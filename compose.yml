@@ -1,6 +1,30 @@
 services:
-  web:
+  frontend:
     build:
       context: .
+      target: frontend-dev # New target in Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules # Prevents overwriting node_modules with host's
+    ports:
+      - "3000:3000" # Vite's default port
+    command: pnpm run dev # Run Vite dev server
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Helps with file watching in Docker
+
+  backend:
+    build:
+      context: .
+      target: backend
+    environment:
+      - DB_HOST=host.docker.internal
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     ports:
       - "8000:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - .:/app

@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-schema": "openapi-generator-cli generate -i http://localhost:8000/api/schema/ -g typescript-fetch -o ./generated-client"
   },
   "dependencies": {
+    "@tanstack/react-query": "4",
+    "@tanstack/react-router": "^1.114.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

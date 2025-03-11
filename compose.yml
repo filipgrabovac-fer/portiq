@@ -2,15 +2,23 @@ services:
   frontend:
     build:
       context: .
-      target: frontend-dev # New target in Dockerfile
-    volumes:
-      - .:/app
-      - /app/node_modules # Prevents overwriting node_modules with host's
+      target: frontend-dev
     ports:
-      - "3000:3000" # Vite's default port
-    command: pnpm run dev # Run Vite dev server
+      - "3000:3000"
+    command: pnpm run dev
     environment:
-      - CHOKIDAR_USEPOLLING=true # Helps with file watching in Docker
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      # Mount source code for development
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./index.html:/app/index.html
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./tsconfig.json:/app/tsconfig.json
+      # Exclude node_modules to prevent host/container conflicts
+      - frontend_node_modules:/app/node_modules
+      # Exclude build artifacts
+      - frontend_dist:/app/dist
 
   backend:
     build:
@@ -27,4 +35,18 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - .:/app
+      # Mount Django project files
+      - ./portiq:/app/portiq
+      - ./portiq_server:/app/portiq_server
+      - ./react_server:/app/react_server
+      - ./manage.py:/app/manage.py
+      # Exclude Python cache files
+      - backend_pycache:/app/__pycache__
+      - backend_migrations:/app/portiq_server/migrations
+
+volumes:
+  # Define named volumes
+  frontend_node_modules:
+  frontend_dist:
+  backend_pycache:
+  backend_migrations:

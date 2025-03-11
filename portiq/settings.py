@@ -12,9 +12,7 @@ SECRET_KEY = 'django-insecure-siy6g$u&^1(u1bc)5&9n4^9zg-s1we_cxsvk^*_c)2-)vz2d#f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "*"
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # Initialize environ
@@ -43,6 +41,8 @@ INSTALLED_APPS = [
     "react_server",
     "portiq_server",
     'corsheaders', 
+    "rest_framework",
+    "drf_spectacular"
 ]
 
 MIDDLEWARE = [
@@ -139,3 +139,25 @@ REACT_APP_BUILD_PATH = BASE_DIR / "dist"
 CORS_ALLOW_ALL_ORIGINS = True  # Only use this in development!
 
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'PortIQ API',
+    'DESCRIPTION': 'PortIQ API',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SERVERS': [
+        {'url': 'http://localhost:8000', 'description': 'Local Development server'},
+    ],
+    # OTHER SETTINGS
+}

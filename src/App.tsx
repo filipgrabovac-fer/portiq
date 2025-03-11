@@ -1,10 +1,23 @@
-import { useState } from "react";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { userApi } from "../generated-client/schema";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const useGetEvents = () => {
+    return useQuery({
+      queryKey: ["users"],
+      queryFn: async () => {
+        const req = await userApi.usersList();
+        return req;
+      },
+    });
+  };
+  const { data } = useGetEvents();
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <>
       <div>
@@ -14,9 +27,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+        <button>CLICK</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

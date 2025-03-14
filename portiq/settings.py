@@ -24,6 +24,8 @@ env = environ.Env(
     DB_PASSWORD=(str, ''),
     DB_HOST=(str, ''),
     DB_PORT=(int, 0),
+    GOOGLE_CLIENT_ID=(str, ''),
+    GOOGLE_CLIENT_SECRET=(str, ''),
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -42,7 +44,19 @@ INSTALLED_APPS = [
     "portiq_server",
     'corsheaders', 
     "rest_framework",
-    "drf_spectacular"
+    "rest_framework.authtoken",
+    
+    "drf_spectacular",
+    "django.contrib.sites",
+
+    
+    'allauth',
+    'allauth.account',
+    "allauth.socialaccount.providers.google",
+    "dj_rest_auth",
+
+    'dj_rest_auth.registration',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'portiq.urls'
@@ -88,7 +103,6 @@ DATABASES = {
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
-
     }
 
 }
@@ -139,11 +153,7 @@ REACT_APP_BUILD_PATH = BASE_DIR / "dist"
 CORS_ALLOW_ALL_ORIGINS = True  # Only use this in development!
 
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ]
-# }
+
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
@@ -159,5 +169,21 @@ SPECTACULAR_SETTINGS = {
     'SERVERS': [
         {'url': 'http://localhost:8000', 'description': 'Local Development server'},
     ],
-    # OTHER SETTINGS
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env('GOOGLE_CLIENT_ID'),
+            'secret': env("GOOGLE_CLIENT_SECRET"),
+            'key': ''
+        }
+    }
+}
+
+SITE_ID = 1

@@ -31,6 +31,3 @@ pnpm-lock.yaml
 .env
 
 openapitools.json
-react_server/__pycache__/*
-portiq_server/__pycache__/*
-portiq/__pycache__/*

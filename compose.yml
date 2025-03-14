@@ -8,6 +8,8 @@ services:
     command: pnpm run dev
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
     volumes:
       # Mount source code for development
       - ./src:/app/src
@@ -15,21 +17,22 @@ services:
       - ./index.html:/app/index.html
       - ./vite.config.ts:/app/vite.config.ts
       - ./tsconfig.json:/app/tsconfig.json
-      # Exclude node_modules to prevent host/container conflicts
-      - frontend_node_modules:/app/node_modules
-      # Exclude build artifacts
-      - frontend_dist:/app/dist
 
   backend:
     build:
       context: .
       target: backend
+      args:
+        - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+        - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_SECRET}
     environment:
       - DB_HOST=host.docker.internal
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
     ports:
       - "8000:8000"
     extra_hosts:
@@ -40,9 +43,6 @@ services:
       - ./portiq_server:/app/portiq_server
       - ./react_server:/app/react_server
       - ./manage.py:/app/manage.py
-      # Exclude Python cache files
-      - backend_pycache:/app/__pycache__
-      - backend_migrations:/app/portiq_server/migrations
 
 volumes:
   # Define named volumes

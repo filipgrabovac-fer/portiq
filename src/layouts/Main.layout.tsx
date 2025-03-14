@@ -7,7 +7,7 @@ export const MainLayout = () => {
   const [isQRCodeVisible, setIsQRCodeVisible] = useState(false);
 
   return (
-    <div className="bg-[linear-gradient(252.35deg,#C180FF99_2.52%,rgba(150,53,241,0.3)_50.43%,#7A6FF699_100.30%,rgba(223,129,129,0.1)_100.29%)] h-screen w-screen ">
+    <div className="bg-[linear-gradient(252.35deg,#C180FF99_2.52%,rgba(150,53,241,0.3)_50.43%,#7A6FF699_100.30%,rgba(223,129,129,0.1)_100.29%)] h-screen w-screen flex">
       <div className=" h-screen bg-[linear-gradient(600deg,#C180FF_2.52%,rgba(150,53,241,0.8)_32.43%,#7A6FF6_60.98%,rgba(223,129,129,0.9)_90.29%)] w-60 flex flex-col">
         <div className="my-auto flex flex-col gap-4 items-center">
           <div
@@ -43,7 +43,9 @@ export const MainLayout = () => {
         </div>
       </div>
 
-      <Outlet />
+      <div className="w-full h-full overflow-y-scroll">
+        <Outlet />
+      </div>
     </div>
   );
 };

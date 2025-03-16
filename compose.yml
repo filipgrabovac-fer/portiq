@@ -10,6 +10,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
     volumes:
       # Mount source code for development
       - ./src:/app/src
@@ -18,13 +19,19 @@ services:
       - ./vite.config.ts:/app/vite.config.ts
       - ./tsconfig.json:/app/tsconfig.json
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
   backend:
     build:
       context: .
       target: backend
       args:
         - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-        - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_SECRET}
+        - VITE_GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+        - VITE_GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
     environment:
       - DB_HOST=host.docker.internal
       - DB_PORT=${DB_PORT}
@@ -33,6 +40,7 @@ services:
       - DB_NAME=${DB_NAME}
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
     ports:
       - "8000:8000"
     extra_hosts:

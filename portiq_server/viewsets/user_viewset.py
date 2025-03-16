@@ -1,9 +1,11 @@
 
+from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from portiq_server.models.user import User
 from portiq_server.serializers import UserSerializer
+from django.core.cache import cache
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,6 +13,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     def list(self, request):
+        return JsonResponse({"demo": cache.get("demo")})
         users = self.queryset.values()
         return Response(users)
     

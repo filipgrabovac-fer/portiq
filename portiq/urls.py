@@ -16,8 +16,9 @@ router.register("certificate", certificate_viewset.CertificateViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('dj-rest-auth/google', GoogleLogin.as_view(), name='google_login'),
+    path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login'),
     path("auth/google/callback", login_with_google, name="google_callback"),
+
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

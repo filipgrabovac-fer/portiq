@@ -26,6 +26,7 @@ env = environ.Env(
     DB_PORT=(int, 0),
     GOOGLE_CLIENT_ID=(str, ''),
     GOOGLE_CLIENT_SECRET=(str, ''),
+    GOOGLE_REDIRECT_URI=(str, ''),
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -69,6 +70,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     "allauth.account.middleware.AccountMiddleware",
+    "portiq.middleware.user_authenticated.UserAuthenticatedMiddleware",
+
 ]
 
 ROOT_URLCONF = 'portiq.urls'
@@ -179,11 +182,27 @@ AUTHENTICATION_BACKENDS = [
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': env('GOOGLE_CLIENT_ID'),
+            'client_id': env("GOOGLE_CLIENT_ID"),
             'secret': env("GOOGLE_CLIENT_SECRET"),
-            'key': ''
         }
     }
 }
 
 SITE_ID = 1
+
+ACCOUNT_LOGOUT_ON_GET = True
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',  # Use the appropriate Redis server URL
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+# Optional: This is to ensure Django sessions are stored in Redis
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'

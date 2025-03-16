@@ -9,6 +9,12 @@ export default defineConfig({
     "import.meta.env.GOOGLE_CLIENT_ID": JSON.stringify(
       process.env.GOOGLE_CLIENT_ID
     ),
+    "import.meta.env.GOOGLE_CLIENT_SECRET": JSON.stringify(
+      process.env.GOOGLE_CLIENT_SECRET
+    ),
+    "import.meta.env.GOOGLE_REDIRECT_URI": JSON.stringify(
+      process.env.GOOGLE_REDIRECT_URI
+    ),
   },
   build: {
     outDir: "dist",

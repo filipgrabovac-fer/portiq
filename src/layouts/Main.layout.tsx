@@ -2,13 +2,30 @@ import { Outlet } from "@tanstack/react-router";
 import { Button } from "antd";
 import { useState } from "react";
 import { cn } from "../utils/cn.util";
+import { MenuIcon, XIcon } from "lucide-react";
 
 export const MainLayout = () => {
   const [isQRCodeVisible, setIsQRCodeVisible] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="bg-[linear-gradient(252.35deg,#C180FF99_2.52%,rgba(150,53,241,0.3)_50.43%,#7A6FF699_100.30%,rgba(223,129,129,0.1)_100.29%)] h-screen w-screen flex">
-      <div className=" h-screen bg-[linear-gradient(600deg,#C180FF_2.52%,rgba(150,53,241,0.8)_32.43%,#7A6FF6_60.98%,rgba(223,129,129,0.9)_90.29%)] w-60 flex flex-col">
+      <button
+        className="absolute top-2 left-2 z-10 bg-button_blue rounded-md p-2 max-sm:block hidden"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? (
+          <XIcon width={24} height={24} color="white" />
+        ) : (
+          <MenuIcon width={24} height={24} color="white" />
+        )}
+      </button>
+      <div
+        className={cn(
+          isSidebarOpen && "max-sm:translate-x-[0]",
+          "h-screen bg-[linear-gradient(600deg,#C180FF_2.52%,rgba(150,53,241,1)_32.43%,#7A6FF6_60.98%,rgba(223,129,129,1)_90.29%)] w-60 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all"
+        )}
+      >
         <div className="my-auto flex flex-col gap-4 items-center">
           <div
             className="w-40 h-40 m-auto bg-white rounded-md p-4 cursor-pointer z-50 relative"

@@ -4,3 +4,7 @@ body {
   font-family: "DM Sans", sans-serif;
   font-weight: 500;
 }
+
+@theme {
+  --color-button_blue: #5853ef;
+}

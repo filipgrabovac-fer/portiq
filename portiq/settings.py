@@ -95,8 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portiq.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -111,8 +109,6 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -130,9 +126,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -141,19 +134,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
 STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REACT_APP_BUILD_PATH = BASE_DIR / "dist"
 
-CORS_ALLOW_ALL_ORIGINS = True  # Only use this in development!
+CORS_ALLOW_ALL_ORIGINS = True 
 
 
 
@@ -172,7 +158,24 @@ SPECTACULAR_SETTINGS = {
     'SERVERS': [
         {'url': 'http://localhost:8000', 'description': 'Local Development server'},
     ],
+    'TAGS': [
+    {
+        'name': 'user',
+        'description': 'User management endpoints'
+    },
+    {
+        'name': 'certificate',
+        'description': 'Certificate management endpoints'
+    },
+    {
+        'name': 'logout',
+        'description': 'Authentication related endpoints'
+    },
+    ],
+    'SCHEMA_PATH_PREFIX': '/api/',
 }
+
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -188,21 +191,12 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-SITE_ID = 1
-
-ACCOUNT_LOGOUT_ON_GET = True
-
-
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/1',  # Use the appropriate Redis server URL
+        'LOCATION': 'redis://redis:6379/1',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
 }
-
-# Optional: This is to ensure Django sessions are stored in Redis
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'

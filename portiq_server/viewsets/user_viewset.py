@@ -6,16 +6,15 @@ from rest_framework.response import Response
 from portiq_server.models.user import User
 from portiq_server.serializers import UserSerializer
 from django.core.cache import cache
+from drf_spectacular.utils import extend_schema
 
-# Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
     def list(self, request):
-        return JsonResponse({"demo": cache.get("demo")})
-        users = self.queryset.values()
-        return Response(users)
+        users = list(self.queryset.values_list("id", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country"))
+        return JsonResponse({"users": users})
     
     def create(self, request):
         serializer = self.serializer_class(data=request.data)

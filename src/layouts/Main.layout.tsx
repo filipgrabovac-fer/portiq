@@ -1,13 +1,15 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, useNavigate } from "@tanstack/react-router";
 import { Button } from "antd";
 import { useState } from "react";
 import { cn } from "../utils/cn.util";
 import { MenuIcon, XIcon } from "lucide-react";
+import { logoutApi } from "../../generated-client/schema";
+import { homeRoute } from "../routes/home.routes";
 
 export const MainLayout = () => {
   const [isQRCodeVisible, setIsQRCodeVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const navigate = useNavigate();
   return (
     <div className="bg-[linear-gradient(252.35deg,#C180FF99_2.52%,rgba(150,53,241,0.3)_50.43%,#7A6FF699_100.30%,rgba(223,129,129,0.1)_100.29%)] h-screen w-screen flex">
       <button
@@ -56,7 +58,15 @@ export const MainLayout = () => {
         </div>
         <div className="flex flex-col mt-auto mb-4">
           <button>Create a template</button>
-          <button className="bg-none text-red-600">Logout</button>
+          <button
+            className="bg-none text-red-600"
+            onClick={async () => {
+              await logoutApi.logoutCreateRaw();
+              navigate({ to: homeRoute.fullPath });
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
 

@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from "../runtime";
 /**
  *
  * @export
@@ -47,13 +48,13 @@ export interface PatchedUser {
    * @type {string}
    * @memberof PatchedUser
    */
-  token?: string;
+  phoneNumber?: string | null;
   /**
    *
    * @type {string}
    * @memberof PatchedUser
    */
-  phoneNumer?: string | null;
+  imageUrl?: string | null;
   /**
    *
    * @type {string}
@@ -95,15 +96,18 @@ export interface PatchedUser {
 /**
  * Check if a given object implements the PatchedUser interface.
  */
-export function instanceOfPatchedUser() {
+export function instanceOfPatchedUser(value: object): value is PatchedUser {
   return true;
 }
 
 export function PatchedUserFromJSON(json: any): PatchedUser {
-  return PatchedUserFromJSONTyped(json);
+  return PatchedUserFromJSONTyped(json, false);
 }
 
-export function PatchedUserFromJSONTyped(json: any): PatchedUser {
+export function PatchedUserFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean
+): PatchedUser {
   if (json == null) {
     return json;
   }
@@ -112,8 +116,9 @@ export function PatchedUserFromJSONTyped(json: any): PatchedUser {
     firstName: json["first_name"] == null ? undefined : json["first_name"],
     lastName: json["last_name"] == null ? undefined : json["last_name"],
     email: json["email"] == null ? undefined : json["email"],
-    token: json["token"] == null ? undefined : json["token"],
-    phoneNumer: json["phone_numer"] == null ? undefined : json["phone_numer"],
+    phoneNumber:
+      json["phone_number"] == null ? undefined : json["phone_number"],
+    imageUrl: json["image_url"] == null ? undefined : json["image_url"],
     address: json["address"] == null ? undefined : json["address"],
     city: json["city"] == null ? undefined : json["city"],
     state: json["state"] == null ? undefined : json["state"],
@@ -125,11 +130,12 @@ export function PatchedUserFromJSONTyped(json: any): PatchedUser {
 }
 
 export function PatchedUserToJSON(json: any): PatchedUser {
-  return PatchedUserToJSONTyped(json);
+  return PatchedUserToJSONTyped(json, false);
 }
 
 export function PatchedUserToJSONTyped(
-  value?: Omit<PatchedUser, "id" | "created_at"> | null
+  value?: Omit<PatchedUser, "id" | "created_at"> | null,
+  ignoreDiscriminator: boolean = false
 ): any {
   if (value == null) {
     return value;
@@ -139,8 +145,8 @@ export function PatchedUserToJSONTyped(
     first_name: value["firstName"],
     last_name: value["lastName"],
     email: value["email"],
-    token: value["token"],
-    phone_numer: value["phoneNumer"],
+    phone_number: value["phoneNumber"],
+    image_url: value["imageUrl"],
     address: value["address"],
     city: value["city"],
     state: value["state"],

@@ -1,7 +1,13 @@
-apis/UsersApi.ts
+apis/CertificateApi.ts
+apis/DjRestAuthApi.ts
+apis/LogoutApi.ts
+apis/UserApi.ts
 apis/index.ts
 index.ts
+models/Certificate.ts
+models/PatchedCertificate.ts
 models/PatchedUser.ts
+models/SocialLogin.ts
 models/User.ts
 models/index.ts
 runtime.ts

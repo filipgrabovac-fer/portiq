@@ -6,11 +6,12 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from .views import GoogleLogin
 from portiq_server.viewsets import certificate_viewset, user_viewset
 from react_server.views import serve_react
-from .auth import login_with_google
+from .auth import login_with_google, logout_user
 
 router = routers.DefaultRouter()
-router.register("user", user_viewset.UserViewSet)
-router.register("certificate", certificate_viewset.CertificateViewSet)
+router.register(r'user', user_viewset.UserViewSet)
+router.register(r'certificate', certificate_viewset.CertificateViewSet)
+
 
 
 urlpatterns = [
@@ -21,9 +22,10 @@ urlpatterns = [
 
 
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/logout/', logout_user, name='logout'),
+    
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path("api/", include(router.urls)),
-    path('api-auth/', include('rest_framework.urls')),
+    path("api/", include((router.urls, "api"))),
     
     re_path(r"^(?P<path>.*)$", serve_react, {"document_root": settings.REACT_APP_BUILD_PATH}),
 ]

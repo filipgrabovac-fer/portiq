@@ -4,7 +4,7 @@ from .models.certificate import Certificate
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [ "id", "first_name", "last_name", "email", "token", "phone_numer", "address", "city", "state", "zip_code", "country", "created_at"]
+        fields = [ "id", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country", "created_at"]
 
 class CertificateSerializer(serializers.ModelSerializer):
     class Meta:

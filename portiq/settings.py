@@ -6,7 +6,6 @@ import environ
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-siy6g$u&^1(u1bc)5&9n4^9zg-s1we_cxsvk^*_c)2-)vz2d#f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -14,10 +13,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
-# Initialize environ
 env = environ.Env(
-    # Set default values
     ALLOWED_HOSTS=(list, []),
     DB_NAME=(str, ''),
     DB_USER=(str, ''),
@@ -30,9 +26,6 @@ env = environ.Env(
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -144,9 +137,6 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
@@ -170,6 +160,10 @@ SPECTACULAR_SETTINGS = {
     {
         'name': 'logout',
         'description': 'Authentication related endpoints'
+    },
+    {
+        'name': 'user-details',
+        'description': 'User details endpoints'
     },
     ],
     'SCHEMA_PATH_PREFIX': '/api/',

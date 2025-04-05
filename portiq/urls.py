@@ -11,7 +11,7 @@ from .auth import login_with_google, logout_user
 router = routers.DefaultRouter()
 router.register(r'user', user_viewset.UserViewSet)
 router.register(r'certificate', certificate_viewset.CertificateViewSet)
-
+router.register(r'user-details', user_viewset.UserDetailsViewSet, basename='user-details')
 
 
 urlpatterns = [

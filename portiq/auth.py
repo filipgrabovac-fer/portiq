@@ -24,25 +24,21 @@ def login_with_google(request):
         "grant_type": "authorization_code"
     }
     
-    credentials = requests.post(token_url, data=token_payload)
-    credentials = credentials.json()
-    
+    credentials = requests.post(token_url, data=token_payload).json()
+
     user_details = jwt.decode(credentials["id_token"], algorithms=["HS256"],  options={"verify_signature": False})
 
     existing_user = User.objects.filter(email=user_details["email"]).values().first()
 
-    if not existing_user:
+    if existing_user:
+        user = existing_user
+    else:
         user = User.objects.create(
             email=user_details["email"],
             first_name = user_details["given_name"],
             last_name = user_details["family_name"],
             image_url = user_details["picture"],
-        )
-        user.save()
-        # Serialize the user object to JSON
-
-    else:
-        user = existing_user
+        ).save()
 
     cache.set("user", user, timeout=24*60*60)
     return redirect("/home")

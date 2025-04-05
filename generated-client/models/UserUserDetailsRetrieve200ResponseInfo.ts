@@ -16,101 +16,88 @@ import { mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface PatchedUser
+ * @interface UserUserDetailsRetrieve200ResponseInfo
  */
-export interface PatchedUser {
-    /**
-     * 
-     * @type {number}
-     * @memberof PatchedUser
-     */
-    readonly id?: number;
+export interface UserUserDetailsRetrieve200ResponseInfo {
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     firstName?: string;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     lastName?: string;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     email?: string;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     phoneNumber?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     imageUrl?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     address?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     city?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     state?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     zipCode?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof PatchedUser
+     * @memberof UserUserDetailsRetrieve200ResponseInfo
      */
     country?: string | null;
-    /**
-     * 
-     * @type {Date}
-     * @memberof PatchedUser
-     */
-    readonly createdAt?: Date;
 }
 
 /**
- * Check if a given object implements the PatchedUser interface.
+ * Check if a given object implements the UserUserDetailsRetrieve200ResponseInfo interface.
  */
-export function instanceOfPatchedUser(value: object): value is PatchedUser {
+export function instanceOfUserUserDetailsRetrieve200ResponseInfo(value: object): value is UserUserDetailsRetrieve200ResponseInfo {
     return true;
 }
 
-export function PatchedUserFromJSON(json: any): PatchedUser {
-    return PatchedUserFromJSONTyped(json, false);
+export function UserUserDetailsRetrieve200ResponseInfoFromJSON(json: any): UserUserDetailsRetrieve200ResponseInfo {
+    return UserUserDetailsRetrieve200ResponseInfoFromJSONTyped(json, false);
 }
 
-export function PatchedUserFromJSONTyped(json: any, ignoreDiscriminator: boolean): PatchedUser {
+export function UserUserDetailsRetrieve200ResponseInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean): UserUserDetailsRetrieve200ResponseInfo {
     if (json == null) {
         return json;
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
         'firstName': json['first_name'] == null ? undefined : json['first_name'],
         'lastName': json['last_name'] == null ? undefined : json['last_name'],
         'email': json['email'] == null ? undefined : json['email'],
@@ -121,15 +108,14 @@ export function PatchedUserFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'state': json['state'] == null ? undefined : json['state'],
         'zipCode': json['zip_code'] == null ? undefined : json['zip_code'],
         'country': json['country'] == null ? undefined : json['country'],
-        'createdAt': json['created_at'] == null ? undefined : (new Date(json['created_at'])),
     };
 }
 
-export function PatchedUserToJSON(json: any): PatchedUser {
-    return PatchedUserToJSONTyped(json, false);
+export function UserUserDetailsRetrieve200ResponseInfoToJSON(json: any): UserUserDetailsRetrieve200ResponseInfo {
+    return UserUserDetailsRetrieve200ResponseInfoToJSONTyped(json, false);
 }
 
-export function PatchedUserToJSONTyped(value?: Omit<PatchedUser, 'id'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function UserUserDetailsRetrieve200ResponseInfoToJSONTyped(value?: UserUserDetailsRetrieve200ResponseInfo | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

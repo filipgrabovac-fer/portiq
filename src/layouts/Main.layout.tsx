@@ -3,11 +3,11 @@ import { Button } from "antd";
 import { useState } from "react";
 import { cn } from "../utils/cn.util";
 import { MenuIcon, XIcon } from "lucide-react";
-import { logoutApi } from "../../generated-client/schema";
+
 import { homeRoute } from "../routes/home.routes";
+import { logoutApi } from "../schema";
 
 export const MainLayout = () => {
-  const [isQRCodeVisible, setIsQRCodeVisible] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   return (
@@ -29,29 +29,15 @@ export const MainLayout = () => {
         )}
       >
         <div className="my-auto flex flex-col gap-4 items-center">
-          <div
-            className="w-40 h-40 m-auto bg-white rounded-md p-4 cursor-pointer z-50 relative"
-            onClick={() => setIsQRCodeVisible(!isQRCodeVisible)}
-          >
+          <div className="w-40 h-40 m-auto bg-white rounded-md  z-50 relative">
             <p
               className={cn(
-                "text-black top-[-1.5rem] font-bold absolute bg-white rounded-md px-2 left-[50%] translate-x-[-50%] w-full pb-2 z-0 text-center",
-                isQRCodeVisible
-                  ? " translate-y-10 duration-300 transition-all hidden "
-                  : "block translate-y-0 duration-300 transition-all"
+                "text-black top-[-1.5rem] font-bold absolute bg-white rounded-md px-2 left-[50%] translate-x-[-50%] w-full pb-2 z-0 text-center"
               )}
             >
-              Reveal QR code!
+              Scan QR Code
             </p>
-            {!isQRCodeVisible ? (
-              <img
-                src="images/icons/avatar-icon.svg"
-                className="z-2"
-                alt="logo"
-              />
-            ) : (
-              <p>QR Code</p>
-            )}
+            <img src="images/icons/qr.svg" className="z-2" alt="logo" />
           </div>
           <Button>Export to pdf</Button>
           <Button>Web Portfolio</Button>

@@ -56,15 +56,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    "allauth.account.middleware.AccountMiddleware",
     "portiq.middleware.user_authenticated.UserAuthenticatedMiddleware",
-
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'portiq.urls'
@@ -194,3 +193,11 @@ CACHES = {
         }
     }
 }
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Add to INSTALLED_APPS if not already there
+if 'django.contrib.staticfiles' not in INSTALLED_APPS:
+    INSTALLED_APPS.append('django.contrib.staticfiles')

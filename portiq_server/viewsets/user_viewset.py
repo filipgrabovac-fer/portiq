@@ -2,7 +2,6 @@ from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from drf_spectacular.utils import extend_schema
 
 from portiq_server.models.user import User
 from portiq_server.serializers import UserSerializer, UserDetailsSerializer

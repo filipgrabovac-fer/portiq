@@ -4,8 +4,8 @@ import { useState } from "react";
 import { cn } from "../utils/cn.util";
 import { MenuIcon, XIcon } from "lucide-react";
 
-import { homeRoute } from "../routes/home.routes";
 import { logoutApi } from "../schema";
+import { loginRoute } from "../routes/login.routes";
 
 export const MainLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -47,8 +47,9 @@ export const MainLayout = () => {
           <button
             className="bg-none text-red-600"
             onClick={async () => {
-              await logoutApi.logoutCreateRaw();
-              navigate({ to: homeRoute.fullPath });
+              await logoutApi.logoutCreate();
+              console.log("logging out");
+              navigate({ to: loginRoute.to });
             }}
           >
             Logout

@@ -5,7 +5,7 @@ from portiq.settings import env
 from django.core.cache import cache
 from django.shortcuts import redirect
 import jwt
-from portiq_server.serializers import UserSerializer
+from portiq_server.models.qr_code import QRCode
 from portiq_server.models.user import User
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import api_view
@@ -34,19 +34,20 @@ def login_with_google(request):
     if existing_user:
         user = existing_user
     else:
-        new_user = User.objects.create(
+        user:User = User.objects.create(
             email=user_details["email"],
             first_name = user_details["given_name"],
             last_name = user_details["family_name"] if "family_name" in user_details else "",
             image_url = user_details["picture"],
         )
-        user = User.objects.filter(id=new_user.id).values().first()
-        
-        # Generate QR code for new user
-        qr_path = generate_qr_code(f'http://localhost:8000/user/{user["id"]}', user["id"])
-        if qr_path:
-            User.objects.filter(id=user["id"]).update(qr_code_path=qr_path)
-            user["qr_code_path"] = qr_path
+
+    qr_code = generate_qr_code(f'http://localhost:8000/user/{user["id_user"]}')
+
+    find_user = User.objects.filter(id_user=user["id_user"]).first()
+    QRCode.objects.create(
+        id_user=find_user,
+        qr_code=qr_code
+    ).save()
 
     cache.set("user", user, timeout=24*60*60)
     return redirect("/home")

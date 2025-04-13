@@ -3,6 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
+from portiq_server.models.qr_code import QRCode
 from portiq_server.models.user import User
 from portiq_server.serializers import UserSerializer, UserDetailsSerializer
 from portiq_server.models.certificate import Certificate
@@ -16,7 +17,7 @@ class UserViewSet(viewsets.ViewSet):
     serializer_class = UserSerializer
 
     def list(self, request):
-        users = list(self.queryset.values_list("id", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country"))
+        users = list(self.queryset.values_list("id_user", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country"))
         return JsonResponse({"users": users})
     
     def create(self, request):
@@ -56,18 +57,22 @@ class UserDetailsViewSet(viewsets.ViewSet):
         print("userDetails endpoint called")
         cached_user = cache.get("user")
         
-        userId = cached_user["id"]
-        user: User = self.queryset.filter(id=userId).first()
+        userId = cached_user["id_user"]
+        user: User = self.queryset.filter(id_user=userId).first()
 
         # Get the data and convert to list of lists
-        certificates = [list(cert) for cert in Certificate.objects.filter(user_id=userId).values_list("id", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
-        education = [list(edu) for edu in Education.objects.filter(user_id=userId).values_list("id", "name", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
-        skills = [list(skill) for skill in Skill.objects.filter(user_id=userId).values_list("id", "title", "description", "location", "level", "link", "created_at")]
-        projects = [list(proj) for proj in Project.objects.filter(user_id=userId).values_list("id", "title", "description", "date", "location", "created_at")]
+        certificates = [list(cert) for cert in Certificate.objects.filter(id_user=userId).values_list("id_certificate", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
+        education = [list(edu) for edu in Education.objects.filter(id_user=userId).values_list("id_education", "name", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
+        skills = [list(skill) for skill in Skill.objects.filter(id_user=userId).values_list("id_skill", "title", "description", "location", "level", "link", "created_at")]
+        projects = [list(proj) for proj in Project.objects.filter(id_user=userId).values_list("id_project", "title", "description", "date", "location", "created_at")]
+
+
+        qr_code =  "QRCode.objects.filter(id_user=userId).first().qr_code"
 
 
         user_details = {
             "info": {
+                "qr_code":qr_code,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,

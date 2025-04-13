@@ -4,8 +4,8 @@ from portiq_server.models.user import User
 
 
 class Other(models.Model):
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_other = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
     start_date = models.DateField(null=True, blank=True)
@@ -15,4 +15,4 @@ class Other(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.title

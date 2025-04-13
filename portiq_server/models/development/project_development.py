@@ -5,7 +5,7 @@ from portiq_server.models.development.code_development import CodeDevelopment
 
 
 class ProjectDevelopment(models.Model):
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    code_id = models.ForeignKey(CodeDevelopment, on_delete=models.CASCADE)
+    id_project_development = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_code = models.ForeignKey(CodeDevelopment, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

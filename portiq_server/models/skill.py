@@ -10,8 +10,8 @@ class Skill(models.Model):
         ('professional', 'Professional')
     ]
 
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_skill = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255, null=True, blank=True)

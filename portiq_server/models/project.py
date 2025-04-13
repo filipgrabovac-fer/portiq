@@ -3,8 +3,8 @@ from django.db import models
 from portiq_server.models.user import User
 
 class Project(models.Model):
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_project = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateField(null=True, blank=True)

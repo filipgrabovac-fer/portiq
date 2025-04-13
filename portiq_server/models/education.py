@@ -13,8 +13,8 @@ class Education(models.Model):
         ('other', 'Other')                    
     ]
 
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_education = models.AutoField(primary_key=True, null=False)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255)

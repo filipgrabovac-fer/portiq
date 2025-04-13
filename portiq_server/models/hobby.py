@@ -4,8 +4,8 @@ from portiq_server.models.user import User
 
 
 class Hobby(models.Model):
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_hobby = models.AutoField(primary_key=True, null=False)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

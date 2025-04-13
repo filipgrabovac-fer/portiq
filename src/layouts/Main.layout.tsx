@@ -37,7 +37,11 @@ export const MainLayout = () => {
             >
               Scan QR Code
             </p>
-            <img src="images/icons/qr.svg" className="z-2" alt="logo" />
+            <img
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAABVUlEQVR42u2aQa7DIAxErXIAjpSr50gcAImfgB3T/k03lWbxvKBNOqs+YY8NNr6N05AiRYoUKVINqXmUYUe7Po/73fw245jSl30dSH8jdVqTx2jl5lfG5LYe81do6dCaO6o5I7M63zk3aOnSisTo3KClTOus3TIxQku7bo2WBKlbmrR2T5gLnlCSVsant9jMPn+WzN6a1Soc/BXdcPDCLsN9e7iMm9a1bNsPWkJ1qzy+3Zf1eFb2lmDd8h3lY4ztEZch6jJWv+Xt1+7loSWXCTe/YdEiRwWDlmDdeqa6tfveOsmEirOM/lbBAtQaP0FLb/IUJrBbHJuYcyMTys4yJpnw7dQtzbplYd7bv46ZTCiYCdPB57FJLtASPN+yvJyxopIJlWkFHjf0z+EktBTPjte7p0Vu9Fu6dSsup5Wt84KWqif8nEYxg1fut7gqixQpUqRIlaV/k45vu5ctmQoAAAAASUVORK5CYII="
+              className="z-2"
+              alt="logo"
+            />
           </div>
           <Button>Export to pdf</Button>
           <Button>Web Portfolio</Button>

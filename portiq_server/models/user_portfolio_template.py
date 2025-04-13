@@ -5,7 +5,7 @@ from portiq_server.models.portfolio_template import PortfolioTemplate
 
 
 class UserPortfolioTemplate(models.Model):
-    id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    portfolio_template_id = models.ForeignKey(PortfolioTemplate, on_delete=models.CASCADE)
+    id_user_portfolio_template = models.AutoField(primary_key=True)
+    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id_portfolio_template = models.ForeignKey(PortfolioTemplate, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -18,28 +18,31 @@ export const CodeInputForm = ({
   setJs,
 }: CodeInputFormProps) => {
   return (
-    <div className="flex flex-col gap-8 p-8 max-w-100 m-auto">
+    <div className="flex flex-col gap-8 p-8">
       <Input
+        rows={6}
         name="html"
         label="HTML"
         type="textarea"
-        placeholder="Paste your code here"
+        placeholder="paste your code here"
         value={html}
         onChange={(value) => setHtml(value)}
       />
       <Input
+        rows={6}
         name="css"
         label="CSS"
         type="textarea"
-        placeholder="Paste your code here"
+        placeholder="paste your code here"
         value={css}
         onChange={(value) => setCss(value)}
       />
       <Input
+        rows={6}
         name="js"
         label="JS"
         type="textarea"
-        placeholder="Paste your code here"
+        placeholder="paste your code here"
         value={js}
         onChange={(value) => setJs(value)}
       />

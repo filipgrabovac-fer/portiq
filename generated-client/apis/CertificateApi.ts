@@ -26,25 +26,25 @@ import {
 } from '../models/index';
 
 export interface CertificateCreateRequest {
-    certificate: Omit<Certificate, 'id'|'created_at'>;
+    certificate: Omit<Certificate, 'id_certificate'|'created_at'>;
 }
 
 export interface CertificateDestroyRequest {
-    id: number;
+    idCertificate: number;
 }
 
 export interface CertificatePartialUpdateRequest {
-    id: number;
-    patchedCertificate?: Omit<PatchedCertificate, 'id'|'created_at'>;
+    idCertificate: number;
+    patchedCertificate?: Omit<PatchedCertificate, 'id_certificate'|'created_at'>;
 }
 
 export interface CertificateRetrieveRequest {
-    id: number;
+    idCertificate: number;
 }
 
 export interface CertificateUpdateRequest {
-    id: number;
-    certificate: Omit<Certificate, 'id'|'created_at'>;
+    idCertificate: number;
+    certificate: Omit<Certificate, 'id_certificate'|'created_at'>;
 }
 
 export interface CertificateUserCertificatesRetrieveRequest {
@@ -96,10 +96,10 @@ export class CertificateApi extends runtime.BaseAPI {
     /**
      */
     async certificateDestroyRaw(requestParameters: CertificateDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idCertificate'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling certificateDestroy().'
+                'idCertificate',
+                'Required parameter "idCertificate" was null or undefined when calling certificateDestroy().'
             );
         }
 
@@ -111,7 +111,7 @@ export class CertificateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/certificate/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/certificate/{id_certificate}/`.replace(`{${"id_certificate"}}`, encodeURIComponent(String(requestParameters['idCertificate']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -156,10 +156,10 @@ export class CertificateApi extends runtime.BaseAPI {
     /**
      */
     async certificatePartialUpdateRaw(requestParameters: CertificatePartialUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Certificate>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idCertificate'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling certificatePartialUpdate().'
+                'idCertificate',
+                'Required parameter "idCertificate" was null or undefined when calling certificatePartialUpdate().'
             );
         }
 
@@ -173,7 +173,7 @@ export class CertificateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/certificate/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/certificate/{id_certificate}/`.replace(`{${"id_certificate"}}`, encodeURIComponent(String(requestParameters['idCertificate']))),
             method: 'PATCH',
             headers: headerParameters,
             query: queryParameters,
@@ -193,10 +193,10 @@ export class CertificateApi extends runtime.BaseAPI {
     /**
      */
     async certificateRetrieveRaw(requestParameters: CertificateRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Certificate>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idCertificate'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling certificateRetrieve().'
+                'idCertificate',
+                'Required parameter "idCertificate" was null or undefined when calling certificateRetrieve().'
             );
         }
 
@@ -208,7 +208,7 @@ export class CertificateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/certificate/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/certificate/{id_certificate}/`.replace(`{${"id_certificate"}}`, encodeURIComponent(String(requestParameters['idCertificate']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -227,10 +227,10 @@ export class CertificateApi extends runtime.BaseAPI {
     /**
      */
     async certificateUpdateRaw(requestParameters: CertificateUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Certificate>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idCertificate'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling certificateUpdate().'
+                'idCertificate',
+                'Required parameter "idCertificate" was null or undefined when calling certificateUpdate().'
             );
         }
 
@@ -251,7 +251,7 @@ export class CertificateApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/certificate/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/certificate/{id_certificate}/`.replace(`{${"id_certificate"}}`, encodeURIComponent(String(requestParameters['idCertificate']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

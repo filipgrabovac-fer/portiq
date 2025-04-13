@@ -164,6 +164,10 @@ SPECTACULAR_SETTINGS = {
         'name': 'user-details',
         'description': 'User details endpoints'
     },
+    {
+        'name': 'development',
+        'description': 'Development endpoints'
+    },
     ],
     'SCHEMA_PATH_PREFIX': '/api/',
 }

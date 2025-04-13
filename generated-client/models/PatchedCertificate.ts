@@ -24,7 +24,7 @@ export interface PatchedCertificate {
      * @type {number}
      * @memberof PatchedCertificate
      */
-    readonly id?: number;
+    readonly idCertificate?: number;
     /**
      * 
      * @type {string}
@@ -86,7 +86,7 @@ export function PatchedCertificateFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'id': json['id'] == null ? undefined : json['id'],
+        'idCertificate': json['id_certificate'] == null ? undefined : json['id_certificate'],
         'title': json['title'] == null ? undefined : json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
@@ -101,7 +101,7 @@ export function PatchedCertificateToJSON(json: any): PatchedCertificate {
     return PatchedCertificateToJSONTyped(json, false);
 }
 
-export function PatchedCertificateToJSONTyped(value?: Omit<PatchedCertificate, 'id'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function PatchedCertificateToJSONTyped(value?: Omit<PatchedCertificate, 'id_certificate'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Tabs, TabsProps } from "antd";
+import { Checkbox, Tabs, TabsProps } from "antd";
 import { CodeInputForm } from "./components/code-input-form/CodeInputForm.component";
-import { group } from "console";
+import { useNavigate } from "@tanstack/react-router";
+import { useSaveCode } from "./hooks/useSaveCode.hook";
 
 type GroupData = {
   html: string;
@@ -43,6 +44,9 @@ export const Development = () => {
   const [html, setHtml] = useState<string>("");
   const [css, setCss] = useState<string>("");
   const [js, setJs] = useState<string>("");
+  const [createFullTemplate, setCreateFullTemplate] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (key: string) => {
     setGroupId(Number(key));
@@ -75,7 +79,7 @@ export const Development = () => {
     },
     {
       key: "1",
-      label: "Tab 2",
+      label: "Skills",
       children: (
         <CodeInputForm
           html={html}
@@ -103,22 +107,54 @@ export const Development = () => {
     },
   ];
 
+  const { mutate: saveCode } = useSaveCode();
+
+  const handleSave = () => {
+    saveCode({ groupData: groupData, createFullTemplate: createFullTemplate });
+  };
+
   return (
     <div className="w-screen h-screen">
-      <div className="max-sm:hidden">
-        <div className="m-auto w-max flex flex-col gap-2 p-8 ">
+      <div className="max-sm:hidden mt-20 w-4/5 md:w-1/2 m-auto">
+        <div className="flex flex-col gap-2 ">
           <h1 className="text-3xl md:text-5xl font-semibold">
-            Create your own template!
+            Create your own design!
           </h1>
-          <h3 className="text-sm md:text-xl">
-            Below you can paste your code (HTML, CSS, JS) and save it as a new
-            template
+          <h3 className="text-sm md:text-base text-gray-500">
+            Below you can paste your code (HTML, CSS, JS)
           </h3>
         </div>
-        <div className="w-3/5 m-auto">
+        <div className="mt-4">
           <Tabs items={items} onChange={handleChange} />
         </div>
+        <div className="flex ml-auto px-8 justify-between">
+          <div className="flex gap-4 items-center">
+            <Checkbox
+              onChange={() => setCreateFullTemplate(!createFullTemplate)}
+            />
+            Create full template
+          </div>
+          <div className="flex gap-4">
+            <div className="m-auto w-max ">
+              <button
+                className="text-red-500 p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer"
+                onClick={() => navigate({ to: "/home" })}
+              >
+                Discard
+              </button>
+            </div>
+            <div className="m-auto w-max">
+              <button
+                className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer"
+                onClick={handleSave}
+              >
+                Save template
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
       <h1 className="sm:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
         You can create templates only on desktop!
       </h1>

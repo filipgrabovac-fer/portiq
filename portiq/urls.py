@@ -4,7 +4,7 @@ from django.conf import settings
 from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from .views import GoogleLogin
-from portiq_server.viewsets import certificate_viewset, user_viewset
+from portiq_server.viewsets import certificate_viewset, development_viewset, user_viewset
 from react_server.views import serve_react
 from .auth import login_with_google, logout_user
 
@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 router.register(r'user', user_viewset.UserViewSet)
 router.register(r'certificate', certificate_viewset.CertificateViewSet)
 router.register(r'user-details', user_viewset.UserDetailsViewSet, basename='user-details')
+router.register(r'development', development_viewset.DevelopmentViewSet, basename='development')
 
 
 urlpatterns = [

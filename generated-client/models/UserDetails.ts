@@ -21,6 +21,12 @@ import { mapValues } from '../runtime';
 export interface UserDetails {
     /**
      * 
+     * @type {string}
+     * @memberof UserDetails
+     */
+    readonly qrCode: string | null;
+    /**
+     * 
      * @type {{ [key: string]: string | null; }}
      * @memberof UserDetails
      */
@@ -55,6 +61,7 @@ export interface UserDetails {
  * Check if a given object implements the UserDetails interface.
  */
 export function instanceOfUserDetails(value: object): value is UserDetails {
+    if (!('qrCode' in value) || value['qrCode'] === undefined) return false;
     if (!('info' in value) || value['info'] === undefined) return false;
     if (!('certificates' in value) || value['certificates'] === undefined) return false;
     if (!('education' in value) || value['education'] === undefined) return false;
@@ -73,6 +80,7 @@ export function UserDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
+        'qrCode': json['qr_code'],
         'info': json['info'],
         'certificates': json['certificates'],
         'education': json['education'],
@@ -85,7 +93,7 @@ export function UserDetailsToJSON(json: any): UserDetails {
     return UserDetailsToJSONTyped(json, false);
 }
 
-export function UserDetailsToJSONTyped(value?: UserDetails | null, ignoreDiscriminator: boolean = false): any {
+export function UserDetailsToJSONTyped(value?: Omit<UserDetails, 'qr_code'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

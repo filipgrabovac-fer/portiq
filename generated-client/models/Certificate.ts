@@ -24,7 +24,7 @@ export interface Certificate {
      * @type {number}
      * @memberof Certificate
      */
-    readonly id: number;
+    readonly idCertificate: number;
     /**
      * 
      * @type {string}
@@ -73,7 +73,7 @@ export interface Certificate {
  * Check if a given object implements the Certificate interface.
  */
 export function instanceOfCertificate(value: object): value is Certificate {
-    if (!('id' in value) || value['id'] === undefined) return false;
+    if (!('idCertificate' in value) || value['idCertificate'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
     if (!('startDate' in value) || value['startDate'] === undefined) return false;
@@ -92,7 +92,7 @@ export function CertificateFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'id': json['id'],
+        'idCertificate': json['id_certificate'],
         'title': json['title'],
         'description': json['description'],
         'startDate': (new Date(json['start_date'])),
@@ -107,7 +107,7 @@ export function CertificateToJSON(json: any): Certificate {
     return CertificateToJSONTyped(json, false);
 }
 
-export function CertificateToJSONTyped(value?: Omit<Certificate, 'id'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function CertificateToJSONTyped(value?: Omit<Certificate, 'id_certificate'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

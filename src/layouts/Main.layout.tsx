@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "@tanstack/react-router";
+import { Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { Button } from "antd";
 import { useState } from "react";
 import { cn } from "../utils/cn.util";
@@ -6,12 +6,13 @@ import { MenuIcon, XIcon } from "lucide-react";
 
 import { logoutApi } from "../schema";
 import { loginRoute } from "../routes/login.routes";
+import { developmentRoute } from "../routes/development.routes";
 
 export const MainLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   return (
-    <div className="bg-[linear-gradient(252.35deg,#C180FF99_2.52%,rgba(150,53,241,0.3)_50.43%,#7A6FF699_100.30%,rgba(223,129,129,0.1)_100.29%)] h-screen w-screen flex">
+    <div className="h-screen w-screen flex">
       <button
         className="absolute top-2 left-2 z-10 bg-button_blue rounded-md p-2 max-sm:block hidden"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -25,7 +26,7 @@ export const MainLayout = () => {
       <div
         className={cn(
           isSidebarOpen && "max-sm:translate-x-[0]",
-          "h-screen bg-[linear-gradient(600deg,#C180FF_2.52%,rgba(150,53,241,1)_32.43%,#7A6FF6_60.98%,rgba(223,129,129,1)_90.29%)] w-60 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all"
+          "h-screen w-80 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all border-r border-gray-200 bg-gray-50"
         )}
       >
         <div className="my-auto flex flex-col gap-4 items-center">
@@ -47,12 +48,16 @@ export const MainLayout = () => {
           <Button>Web Portfolio</Button>
         </div>
         <div className="flex flex-col mt-auto mb-4">
-          <button>Create a template</button>
+          <button
+            className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer mx-auto"
+            onClick={() => navigate({ to: developmentRoute.to })}
+          >
+            Create a template
+          </button>
           <button
             className="bg-none text-red-600"
             onClick={async () => {
               await logoutApi.logoutCreate();
-              console.log("logging out");
               navigate({ to: loginRoute.to });
             }}
           >

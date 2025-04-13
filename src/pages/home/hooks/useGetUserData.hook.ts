@@ -27,8 +27,7 @@ export const useGetUserData = () => {
     queryKey: ["userData"],
     queryFn: async () => {
       const response = await userDetailsApi.userDetailsUserDetailsRetrieve();
-      console.log(response);
-      return response as UserDetailsDataType;
+      return response;
     },
   });
 };

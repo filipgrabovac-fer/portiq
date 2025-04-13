@@ -23,20 +23,20 @@ import {
 } from '../models/index';
 
 export interface UserCreateRequest {
-    user: Omit<User, 'id'|'created_at'>;
+    user: Omit<User, 'id_user'|'created_at'>;
 }
 
 export interface UserDestroyRequest {
-    id: number;
+    idUser: number;
 }
 
 export interface UserRetrieveRequest {
-    id: number;
+    idUser: number;
 }
 
 export interface UserUpdateRequest {
-    id: number;
-    user: Omit<User, 'id'|'created_at'>;
+    idUser: number;
+    user: Omit<User, 'id_user'|'created_at'>;
 }
 
 /**
@@ -84,10 +84,10 @@ export class UserApi extends runtime.BaseAPI {
     /**
      */
     async userDestroyRaw(requestParameters: UserDestroyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idUser'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling userDestroy().'
+                'idUser',
+                'Required parameter "idUser" was null or undefined when calling userDestroy().'
             );
         }
 
@@ -99,7 +99,7 @@ export class UserApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/user/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/user/{id_user}/`.replace(`{${"id_user"}}`, encodeURIComponent(String(requestParameters['idUser']))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -144,10 +144,10 @@ export class UserApi extends runtime.BaseAPI {
     /**
      */
     async userRetrieveRaw(requestParameters: UserRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idUser'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling userRetrieve().'
+                'idUser',
+                'Required parameter "idUser" was null or undefined when calling userRetrieve().'
             );
         }
 
@@ -159,7 +159,7 @@ export class UserApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/user/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/user/{id_user}/`.replace(`{${"id_user"}}`, encodeURIComponent(String(requestParameters['idUser']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -178,10 +178,10 @@ export class UserApi extends runtime.BaseAPI {
     /**
      */
     async userUpdateRaw(requestParameters: UserUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
-        if (requestParameters['id'] == null) {
+        if (requestParameters['idUser'] == null) {
             throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling userUpdate().'
+                'idUser',
+                'Required parameter "idUser" was null or undefined when calling userUpdate().'
             );
         }
 
@@ -202,7 +202,7 @@ export class UserApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/user/{id}/`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+            path: `/api/user/{id_user}/`.replace(`{${"id_user"}}`, encodeURIComponent(String(requestParameters['idUser']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

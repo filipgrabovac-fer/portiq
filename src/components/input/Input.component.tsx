@@ -2,6 +2,7 @@ import { cn } from "../../utils/cn.util";
 
 type InputProps = {
   inputWrapperClass?: string;
+  rows?: number;
   readonly?: boolean;
   name: string;
   label: string;
@@ -13,6 +14,7 @@ type InputProps = {
 };
 
 export const Input = ({
+  rows,
   inputWrapperClass,
   readonly,
   name,
@@ -30,18 +32,33 @@ export const Input = ({
       <label htmlFor={name} className="absolute top-[-1.5rem] left-2">
         {label}
       </label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(value) => onChange(value.target.value)}
-        className={cn(
-          "w-full bg-white rounded-md p-2 px-3 text-base border border-gray-300"
-        )}
-        disabled={readonly}
-        name={name}
-        {...props}
-      />
+      {type === "textarea" ? (
+        <textarea
+          rows={rows}
+          placeholder={placeholder}
+          value={value}
+          onChange={(value) => onChange(value.target.value)}
+          className={cn(
+            "w-full bg-white rounded-md p-2 px-3 text-base border border-gray-300 resize-none"
+          )}
+          disabled={readonly}
+          name={name}
+          {...props}
+        />
+      ) : (
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={(value) => onChange(value.target.value)}
+          className={cn(
+            "w-full bg-white rounded-md p-2 px-3 text-base border border-gray-300"
+          )}
+          disabled={readonly}
+          name={name}
+          {...props}
+        />
+      )}
     </div>
   );
 };

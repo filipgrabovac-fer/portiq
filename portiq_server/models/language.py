@@ -1,6 +1,5 @@
 from portiq_server.models.user import User
-from react_server import models
-
+from django.db import models
 
 class Language(models.Model):
     id_language = models.AutoField(primary_key=True)

@@ -1,8 +1,30 @@
 import { PersonalInfoForm } from "./components/personal-info-form/PersonalInfoForm.component";
 import {
+  ProfileFormComponentItemType,
+  ProfileFormComponentType,
+} from "./components/profile-form/components/profile-form-component/ProfileFormComponent.component";
+import {
+  ProfileForm,
+  ProfileFormProps,
+} from "./components/profile-form/ProfileForm.component";
+import {
   useGetUserData,
   UserDetailsInfoType,
 } from "./hooks/useGetUserData.hook";
+
+enum UserDataKeysEnum {
+  certificates = "Certificates",
+  education = "Education",
+  skills = "Skills",
+  projects = "Projects",
+}
+import { objectToCamel } from "ts-case-convert";
+
+type UserDataKey = keyof typeof UserDataKeysEnum;
+
+const isKeyOfUserData = (key: string): key is UserDataKey => {
+  return key in UserDataKeysEnum;
+};
 
 export const Home = () => {
   const { data: userData } = useGetUserData();
@@ -13,6 +35,24 @@ export const Home = () => {
         {userData && (
           <PersonalInfoForm data={userData?.info as UserDetailsInfoType} />
         )}
+
+        {userData &&
+          Object.entries(userData).map((componentData) => {
+            const key = componentData[0];
+            const data = objectToCamel(
+              (componentData[1] as ProfileFormProps["data"]) ?? {}
+            );
+
+            if (!isKeyOfUserData(key) || !data) return null;
+
+            return (
+              <ProfileForm
+                sectionTitle={UserDataKeysEnum[key]}
+                data={data as ProfileFormProps["data"]}
+                type={key as ProfileFormComponentType}
+              />
+            );
+          })}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 apis/CertificateApi.ts
 apis/DevelopmentApi.ts
 apis/DjRestAuthApi.ts
+apis/EducationApi.ts
 apis/LogoutApi.ts
 apis/UserApi.ts
 apis/UserDetailsApi.ts
@@ -9,8 +10,11 @@ index.ts
 models/Certificate.ts
 models/Development.ts
 models/DevelopmentResponse.ts
+models/Education.ts
 models/PatchedCertificate.ts
+models/PatchedEducation.ts
 models/SocialLogin.ts
+models/TypeEnum.ts
 models/User.ts
 models/UserDetails.ts
 models/index.ts

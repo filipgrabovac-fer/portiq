@@ -15,7 +15,7 @@ class Education(models.Model):
 
     id_education = models.AutoField(primary_key=True, null=False)
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255)
     type = models.CharField(max_length=20, choices=EDUCATION_TYPES)
@@ -25,4 +25,4 @@ class Education(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.title

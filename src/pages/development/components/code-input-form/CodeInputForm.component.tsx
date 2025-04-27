@@ -1,51 +1,111 @@
 import { Input } from "../../../../components/input/Input.component";
+import CodeEditor from "@uiw/react-textarea-code-editor";
 
 type CodeInputFormProps = {
   html: string;
   css: string;
   js: string;
+  title: string;
   setHtml: (html: string) => void;
   setCss: (css: string) => void;
   setJs: (js: string) => void;
+  setTitle: (title: string) => void;
 };
 
 export const CodeInputForm = ({
   html,
   css,
   js,
+  title,
   setHtml,
   setCss,
   setJs,
+  setTitle,
 }: CodeInputFormProps) => {
   return (
-    <div className="flex flex-col gap-8 p-8">
-      <Input
-        rows={6}
-        name="html"
-        label="HTML"
-        type="textarea"
-        placeholder="paste your code here"
-        value={html}
-        onChange={(value) => setHtml(value)}
-      />
-      <Input
-        rows={6}
-        name="css"
-        label="CSS"
-        type="textarea"
-        placeholder="paste your code here"
-        value={css}
-        onChange={(value) => setCss(value)}
-      />
-      <Input
-        rows={6}
-        name="js"
-        label="JS"
-        type="textarea"
-        placeholder="paste your code here"
-        value={js}
-        onChange={(value) => setJs(value)}
-      />
-    </div>
+    <>
+      <style>
+        {`#code-input::placeholder {
+          color: gray;
+        }`}
+      </style>
+      <div className="flex flex-col gap-8 p-8">
+        <Input
+          rows={6}
+          name="title"
+          label="Title"
+          type="text"
+          placeholder="title"
+          value={title}
+          onChange={(value) => setTitle(value)}
+        />
+        <div className="relative">
+          <label htmlFor="html" className="absolute top-[-1.5rem] left-2">
+            HTML
+          </label>
+          <CodeEditor
+            id="code-input"
+            value={html}
+            language="html"
+            placeholder="Please enter HTML code."
+            onChange={(el) => setHtml(el.target.value)}
+            padding={15}
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #ccc",
+              borderRadius: "0.2rem",
+              color: "#111D4A",
+              minHeight: "10rem",
+              fontFamily:
+                "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+            }}
+          />
+        </div>
+        <div className="relative">
+          <label htmlFor="css" className="absolute top-[-1.5rem] left-2">
+            CSS
+          </label>
+          <CodeEditor
+            id="code-input"
+            value={css}
+            language="css"
+            placeholder="Please enter CSS code."
+            onChange={(el) => setCss(el.target.value)}
+            padding={15}
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #ccc",
+              borderRadius: "0.2rem",
+              color: "#111D4A",
+              minHeight: "10rem",
+              fontFamily:
+                "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+            }}
+          />
+        </div>
+        <div className="relative">
+          <label htmlFor="js" className="absolute top-[-1.5rem] left-2">
+            JS
+          </label>
+          <CodeEditor
+            id="code-input"
+            value={js}
+            language="js"
+            placeholder="Please enter JS code."
+            onChange={(el) => setJs(el.target.value)}
+            padding={15}
+            style={{
+              backgroundColor: "white",
+              border: "1px solid #ccc",
+              borderRadius: "0.2rem",
+              color: "#111D4A",
+              minHeight: "10rem",
+              fontFamily:
+                "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+            }}
+          />
+        </div>
+      </div>
+    </>
   );
 };

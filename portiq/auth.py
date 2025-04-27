@@ -5,12 +5,9 @@ from portiq.settings import env
 from django.core.cache import cache
 from django.shortcuts import redirect
 import jwt
-from portiq_server.models.qr_code import QRCode
 from portiq_server.models.user import User
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import api_view
-
-from portiq_server.utils.qr_code_generator import generate_qr_code
 
 @csrf_exempt
 def login_with_google(request):
@@ -40,14 +37,6 @@ def login_with_google(request):
             last_name = user_details["family_name"] if "family_name" in user_details else "",
             image_url = user_details["picture"],
         )
-
-    qr_code = generate_qr_code(f'http://localhost:8000/user/{user["id_user"]}')
-
-    find_user = User.objects.filter(id_user=user["id_user"]).first()
-    QRCode.objects.create(
-        id_user=find_user,
-        qr_code=qr_code
-    ).save()
 
     cache.set("user", user, timeout=24*60*60)
     return redirect("/home")

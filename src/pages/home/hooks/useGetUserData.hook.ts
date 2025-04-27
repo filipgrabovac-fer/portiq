@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { userDetailsApi } from "../../../schema";
-import { PersonalInfoFormProps } from "../components/personal-info-form/PersonalInfoForm.component";
 
 export type UserDetailsDataType = {
   certificates: [];

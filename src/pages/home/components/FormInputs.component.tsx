@@ -1,6 +1,6 @@
+import { Input } from "antd";
 import { Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react";
 import { cn } from "../../../utils/cn.util";
-import { Input } from "../../../components/input/Input.component";
 
 export type FormProps = {
   formInputs: FormInputProps[];
@@ -17,21 +17,28 @@ export type FormInputProps = {
   props?: Record<string, unknown>;
   inputWrapperClass?: string;
   readonly?: boolean;
+  className?: string;
 };
 
 export const FormInputs = ({ formInputs, readonly }: FormProps) => {
   return (
-    <div className={"flex flex-col gap-10"}>
+    <div className={"flex flex-col gap-2"}>
       {formInputs.map((formInput) => (
-        <Input
-          label={formInput.label ?? ""}
-          name={formInput.name}
-          type={formInput.type ?? "text"}
-          placeholder={formInput.placeholder ?? ""}
-          value={formInput.value ?? ""}
-          onChange={formInput.onChange}
-          readonly={readonly}
-        />
+        <div className={formInput.className}>
+          <label>{formInput.label ?? ""}</label>
+          <Input
+            name={formInput.name}
+            type={formInput.type ?? "text"}
+            placeholder={formInput.placeholder ?? ""}
+            value={formInput.value ?? ""}
+            onChange={(event) => formInput.onChange(event.target.value)}
+            readOnly={readonly}
+            className={cn(
+              readonly &&
+                "bg-gray-100 cursor-not-allowed hover:outline-none hover:border-none opacity-70"
+            )}
+          />
+        </div>
       ))}
     </div>
   );

@@ -1,8 +1,7 @@
 from rest_framework import serializers
 
 from portiq_server.models.education import Education
-from portiq_server.models.project import Project
-from portiq_server.models.skill import Skill
+
 from .models.user import User
 from .models.certificate import Certificate
 
@@ -16,8 +15,12 @@ class CertificateSerializer(serializers.ModelSerializer):
         model = Certificate
         fields = [ "id_certificate", "title", "description", "start_date", "end_date", "location", "link", "created_at"]
 
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Education
+        fields = [ "id_education", "title", "description", "location", "type", "start_date", "end_date", "link", "created_at"]
+
 class UserDetailsSerializer(serializers.Serializer):
-    qr_code = serializers.StringRelatedField(allow_null=True)
     info = serializers.DictField(child=serializers.CharField(allow_null=True))
     certificates = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     education = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))

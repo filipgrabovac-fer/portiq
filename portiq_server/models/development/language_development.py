@@ -7,6 +7,7 @@ class LanguageDevelopment(models.Model):
     id_language_development = models.AutoField(primary_key=True)
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     id_code = models.ForeignKey(CodeDevelopment, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

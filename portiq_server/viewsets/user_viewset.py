@@ -2,8 +2,6 @@ from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
-from portiq_server.models.qr_code import QRCode
 from portiq_server.models.user import User
 from portiq_server.serializers import UserSerializer, UserDetailsSerializer
 from portiq_server.models.certificate import Certificate
@@ -62,17 +60,12 @@ class UserDetailsViewSet(viewsets.ViewSet):
 
         # Get the data and convert to list of lists
         certificates = [list(cert) for cert in Certificate.objects.filter(id_user=userId).values_list("id_certificate", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
-        education = [list(edu) for edu in Education.objects.filter(id_user=userId).values_list("id_education", "name", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
+        education = [list(edu) for edu in Education.objects.filter(id_user=userId).values_list("id_education", "title", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
         skills = [list(skill) for skill in Skill.objects.filter(id_user=userId).values_list("id_skill", "title", "description", "location", "level", "link", "created_at")]
         projects = [list(proj) for proj in Project.objects.filter(id_user=userId).values_list("id_project", "title", "description", "date", "location", "created_at")]
 
-
-        qr_code =  "QRCode.objects.filter(id_user=userId).first().qr_code"
-
-
         user_details = {
             "info": {
-                "qr_code":qr_code,
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
@@ -84,10 +77,52 @@ class UserDetailsViewSet(viewsets.ViewSet):
                 "zip_code": user.zip_code,
                 "country": user.country,
             },
-            "certificates": certificates,
-            "education": education,
-            "skills": skills,
-            "projects": projects,
+            "certificates": [
+                {
+                    "id": cert[0],
+                    "title": cert[1],
+                    "description": cert[2],
+                    "start_date": cert[3],
+                    "end_date": cert[4],
+                    "location": cert[5],
+                    "link": cert[6],
+                    "created_at": cert[7]
+                } for cert in certificates
+            ],
+            "education": [
+                {
+                    "id": edu[0],
+                    "title": edu[1],
+                    "description": edu[2],
+                    "location": edu[3],
+                    "type": edu[4],
+                    "start_date": edu[5],
+                    "end_date": edu[6],
+                    "link": edu[7],
+                    "created_at": edu[8]
+                } for edu in education
+            ],
+            "skills": [
+                {
+                    "id": skill[0],
+                    "title": skill[1],
+                    "description": skill[2],
+                    "location": skill[3],
+                    "level": skill[4],
+                    "link": skill[5],
+                    "created_at": skill[6]
+                } for skill in skills
+            ],
+            "projects": [
+                {
+                    "id": proj[0],
+                    "title": proj[1],
+                    "description": proj[2],
+                    "date": proj[3],
+                    "location": proj[4],
+                    "created_at": proj[5]
+                } for proj in projects
+            ],
         }
 
 

@@ -5,37 +5,29 @@ import { useNavigate } from "@tanstack/react-router";
 import { useSaveCode } from "./hooks/useSaveCode.hook";
 
 type GroupData = {
+  title: string;
   html: string;
   css: string;
   js: string;
+  type: string;
 };
 
+export enum GroupType {
+  PERSONAL_INFO = "personal_info",
+  SKILL = "skill",
+  LANGUAGE = "language",
+  PROJECT = "project",
+  OTHER = "other",
+}
+
 const initialGroupData: GroupData[] = [
-  {
+  ...Object.values(GroupType).map((type) => ({
+    title: "",
     html: "",
     css: "",
     js: "",
-  },
-  {
-    html: "",
-    css: "",
-    js: "",
-  },
-  {
-    html: "",
-    css: "",
-    js: "",
-  },
-  {
-    html: "",
-    css: "",
-    js: "",
-  },
-  {
-    html: "",
-    css: "",
-    js: "",
-  },
+    type: type,
+  })),
 ];
 
 export const Development = () => {
@@ -45,7 +37,7 @@ export const Development = () => {
   const [css, setCss] = useState<string>("");
   const [js, setJs] = useState<string>("");
   const [createFullTemplate, setCreateFullTemplate] = useState<boolean>(false);
-
+  const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
 
   const handleChange = (key: string) => {
@@ -54,13 +46,15 @@ export const Development = () => {
     setHtml(selectedGroupData.html);
     setCss(selectedGroupData.css);
     setJs(selectedGroupData.js);
+    setTitle(selectedGroupData.title);
   };
 
   useEffect(() => {
     groupData[groupId].html = html;
     groupData[groupId].css = css;
     groupData[groupId].js = js;
-  }, [html, css, js]);
+    groupData[groupId].title = title;
+  }, [html, css, js, title]);
 
   const items: TabsProps["items"] = [
     {
@@ -71,9 +65,11 @@ export const Development = () => {
           html={html}
           css={css}
           js={js}
+          title={title}
           setHtml={setHtml}
           setCss={setCss}
           setJs={setJs}
+          setTitle={setTitle}
         />
       ),
     },
@@ -85,9 +81,11 @@ export const Development = () => {
           html={html}
           css={css}
           js={js}
+          title={title}
           setHtml={setHtml}
           setCss={setCss}
           setJs={setJs}
+          setTitle={setTitle}
         />
       ),
     },
@@ -99,9 +97,43 @@ export const Development = () => {
           html={html}
           css={css}
           js={js}
+          title={title}
           setHtml={setHtml}
           setCss={setCss}
           setJs={setJs}
+          setTitle={setTitle}
+        />
+      ),
+    },
+    {
+      key: "3",
+      label: "Projects",
+      children: (
+        <CodeInputForm
+          html={html}
+          css={css}
+          js={js}
+          title={title}
+          setHtml={setHtml}
+          setCss={setCss}
+          setJs={setJs}
+          setTitle={setTitle}
+        />
+      ),
+    },
+    {
+      key: "4",
+      label: "Other",
+      children: (
+        <CodeInputForm
+          html={html}
+          css={css}
+          js={js}
+          title={title}
+          setHtml={setHtml}
+          setCss={setCss}
+          setJs={setJs}
+          setTitle={setTitle}
         />
       ),
     },

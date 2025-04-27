@@ -101,7 +101,7 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
   return (
     <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold py-2">Personal Info</h2>
+        <h2 className="text-2xl font-semibold pb-2">Personal Info</h2>
 
         {readonly ? (
           <EditIcon

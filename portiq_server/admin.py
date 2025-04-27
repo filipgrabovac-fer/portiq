@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from portiq_server.models.certificate import Certificate
+import portiq_server.models.development as development
 from portiq_server.models.development.certificate_development import CertificateDevelopment
 from portiq_server.models.development.code_development import CodeDevelopment
 from portiq_server.models.development.css_development import CssDevelopment
@@ -24,7 +25,7 @@ from portiq_server.models.skill import Skill
 from portiq_server.models.social_media_link import SocialMediaLink
 from portiq_server.models.user import User
 from portiq_server.models.user_portfolio_template import UserPortfolioTemplate
-from portiq_server.models.user_skill import UserSkill
+from portiq_server.models.language import Language
 
 
 admin.site.register(User)
@@ -49,5 +50,5 @@ admin.site.register(SkillDevelopment)
 admin.site.register(UserInfoDevelopment)
 admin.site.register(UserPortfolioTemplate)
 admin.site.register(PortfolioTemplate)
-admin.site.register(UserSkill)
 admin.site.register(ProjectLink)
+admin.site.register(Language)

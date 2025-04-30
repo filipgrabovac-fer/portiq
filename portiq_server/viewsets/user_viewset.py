@@ -2,13 +2,17 @@ from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from portiq_server.models.hobby import Hobby
+from portiq_server.models.language import Language
+from portiq_server.models.other import Other
 from portiq_server.models.user import User
-from portiq_server.serializers import UserSerializer, UserDetailsSerializer
+from portiq_server.serializers import PutUserDataSerializer, UserSerializer, UserDetailsSerializer
 from portiq_server.models.certificate import Certificate
 from portiq_server.models.education import Education
 from portiq_server.models.skill import Skill
 from portiq_server.models.project import Project
 from django.core.cache import cache
+from drf_spectacular.utils import extend_schema
 
 class UserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
@@ -29,16 +33,25 @@ class UserViewSet(viewsets.ViewSet):
         user = self.queryset.filter(id=pk).values()
         return Response(user, status=status.HTTP_200_OK)
     
+    @extend_schema(
+        request=PutUserDataSerializer,
+    )
     def update(self, request, pk=None):
-        user = self.queryset.filter(id=pk).values()
-        if user:
-            user.update(request.data)
-            return Response(user, status=status.HTTP_200_OK)
-        else:
-            return Response("User not found", status=status.HTTP_404_NOT_FOUND)
+        id_user = cache.get("user")["id_user"]
+        user = self.queryset.filter(id_user=id_user).first()
+
+        userData = request.data
+        userData["id_user"] = id_user
+
+        serializer = self.serializer_class(user, data=userData)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def destroy(self, request, pk=None):
-        user = self.queryset.filter(id=pk).values()
+        user = self.queryset.filter(id=pk).first()
         if user:
             user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -63,6 +76,10 @@ class UserDetailsViewSet(viewsets.ViewSet):
         education = [list(edu) for edu in Education.objects.filter(id_user=userId).values_list("id_education", "title", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
         skills = [list(skill) for skill in Skill.objects.filter(id_user=userId).values_list("id_skill", "title", "description", "location", "level", "link", "created_at")]
         projects = [list(proj) for proj in Project.objects.filter(id_user=userId).values_list("id_project", "title", "description", "date", "location", "created_at")]
+        
+        languages = [list(lang) for lang in Language.objects.filter(id_user=userId).values_list("id_language", "title", "level", "created_at")]
+        other = [list(other) for other in Other.objects.filter(id_user=userId).values_list("id_other", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
+        hobbies = [list(hobby) for hobby in Hobby.objects.filter(id_user=userId).values_list("id_hobby", "title", "description", "created_at")]
 
         user_details = {
             "info": {
@@ -123,7 +140,35 @@ class UserDetailsViewSet(viewsets.ViewSet):
                     "created_at": proj[5]
                 } for proj in projects
             ],
+            "languages": [
+                {
+                    "id": lang[0],
+                    "title": lang[1],
+                    "level": lang[2],
+                    "created_at": lang[3]
+                } for lang in languages
+            ],
+            "other": [
+                {
+                    "id": other[0],
+                    "title": other[1],
+                    "description": other[2],
+                    "link": other[3],
+                    "created_at": other[4]
+                } for other in other
+            ],
+            "hobbies": [
+                {
+                    "id": hobby[0],
+                    "title": hobby[1],
+                    "description": hobby[2],
+                    "created_at": hobby[3]
+                } for hobby in hobbies
+            ],
+
         }
+
+        print(user_details)
 
 
         return Response(user_details, status=status.HTTP_200_OK)

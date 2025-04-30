@@ -4,7 +4,7 @@ import {
   ProfileFormComponent,
   ProfileFormComponentItemType,
   ProfileFormComponentType,
-  UpdateHookDataProps,
+  ProfileFormHookDataProps,
 } from "./components/profile-form-component/ProfileFormComponent.component";
 import { cn } from "../../../../utils/cn.util";
 import { usePutCertificate } from "./hooks/usePutCertificate.hook";
@@ -20,7 +20,9 @@ export type ProfileFormProps = {
 export const ProfileForm = ({ sectionTitle, data, type }: ProfileFormProps) => {
   const { mutate: updateCertificate } = usePutCertificate();
   const { mutate: updateEducation } = usePutEducation();
-  const updateHook = (data: UpdateHookDataProps) => {
+
+  // TODO: ovog se riješiti!!
+  const updateHook = (data: ProfileFormHookDataProps) => {
     if (data.type === "certificates") {
       updateCertificate({
         certificate: {
@@ -67,7 +69,7 @@ export const ProfileForm = ({ sectionTitle, data, type }: ProfileFormProps) => {
               <ProfileFormComponent
                 item={item}
                 updateHook={updateHook}
-                type={type}
+                profileFormComponentType={type}
               />
             </div>
           ))}

@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  PutUserData,
   User,
 } from '../models/index';
 import {
+    PutUserDataFromJSON,
+    PutUserDataToJSON,
     UserFromJSON,
     UserToJSON,
 } from '../models/index';
@@ -36,7 +39,7 @@ export interface UserRetrieveRequest {
 
 export interface UserUpdateRequest {
     idUser: number;
-    user: Omit<User, 'id_user'|'created_at'>;
+    putUserData: PutUserData;
 }
 
 /**
@@ -185,10 +188,10 @@ export class UserApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['user'] == null) {
+        if (requestParameters['putUserData'] == null) {
             throw new runtime.RequiredError(
-                'user',
-                'Required parameter "user" was null or undefined when calling userUpdate().'
+                'putUserData',
+                'Required parameter "putUserData" was null or undefined when calling userUpdate().'
             );
         }
 
@@ -206,7 +209,7 @@ export class UserApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: UserToJSON(requestParameters['user']),
+            body: PutUserDataToJSON(requestParameters['putUserData']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));

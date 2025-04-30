@@ -1,6 +1,8 @@
-import { EditIcon, SaveIcon, TrashIcon } from "lucide-react";
+import { Delete, EditIcon, SaveIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { FormInputProps, FormInputs } from "../../../FormInputs.component";
+import { useDeleteProfileComponent } from "../../../../../hooks/useDeleteProfileComponent.hook";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type ProfileFormComponentItemType = {
   id?: string;
@@ -11,6 +13,33 @@ export type ProfileFormComponentItemType = {
   location?: string;
   link?: string;
   createdAt?: string;
+  level?: string;
+  type?: string;
+};
+
+export const profileFormInputsByCategory = {
+  certificates: [
+    "title",
+    "description",
+    "startDate",
+    "endDate",
+    "location",
+    "link",
+  ],
+  education: [
+    "title",
+    "description",
+    "location",
+    "type",
+    "startDate",
+    "endDate",
+    "link",
+  ],
+  skills: ["title", "description", "location", "level", "link"],
+  projects: ["title", "description", "date", "location"],
+  language: ["title", "level"],
+  other: ["title", "description", "startDate", "endDate", "location", "link"],
+  hobbies: ["title", "description"],
 };
 
 export type ProfileFormComponentType =
@@ -19,7 +48,7 @@ export type ProfileFormComponentType =
   | "skills"
   | "projects";
 
-export type UpdateHookDataProps = {
+export type ProfileFormHookDataProps = {
   id: string;
   item: ProfileFormComponentItemType;
   type: ProfileFormComponentType;
@@ -27,16 +56,18 @@ export type UpdateHookDataProps = {
 
 export type ProfileFormComponentProps = {
   item: ProfileFormComponentItemType;
-  updateHook: (data: UpdateHookDataProps) => void;
-  type: ProfileFormComponentType;
+  updateHook: (data: ProfileFormHookDataProps) => void;
+  profileFormComponentType: ProfileFormComponentType;
 };
 
 export const ProfileFormComponent = ({
   item,
   updateHook,
-  type,
+  profileFormComponentType,
 }: ProfileFormComponentProps) => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState<string | undefined>(item.title);
   const [description, setDescription] = useState<string | undefined>(
     item.description
@@ -47,47 +78,81 @@ export const ProfileFormComponent = ({
   const [endDate, setEndDate] = useState<string | undefined>(item.endDate);
   const [location, setLocation] = useState<string | undefined>(item.location);
   const [link, setLink] = useState<string | undefined>(item.link);
+  const [level, setLevel] = useState<string | undefined>(item.level);
+  const [type, setType] = useState<string | undefined>(item.type);
 
   const formInputs: FormInputProps[] = [
     {
-      name: "Title",
+      name: "title",
       label: "Title",
       value: title,
       onChange: (value) => setTitle(value),
     },
     {
-      name: "Description",
+      name: "description",
       label: "Description",
       value: description,
       onChange: (value) => setDescription(value),
     },
     {
-      name: "StartDate",
+      name: "startDate",
       label: "Start Date",
       type: "date",
       value: startDate,
       onChange: (value) => setStartDate(value),
     },
     {
-      name: "EndDate",
+      name: "endDate",
       label: "End Date",
       type: "date",
       value: endDate,
       onChange: (value) => setEndDate(value),
     },
     {
-      name: "Location",
+      name: "location",
       label: "Location",
       value: location,
       onChange: (value) => setLocation(value),
     },
     {
-      name: "Link",
+      name: "link",
       label: "Link",
       value: link,
       onChange: (value) => setLink(value),
     },
+    {
+      name: "type",
+      label: "Type",
+      value: type,
+      onChange: (value) => setType(value),
+    },
+    {
+      name: "level",
+      label: "Level",
+      value: level,
+      onChange: (value) => setLevel(value),
+    },
   ];
+
+  const allowedProfileFormInputs =
+    profileFormInputsByCategory[profileFormComponentType];
+
+  const filteredFormInputs = formInputs.filter((input) =>
+    allowedProfileFormInputs.includes(input.name)
+  );
+
+  const { mutate: deleteProfileComponent } = useDeleteProfileComponent({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getUserData"] });
+    },
+  });
+
+  const deleteHook = (data: ProfileFormHookDataProps) => {
+    deleteProfileComponent({
+      id: Number(data.id),
+      type: data.type,
+    });
+  };
 
   return (
     <div className="flex flex-col gap-2 rounded-md flex-1 p-2 pb-2 relative">
@@ -95,10 +160,10 @@ export const ProfileFormComponent = ({
         {isEditing ? (
           <div className="flex gap-2">
             <SaveIcon
-              onClick={() =>
+              onClick={() => {
                 updateHook({
                   id: item.id ?? "",
-                  type,
+                  type: profileFormComponentType,
                   item: {
                     title: title ?? "",
                     description: description ?? "",
@@ -107,29 +172,41 @@ export const ProfileFormComponent = ({
                     location: location ?? "",
                     link: link ?? "",
                   },
-                })
-              }
+                });
+                setIsEditing(false);
+              }}
               className="cursor-pointer hover:text-button_blue duration-300"
             />
-            <TrashIcon
+            <Delete
               onClick={() => setIsEditing(false)}
               className="cursor-pointer hover:text-red-500 duration-300"
             />
           </div>
         ) : (
-          <EditIcon
-            width={24}
-            height={24}
-            className="cursor-pointer hover:text-button_blue duration-300"
-            onClick={() => setIsEditing(true)}
-          />
+          <div className="flex gap-2">
+            <EditIcon
+              width={24}
+              height={24}
+              className="cursor-pointer hover:text-button_blue duration-300"
+              onClick={() => setIsEditing(true)}
+            />
+            <TrashIcon
+              onClick={() => {
+                setIsEditing(false);
+                deleteHook({
+                  id: item.id ?? "",
+                  type: profileFormComponentType,
+                  item: item,
+                });
+              }}
+              className="cursor-pointer hover:text-red-500 duration-300"
+            />
+          </div>
         )}
       </div>
 
       {isEditing ? (
-        <div>
-          <FormInputs formInputs={formInputs} />
-        </div>
+        <FormInputs formInputs={filteredFormInputs} />
       ) : (
         <>
           <div>
@@ -138,13 +215,29 @@ export const ProfileFormComponent = ({
           </div>
           <div className="grid grid-cols-1 grid-rows-[auto auto] md:grid-rows-1 md:grid-cols-2 w-full text-gray-500 text-sm">
             <div>
-              <p>Start Date: {item.startDate}</p>
-              <p>End Date: {item.endDate}</p>
-              <p>Created At: {item.createdAt}</p>
+              {allowedProfileFormInputs.includes("location") && (
+                <p>Location: {item.location}</p>
+              )}
+              {allowedProfileFormInputs.includes("link") && (
+                <p>Link: {item.link}</p>
+              )}
+              {allowedProfileFormInputs.includes("level") && (
+                <p>Level: {item.level}</p>
+              )}
+              {allowedProfileFormInputs.includes("type") && (
+                <p>Type: {item.type}</p>
+              )}
             </div>
             <div>
-              <p>Location: {item.location}</p>
-              <p>Link: {item.link}</p>
+              {allowedProfileFormInputs.includes("startDate") && (
+                <p>Start Date: {item.startDate}</p>
+              )}
+              {allowedProfileFormInputs.includes("endDate") && (
+                <p>End Date: {item.endDate}</p>
+              )}
+              {allowedProfileFormInputs.includes("createdAt") && (
+                <p>Created At: {item.createdAt}</p>
+              )}
             </div>
           </div>
         </>

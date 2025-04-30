@@ -6,6 +6,7 @@ export * from './DevelopmentResponse';
 export * from './Education';
 export * from './PatchedCertificate';
 export * from './PatchedEducation';
+export * from './PutUserData';
 export * from './SocialLogin';
 export * from './TypeEnum';
 export * from './User';

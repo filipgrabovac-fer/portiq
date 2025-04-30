@@ -1,8 +1,5 @@
 import { PersonalInfoForm } from "./components/personal-info-form/PersonalInfoForm.component";
-import {
-  ProfileFormComponentItemType,
-  ProfileFormComponentType,
-} from "./components/profile-form/components/profile-form-component/ProfileFormComponent.component";
+import { ProfileFormComponentType } from "./components/profile-form/components/profile-form-component/ProfileFormComponent.component";
 import {
   ProfileForm,
   ProfileFormProps,
@@ -17,7 +14,11 @@ enum UserDataKeysEnum {
   education = "Education",
   skills = "Skills",
   projects = "Projects",
+  language = "Languages",
+  other = "Other",
+  hobbies = "Hobbies",
 }
+
 import { objectToCamel } from "ts-case-convert";
 
 type UserDataKey = keyof typeof UserDataKeysEnum;

@@ -170,6 +170,10 @@ SPECTACULAR_SETTINGS = {
         'name': 'development',
         'description': 'Development endpoints'
     },
+    {
+        'name': 'profile-component',
+        'description': 'Profile component endpoints'
+    },
     ],
     'SCHEMA_PATH_PREFIX': '/api/',
 }

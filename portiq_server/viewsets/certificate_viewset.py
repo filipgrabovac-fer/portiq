@@ -23,7 +23,6 @@ class CertificateViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def update(self, request, pk=None):
-        print(pk)
         certificate = Certificate.objects.get(id_certificate=pk)
         serializer = self.serializer_class(certificate, data=request.data)
 

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { FormInputs, FormInputProps } from "../FormInputs.component";
 import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
 import { EditIcon, SaveIcon, TrashIcon } from "lucide-react";
+import { usePutUserData } from "../../hooks/usePutUserData.hook";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;
@@ -98,6 +100,9 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
     },
   ];
 
+  const { mutate: updateUserData } = usePutUserData();
+  const queryClient = useQueryClient();
+
   return (
     <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
       <div className="flex justify-between items-center">
@@ -113,11 +118,31 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
         ) : (
           <div className="flex gap-2">
             <SaveIcon
-              onClick={() => setReadonly(true)}
+              onClick={() => {
+                updateUserData({
+                  info: {
+                    first_name: name ?? "",
+                    last_name: surname ?? "",
+                    email: email ?? "",
+                    phone_number: phone ?? "",
+                    address: address ?? "",
+                    city: city ?? "",
+                    state: state ?? "",
+                    zip_code: zipCode ?? "",
+                    country: country ?? "",
+                  },
+                });
+                setReadonly(true);
+              }}
               className="cursor-pointer hover:text-button_blue duration-300"
             />
             <TrashIcon
-              onClick={() => setReadonly(true)}
+              onClick={() => {
+                setReadonly(true);
+                queryClient.invalidateQueries({
+                  queryKey: ["getUserData"],
+                });
+              }}
               className="cursor-pointer hover:text-red-500 duration-300"
             />
           </div>

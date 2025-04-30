@@ -5,6 +5,7 @@ import {
   UserDetailsApi,
   DevelopmentApi,
   EducationApi,
+  ProfileComponentApi,
 } from "../generated-client";
 
 export const userApi: UserApi = new UserApi();
@@ -13,3 +14,5 @@ export const logoutApi: LogoutApi = new LogoutApi();
 export const userDetailsApi: UserDetailsApi = new UserDetailsApi();
 export const developmentApi: DevelopmentApi = new DevelopmentApi();
 export const educationApi: EducationApi = new EducationApi();
+export const profileComponentApi: ProfileComponentApi =
+  new ProfileComponentApi();

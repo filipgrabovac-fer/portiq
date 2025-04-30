@@ -7,6 +7,9 @@ export type UserDetailsDataType = {
   info: UserDetailsInfoType;
   projects: [];
   skills: [];
+  languages: [];
+  other: [];
+  hobbies: [];
 };
 
 export type UserDetailsInfoType = {
@@ -15,7 +18,7 @@ export type UserDetailsInfoType = {
   country: string;
   email: string;
   first_name: string;
-  image_url: string;
+  image_url?: string;
   last_name: string;
   phone_number: string;
   state: string;
@@ -23,7 +26,7 @@ export type UserDetailsInfoType = {
 };
 export const useGetUserData = () => {
   return useQuery({
-    queryKey: ["userData"],
+    queryKey: ["getUserData"],
     queryFn: async () => {
       const response = await userDetailsApi.userDetailsUserDetailsRetrieve();
       return response;

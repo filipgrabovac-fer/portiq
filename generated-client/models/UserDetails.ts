@@ -49,6 +49,24 @@ export interface UserDetails {
      * @memberof UserDetails
      */
     projects: Array<Array<string | null>>;
+    /**
+     * 
+     * @type {Array<Array<string | null>>}
+     * @memberof UserDetails
+     */
+    languages: Array<Array<string | null>>;
+    /**
+     * 
+     * @type {Array<Array<string | null>>}
+     * @memberof UserDetails
+     */
+    other: Array<Array<string | null>>;
+    /**
+     * 
+     * @type {Array<Array<string | null>>}
+     * @memberof UserDetails
+     */
+    hobbies: Array<Array<string | null>>;
 }
 
 /**
@@ -60,6 +78,9 @@ export function instanceOfUserDetails(value: object): value is UserDetails {
     if (!('education' in value) || value['education'] === undefined) return false;
     if (!('skills' in value) || value['skills'] === undefined) return false;
     if (!('projects' in value) || value['projects'] === undefined) return false;
+    if (!('languages' in value) || value['languages'] === undefined) return false;
+    if (!('other' in value) || value['other'] === undefined) return false;
+    if (!('hobbies' in value) || value['hobbies'] === undefined) return false;
     return true;
 }
 
@@ -78,6 +99,9 @@ export function UserDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'education': json['education'],
         'skills': json['skills'],
         'projects': json['projects'],
+        'languages': json['languages'],
+        'other': json['other'],
+        'hobbies': json['hobbies'],
     };
 }
 
@@ -97,6 +121,9 @@ export function UserDetailsToJSONTyped(value?: UserDetails | null, ignoreDiscrim
         'education': value['education'],
         'skills': value['skills'],
         'projects': value['projects'],
+        'languages': value['languages'],
+        'other': value['other'],
+        'hobbies': value['hobbies'],
     };
 }
 

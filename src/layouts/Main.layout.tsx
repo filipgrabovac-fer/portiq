@@ -15,7 +15,7 @@ export const MainLayout = () => {
   return (
     <div className="h-screen w-screen flex">
       <button
-        className="absolute top-2 left-2 z-10 bg-button_blue rounded-md p-2 max-sm:block hidden"
+        className="absolute top-2 left-2 z-20 bg-button_blue rounded-md p-2 max-sm:block hidden"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? (

@@ -16,7 +16,6 @@ class EducationViewSet(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def update(self, request, pk=None):
-        print(pk)
         education = Education.objects.get(id_education=pk)
         serializer = self.serializer_class(education, data=request.data)
 

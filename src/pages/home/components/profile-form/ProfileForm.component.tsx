@@ -10,6 +10,8 @@ import { cn } from "../../../../utils/cn.util";
 import { usePutCertificate } from "./hooks/usePutCertificate.hook";
 import { usePutEducation } from "./hooks/usePutEducation.hook";
 import { TypeEnum } from "../../../../../generated-client";
+import { AddNewDataModal } from "./components/profile-form-component/AddNewDataModal.component";
+import { useState } from "react";
 
 export type ProfileFormProps = {
   sectionTitle: string;
@@ -18,39 +20,11 @@ export type ProfileFormProps = {
 };
 
 export const ProfileForm = ({ sectionTitle, data, type }: ProfileFormProps) => {
-  const { mutate: updateCertificate } = usePutCertificate();
-  const { mutate: updateEducation } = usePutEducation();
-
-  // TODO: ovog se riješiti!!
-  const updateHook = (data: ProfileFormHookDataProps) => {
-    if (data.type === "certificates") {
-      updateCertificate({
-        certificate: {
-          ...data.item,
-          idCertificate: Number(data.id),
-          createdAt: new Date(data.item.createdAt ?? ""),
-          startDate: new Date(data.item.startDate ?? ""),
-          endDate: new Date(data.item.endDate ?? ""),
-        },
-      });
-    } else if (data.type === "education") {
-      updateEducation({
-        education: {
-          ...data.item,
-          idEducation: Number(data.id),
-          type: TypeEnum["HighSchool"],
-          createdAt: new Date(data.item.createdAt ?? ""),
-          startDate: new Date(data.item.startDate ?? ""),
-          endDate: new Date(data.item.endDate ?? ""),
-          location: data.item.location ?? "",
-        },
-      });
-    }
-  };
+  const [isAddNewDataModalOpen, setIsAddNewDataModalOpen] = useState(false);
 
   return (
     <>
-      <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col  border border-gray-200 p-8 pb-0">
+      <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col  border border-gray-200 p-8 pb-0 ">
         <h2
           className={cn(
             "text-2xl font-semibold pb-2 border-b-[1px] border-gray-200",
@@ -68,17 +42,22 @@ export const ProfileForm = ({ sectionTitle, data, type }: ProfileFormProps) => {
               </div>
               <ProfileFormComponent
                 item={item}
-                updateHook={updateHook}
                 profileFormComponentType={type}
               />
             </div>
           ))}
         </div>
         <AddNewDataButton
-          onClick={() => {}}
+          onClick={() => setIsAddNewDataModalOpen(true)}
           className="p-2"
           title={sectionTitle}
         />
+        {isAddNewDataModalOpen && (
+          <AddNewDataModal
+            setIsAddNewDataModalOpen={setIsAddNewDataModalOpen}
+            dataType={type}
+          />
+        )}
       </div>
     </>
   );

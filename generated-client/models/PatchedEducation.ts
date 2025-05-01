@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { TypeEnum } from './TypeEnum';
+import type { EducationType } from './EducationType';
 import {
-    TypeEnumFromJSON,
-    TypeEnumFromJSONTyped,
-    TypeEnumToJSON,
-    TypeEnumToJSONTyped,
-} from './TypeEnum';
+    EducationTypeFromJSON,
+    EducationTypeFromJSONTyped,
+    EducationTypeToJSON,
+    EducationTypeToJSONTyped,
+} from './EducationType';
 
 /**
  * 
@@ -53,10 +53,10 @@ export interface PatchedEducation {
     location?: string;
     /**
      * 
-     * @type {TypeEnum}
+     * @type {EducationType}
      * @memberof PatchedEducation
      */
-    type?: TypeEnum;
+    type?: EducationType | null;
     /**
      * 
      * @type {Date}
@@ -83,8 +83,6 @@ export interface PatchedEducation {
     readonly createdAt?: Date;
 }
 
-
-
 /**
  * Check if a given object implements the PatchedEducation interface.
  */
@@ -106,7 +104,7 @@ export function PatchedEducationFromJSONTyped(json: any, ignoreDiscriminator: bo
         'title': json['title'] == null ? undefined : json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'location': json['location'] == null ? undefined : json['location'],
-        'type': json['type'] == null ? undefined : TypeEnumFromJSON(json['type']),
+        'type': json['type'] == null ? undefined : EducationTypeFromJSON(json['type']),
         'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
         'endDate': json['end_date'] == null ? undefined : (new Date(json['end_date'])),
         'link': json['link'] == null ? undefined : json['link'],
@@ -128,7 +126,7 @@ export function PatchedEducationToJSONTyped(value?: Omit<PatchedEducation, 'id_e
         'title': value['title'],
         'description': value['description'],
         'location': value['location'],
-        'type': TypeEnumToJSON(value['type']),
+        'type': EducationTypeToJSON(value['type']),
         'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString().substring(0,10)),
         'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString().substring(0,10)),
         'link': value['link'],

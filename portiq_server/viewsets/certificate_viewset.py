@@ -11,7 +11,6 @@ class CertificateViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path="(?P<user_id>\d+)/user-certificates")
     def user_certificates(self, request, user_id=None):
-        print("pk", user_id)
         certificates = self.queryset.filter(user_id = user_id).values_list()
         return Response(certificates)
 

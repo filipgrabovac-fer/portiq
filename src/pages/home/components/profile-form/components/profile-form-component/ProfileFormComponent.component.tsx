@@ -3,6 +3,7 @@ import { useState } from "react";
 import { FormInputProps, FormInputs } from "../../../FormInputs.component";
 import { useDeleteProfileComponent } from "../../../../../hooks/useDeleteProfileComponent.hook";
 import { useQueryClient } from "@tanstack/react-query";
+import { usePutProfileComponent } from "../../../../../hooks/usePutProfileComponent.hook";
 
 export type ProfileFormComponentItemType = {
   id?: string;
@@ -36,7 +37,7 @@ export const profileFormInputsByCategory = {
     "link",
   ],
   skills: ["title", "description", "location", "level", "link"],
-  projects: ["title", "description", "date", "location"],
+  projects: ["title", "description", "startDate", "endDate", "location"],
   language: ["title", "level"],
   other: ["title", "description", "startDate", "endDate", "location", "link"],
   hobbies: ["title", "description"],
@@ -46,7 +47,10 @@ export type ProfileFormComponentType =
   | "certificates"
   | "education"
   | "skills"
-  | "projects";
+  | "projects"
+  | "language"
+  | "hobbies"
+  | "other";
 
 export type ProfileFormHookDataProps = {
   id: string;
@@ -56,13 +60,11 @@ export type ProfileFormHookDataProps = {
 
 export type ProfileFormComponentProps = {
   item: ProfileFormComponentItemType;
-  updateHook: (data: ProfileFormHookDataProps) => void;
   profileFormComponentType: ProfileFormComponentType;
 };
 
 export const ProfileFormComponent = ({
   item,
-  updateHook,
   profileFormComponentType,
 }: ProfileFormComponentProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -146,9 +148,21 @@ export const ProfileFormComponent = ({
       queryClient.invalidateQueries({ queryKey: ["getUserData"] });
     },
   });
+  const { mutate: putProfileComponent } = usePutProfileComponent({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getUserData"] });
+    },
+  });
 
   const deleteHook = (data: ProfileFormHookDataProps) => {
     deleteProfileComponent({
+      id: Number(data.id),
+      type: data.type,
+    });
+  };
+
+  const updateHook = (data: ProfileFormHookDataProps) => {
+    putProfileComponent({
       id: Number(data.id),
       type: data.type,
     });

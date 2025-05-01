@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime';
-import type { TypeEnum } from './TypeEnum';
+import type { EducationType } from './EducationType';
 import {
-    TypeEnumFromJSON,
-    TypeEnumFromJSONTyped,
-    TypeEnumToJSON,
-    TypeEnumToJSONTyped,
-} from './TypeEnum';
+    EducationTypeFromJSON,
+    EducationTypeFromJSONTyped,
+    EducationTypeToJSON,
+    EducationTypeToJSONTyped,
+} from './EducationType';
 
 /**
  * 
@@ -53,10 +53,10 @@ export interface Education {
     location: string;
     /**
      * 
-     * @type {TypeEnum}
+     * @type {EducationType}
      * @memberof Education
      */
-    type: TypeEnum;
+    type?: EducationType | null;
     /**
      * 
      * @type {Date}
@@ -83,8 +83,6 @@ export interface Education {
     readonly createdAt: Date;
 }
 
-
-
 /**
  * Check if a given object implements the Education interface.
  */
@@ -93,7 +91,6 @@ export function instanceOfEducation(value: object): value is Education {
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
     if (!('location' in value) || value['location'] === undefined) return false;
-    if (!('type' in value) || value['type'] === undefined) return false;
     if (!('startDate' in value) || value['startDate'] === undefined) return false;
     if (!('endDate' in value) || value['endDate'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
@@ -114,7 +111,7 @@ export function EducationFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'title': json['title'],
         'description': json['description'],
         'location': json['location'],
-        'type': TypeEnumFromJSON(json['type']),
+        'type': json['type'] == null ? undefined : EducationTypeFromJSON(json['type']),
         'startDate': (new Date(json['start_date'])),
         'endDate': (new Date(json['end_date'])),
         'link': json['link'] == null ? undefined : json['link'],
@@ -136,7 +133,7 @@ export function EducationToJSONTyped(value?: Omit<Education, 'id_education'|'cre
         'title': value['title'],
         'description': value['description'],
         'location': value['location'],
-        'type': TypeEnumToJSON(value['type']),
+        'type': EducationTypeToJSON(value['type']),
         'start_date': ((value['startDate']).toISOString().substring(0,10)),
         'end_date': ((value['endDate']).toISOString().substring(0,10)),
         'link': value['link'],

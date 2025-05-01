@@ -1,5 +1,10 @@
 from rest_framework import serializers
 from portiq_server.models.education import Education
+from portiq_server.models.hobby import Hobby
+from portiq_server.models.language import Language
+from portiq_server.models.other import Other
+from portiq_server.models.project import Project
+from portiq_server.models.skill import Skill
 from .models.user import User
 from .models.certificate import Certificate
 
@@ -12,7 +17,6 @@ class CertificateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Certificate
         fields = [ "id_certificate", "title", "description", "start_date", "end_date", "location", "link", "created_at"]
-
 class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
@@ -26,10 +30,9 @@ class PutUserDataSerializer(serializers.ModelSerializer):
 class ProfileComponentDestroySerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
     type = serializers.ChoiceField(
-        choices=['certificates', 'education', 'skills', 'projects', 'language', 'other'],
+        choices=['certificates', 'education', 'skills', 'projects', 'language', 'other', 'hobbies'],
         required=True
     )
-
 class ProfileComponentUpdateSerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
     type = serializers.ChoiceField(
@@ -42,8 +45,8 @@ class ProfileComponentUpdateSerializer(serializers.Serializer):
     end_date = serializers.DateTimeField(required=False)
     location = serializers.CharField(required=False, allow_blank=True)
     link = serializers.CharField(required=False, allow_blank=True)
-    level = serializers.CharField(required=False, allow_blank=True)  # za skills
-    type_field = serializers.CharField(required=False, allow_blank=True)  # za education
+    level = serializers.CharField(required=False, allow_blank=True) 
+    type_field = serializers.CharField(required=False, allow_blank=True) 
 
 class UserDetailsSerializer(serializers.Serializer):
     info = serializers.DictField(child=serializers.CharField(allow_null=True))
@@ -55,3 +58,81 @@ class UserDetailsSerializer(serializers.Serializer):
     other = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     hobbies = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     
+class PostProjectSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+    location = serializers.CharField(required=False, allow_blank=True)
+    start_date = serializers.DateTimeField(required=False)
+    end_date = serializers.DateTimeField(required=False)
+    location = serializers.CharField(required=False, allow_blank=True)
+
+class PostSkillSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+    location = serializers.CharField(required=False, allow_blank=True)
+    level = serializers.CharField(required=False, allow_blank=True)
+    link = serializers.CharField(required=False, allow_blank=True)
+
+class PostLanguageSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    level = serializers.CharField(required=False)
+
+class PostOtherSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+    start_date = serializers.DateTimeField(required=False)
+    end_date = serializers.DateTimeField(required=False)
+    link = serializers.CharField(required=False, allow_blank=True)
+    location = serializers.CharField(required=False, allow_blank=True)
+
+
+class PostHobbySerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+
+
+class PostEducationSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+    location = serializers.CharField(required=False, allow_blank=True)
+    link = serializers.CharField(required=False, allow_blank=True)
+    type = serializers.CharField(required=False, allow_blank=True)
+    start_date = serializers.DateTimeField(required=False)
+    end_date = serializers.DateTimeField(required=False)
+
+class PostCertificateSerializer(serializers.Serializer):
+    title = serializers.CharField(required=False)
+    description = serializers.CharField(required=False, allow_blank=True)
+    start_date = serializers.DateTimeField(required=False)
+    end_date = serializers.DateTimeField(required=False)
+    location = serializers.CharField(required=False, allow_blank=True)
+    link = serializers.CharField(required=False, allow_blank=True)
+class SkillSerializer(serializers.ModelSerializer):
+    id_skill = serializers.IntegerField(source='id')
+    class Meta:
+        model = Skill
+        fields = [ "id_skill", "title", "description", "location", "level", "link"]
+class LanguageSerializer(serializers.ModelSerializer):
+    id_language = serializers.IntegerField(source='id')
+
+    class Meta:
+        model = Language
+        fields = [ "id_language", "title", "level"]
+class OtherSerializer(serializers.ModelSerializer):
+    id_other = serializers.IntegerField(source='id')
+
+    class Meta:
+        model = Other
+        fields = [ "id_other", "title", "description", "start_date", "end_date", "location", "link"]
+class HobbySerializer(serializers.ModelSerializer):
+    id_hobby = serializers.IntegerField(source='id')
+
+    class Meta:
+        model = Hobby
+        fields = [ "id_hobby", "title", "description"]
+class ProjectSerializer(serializers.ModelSerializer):
+    id_project = serializers.IntegerField(source='id')
+
+    class Meta:
+        model = Project
+        fields = [ "id_project", "title", "description", "start_date", "end_date", "location"]

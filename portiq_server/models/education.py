@@ -18,7 +18,7 @@ class Education(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255)
-    type = models.CharField(max_length=20, choices=EDUCATION_TYPES)
+    type = models.CharField(max_length=20, choices=EDUCATION_TYPES, null=True, blank=True)
     start_date = models.DateField()
     end_date = models.DateField()
     link = models.URLField(null=True, blank=True)

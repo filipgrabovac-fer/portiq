@@ -65,17 +65,16 @@ class UserDetailsViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['get'], url_path="user-details")
     def userDetails(self, request):
-        print("userDetails endpoint called")
         cached_user = cache.get("user")
         
-        userId = cached_user["id_user"]
+        userId = cached_user.id_user
         user: User = self.queryset.filter(id_user=userId).first()
 
         # Get the data and convert to list of lists
         certificates = [list(cert) for cert in Certificate.objects.filter(id_user=userId).values_list("id_certificate", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
         education = [list(edu) for edu in Education.objects.filter(id_user=userId).values_list("id_education", "title", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
         skills = [list(skill) for skill in Skill.objects.filter(id_user=userId).values_list("id_skill", "title", "description", "location", "level", "link", "created_at")]
-        projects = [list(proj) for proj in Project.objects.filter(id_user=userId).values_list("id_project", "title", "description", "date", "location", "created_at")]
+        projects = [list(proj) for proj in Project.objects.filter(id_user=userId).values_list("id_project", "title", "description", "start_date", "end_date", "location", "created_at")]
         
         languages = [list(lang) for lang in Language.objects.filter(id_user=userId).values_list("id_language", "title", "level", "created_at")]
         other = [list(other) for other in Other.objects.filter(id_user=userId).values_list("id_other", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
@@ -135,9 +134,10 @@ class UserDetailsViewSet(viewsets.ViewSet):
                     "id": proj[0],
                     "title": proj[1],
                     "description": proj[2],
-                    "date": proj[3],
-                    "location": proj[4],
-                    "created_at": proj[5]
+                    "start_date": proj[3],
+                    "end_date": proj[4],
+                    "location": proj[5],
+                    "created_at": proj[6]
                 } for proj in projects
             ],
             "languages": [
@@ -153,8 +153,11 @@ class UserDetailsViewSet(viewsets.ViewSet):
                     "id": other[0],
                     "title": other[1],
                     "description": other[2],
-                    "link": other[3],
-                    "created_at": other[4]
+                    "start_date": other[3],
+                    "end_date": other[4],
+                    "location": other[5],
+                    "link": other[6],
+                    "created_at": other[7]
                 } for other in other
             ],
             "hobbies": [
@@ -167,9 +170,6 @@ class UserDetailsViewSet(viewsets.ViewSet):
             ],
 
         }
-
-        print(user_details)
-
 
         return Response(user_details, status=status.HTTP_200_OK)
 

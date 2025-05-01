@@ -15,7 +15,7 @@ class Skill(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     location = models.CharField(max_length=255, null=True, blank=True)
-    level = models.CharField(max_length=20, choices=SKILL_LEVEL)
+    level = models.CharField(max_length=20, choices=SKILL_LEVEL, null=True, blank=True)
     link = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

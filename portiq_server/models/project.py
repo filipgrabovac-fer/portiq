@@ -7,7 +7,8 @@ class Project(models.Model):
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    date = models.DateField(null=True, blank=True)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
     location = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 

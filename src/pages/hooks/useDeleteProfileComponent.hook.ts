@@ -12,7 +12,7 @@ export const useDeleteProfileComponent = ({
     onSuccess: onSuccess,
     mutationFn: async ({ id, type }: { id: number; type: string }) => {
       const response =
-        await profileComponentApi.profileComponentProfileComponentDestroy({
+        await profileComponentApi.profileComponentProfileComponentDeleteCreate({
           body: JSON.stringify({ id, type }),
           headers: {
             "Content-Type": "application/json",

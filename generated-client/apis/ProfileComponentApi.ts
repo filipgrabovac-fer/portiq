@@ -22,7 +22,7 @@ export class ProfileComponentApi extends runtime.BaseAPI {
 
     /**
      */
-    async profileComponentProfileComponentDestroyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async profileComponentProfileComponentCreateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -32,7 +32,7 @@ export class ProfileComponentApi extends runtime.BaseAPI {
         }
         const response = await this.request({
             path: `/api/profile-component/profile-component/`,
-            method: 'DELETE',
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
@@ -42,13 +42,13 @@ export class ProfileComponentApi extends runtime.BaseAPI {
 
     /**
      */
-    async profileComponentProfileComponentDestroy(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.profileComponentProfileComponentDestroyRaw(initOverrides);
+    async profileComponentProfileComponentCreate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.profileComponentProfileComponentCreateRaw(initOverrides);
     }
 
     /**
      */
-    async profileComponentProfileComponentUpdateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async profileComponentProfileComponentDeleteCreateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -57,8 +57,8 @@ export class ProfileComponentApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/profile-component/profile-component/`,
-            method: 'PUT',
+            path: `/api/profile-component/profile-component-delete/`,
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
@@ -68,8 +68,34 @@ export class ProfileComponentApi extends runtime.BaseAPI {
 
     /**
      */
-    async profileComponentProfileComponentUpdate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.profileComponentProfileComponentUpdateRaw(initOverrides);
+    async profileComponentProfileComponentDeleteCreate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.profileComponentProfileComponentDeleteCreateRaw(initOverrides);
+    }
+
+    /**
+     */
+    async profileComponentProfileComponentUpdateCreateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/profile-component/profile-component-update/`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async profileComponentProfileComponentUpdateCreate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.profileComponentProfileComponentUpdateCreateRaw(initOverrides);
     }
 
 }

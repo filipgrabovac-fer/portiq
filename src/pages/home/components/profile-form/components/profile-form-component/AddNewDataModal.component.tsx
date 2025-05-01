@@ -1,0 +1,121 @@
+import { XIcon } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { FormInputProps, FormInputs } from "../../../FormInputs.component";
+import {
+  ProfileFormComponentType,
+  profileFormInputsByCategory,
+} from "./ProfileFormComponent.component";
+import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
+
+export type AddNewDataModalProps = {
+  setIsAddNewDataModalOpen: Dispatch<SetStateAction<boolean>>;
+  dataType: ProfileFormComponentType;
+};
+
+export const AddNewDataModal = ({
+  setIsAddNewDataModalOpen,
+  dataType,
+}: AddNewDataModalProps) => {
+  const [title, setTitle] = useState<string>();
+  const [description, setDescription] = useState<string>();
+  const [startDate, setStartDate] = useState<string>();
+  const [endDate, setEndDate] = useState<string>();
+  const [location, setLocation] = useState<string>();
+  const [link, setLink] = useState<string>();
+  const [level, setLevel] = useState<string>();
+  const [type, setType] = useState<string>();
+
+  const formInputs: FormInputProps[] = [
+    {
+      name: "title",
+      label: "Title",
+      value: title,
+      onChange: (value) => setTitle(value),
+    },
+    {
+      name: "description",
+      label: "Description",
+      value: description,
+      onChange: (value) => setDescription(value),
+    },
+    {
+      name: "startDate",
+      label: "Start Date",
+      type: "date",
+      value: startDate,
+      onChange: (value) => setStartDate(value),
+    },
+    {
+      name: "endDate",
+      label: "End Date",
+      type: "date",
+      value: endDate,
+      onChange: (value) => setEndDate(value),
+    },
+    {
+      name: "location",
+      label: "Location",
+      value: location,
+      onChange: (value) => setLocation(value),
+    },
+    {
+      name: "link",
+      label: "Link",
+      value: link,
+      onChange: (value) => setLink(value),
+    },
+    {
+      name: "type",
+      label: "Type",
+      value: type,
+      onChange: (value) => setType(value),
+    },
+    {
+      name: "level",
+      label: "Level",
+      value: level,
+      onChange: (value) => setLevel(value),
+    },
+  ];
+
+  const allowedProfileFormInputs = profileFormInputsByCategory[dataType];
+
+  const filteredFormInputs = formInputs.filter((input) =>
+    allowedProfileFormInputs.includes(input.name)
+  );
+
+  const { mutate: createProfileComponent } = usePostProfileComponent({
+    onSuccess: () => setIsAddNewDataModalOpen(false),
+  });
+  return (
+    <div className="absolute top-0 left-0 bg-black/80 h-screen w-screen z-10">
+      <div className="relative bg-white w-full sm:w-4/5 md:w-3/5 lg:w-2/5 max-w-6xl rounded-md p-16 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <XIcon
+          className="absolute top-5 right-5 cursor-pointer"
+          onClick={() => setIsAddNewDataModalOpen(false)}
+        />
+        <FormInputs formInputs={filteredFormInputs} />
+        <button
+          className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer mx-auto mt-4"
+          onClick={() => {
+            createProfileComponent({
+              type: dataType,
+              item: {
+                title,
+                description,
+                endDate: new Date(endDate ?? ""),
+                level,
+                link,
+                location,
+                startDate: new Date(startDate ?? ""),
+                type,
+              },
+            });
+          }}
+        >
+          Create {dataType}
+        </button>
+      </div>
+    </div>
+  );
+};

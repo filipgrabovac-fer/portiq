@@ -6,6 +6,7 @@ import {
   profileFormInputsByCategory,
 } from "./ProfileFormComponent.component";
 import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type AddNewDataModalProps = {
   setIsAddNewDataModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -84,8 +85,13 @@ export const AddNewDataModal = ({
     allowedProfileFormInputs.includes(input.name)
   );
 
+  const queryClient = useQueryClient();
+
   const { mutate: createProfileComponent } = usePostProfileComponent({
-    onSuccess: () => setIsAddNewDataModalOpen(false),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
+        setIsAddNewDataModalOpen(false);
+    },
   });
   return (
     <div className="absolute top-0 left-0 bg-black/80 h-screen w-screen z-10">

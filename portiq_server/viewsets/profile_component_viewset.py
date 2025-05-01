@@ -96,9 +96,10 @@ class ProfileComponentViewSet(viewsets.ViewSet):
         component_type = data["type"]
         item = data["item"]
         user = cache.get("user")
-        item["id_user"] = User.objects.get(id_user=user.id_user)
-        
-        serializer = SERIALIZER_MAPPING[component_type](data=item)
+        item["id_user"] = user.id_user
+        instance = MODEL_MAPPING[component_type].objects.get(pk=item["id"])
+
+        serializer = SERIALIZER_MAPPING[component_type](data=item, instance=instance, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Component created successfully"}, status=status.HTTP_201_CREATED)

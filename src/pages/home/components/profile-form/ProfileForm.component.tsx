@@ -7,9 +7,6 @@ import {
   ProfileFormHookDataProps,
 } from "./components/profile-form-component/ProfileFormComponent.component";
 import { cn } from "../../../../utils/cn.util";
-import { usePutCertificate } from "./hooks/usePutCertificate.hook";
-import { usePutEducation } from "./hooks/usePutEducation.hook";
-import { TypeEnum } from "../../../../../generated-client";
 import { AddNewDataModal } from "./components/profile-form-component/AddNewDataModal.component";
 import { useState } from "react";
 

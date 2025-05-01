@@ -163,8 +163,13 @@ export const ProfileFormComponent = ({
 
   const updateHook = (data: ProfileFormHookDataProps) => {
     putProfileComponent({
-      id: Number(data.id),
       type: data.type,
+      item: {
+        ...data.item,
+        id: Number(data.id),
+        startDate: new Date(data.item.startDate + "T00:00:00.000Z"),
+        endDate: new Date(data.item.endDate + "T00:00:00.000Z"),
+      },
     });
   };
 
@@ -181,8 +186,8 @@ export const ProfileFormComponent = ({
                   item: {
                     title: title ?? "",
                     description: description ?? "",
-                    startDate: startDate,
-                    endDate: endDate,
+                    startDate: startDate ?? "",
+                    endDate: endDate ?? "",
                     location: location ?? "",
                     link: link ?? "",
                   },

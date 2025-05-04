@@ -3,6 +3,7 @@ from portiq_server.models.education import Education
 from portiq_server.models.hobby import Hobby
 from portiq_server.models.language import Language
 from portiq_server.models.other import Other
+from portiq_server.models.portfolio_template import PortfolioTemplate
 from portiq_server.models.project import Project
 from portiq_server.models.skill import Skill
 from .models.user import User
@@ -163,3 +164,44 @@ class DateField(serializers.DateTimeField):
                 except ValueError:
                     raise serializers.ValidationError("Invalid date format. Use YYYY-MM-DD or ISO format.")
         return super().to_internal_value(value)
+
+
+class DevelopmentCodeSerializer(serializers.Serializer):
+    title = serializers.CharField(required=True)
+    id_code = serializers.IntegerField(required=True)
+
+class CodeSerializer(serializers.Serializer):
+    html = serializers.CharField(required=True)
+    css = serializers.CharField(required=True)
+    js = serializers.CharField(required=True)
+    title = serializers.CharField(required=True)
+    id = serializers.IntegerField(required=True)
+class DevelopmentCodeResponseSerializer(serializers.Serializer):
+    personal_info = CodeSerializer(many=True)
+    skills = CodeSerializer(many=True)
+    languages = CodeSerializer(many=True)
+    projects = CodeSerializer(many=True)
+    certificates = CodeSerializer(many=True)
+    education = CodeSerializer(many=True)
+    hobbies = CodeSerializer(many=True)
+    other = CodeSerializer(many=True)
+
+
+class GetSelectedComponentsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=PortfolioTemplate
+        fields = ["id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development" ]
+
+class PutSelectedComponentsSerializer(serializers.ModelSerializer):
+    id_user_info_development = serializers.IntegerField(required=False, allow_null=True)
+    id_skill_development = serializers.IntegerField(required=False, allow_null=True)
+    id_language_development = serializers.IntegerField(required=False, allow_null=True)
+    id_project_development = serializers.IntegerField(required=False, allow_null=True)
+    id_certificate_development = serializers.IntegerField(required=False, allow_null=True)
+    id_education_development = serializers.IntegerField(required=False, allow_null=True)
+    id_hobby_development = serializers.IntegerField(required=False, allow_null=True)
+    id_other_development = serializers.IntegerField(required=False, allow_null=True)
+    class Meta:
+        model=PortfolioTemplate
+        fields = ["id_user", "id_portfolio_template","id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development" ]

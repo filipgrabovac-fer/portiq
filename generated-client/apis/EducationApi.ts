@@ -26,7 +26,7 @@ import {
 } from '../models/index';
 
 export interface EducationCreateRequest {
-    education: Omit<Education, 'id_education'|'created_at'>;
+    education: Omit<Education, 'created_at'>;
 }
 
 export interface EducationDestroyRequest {
@@ -35,7 +35,7 @@ export interface EducationDestroyRequest {
 
 export interface EducationPartialUpdateRequest {
     idEducation: number;
-    patchedEducation?: Omit<PatchedEducation, 'id_education'|'created_at'>;
+    patchedEducation?: Omit<PatchedEducation, 'created_at'>;
 }
 
 export interface EducationRetrieveRequest {
@@ -44,7 +44,7 @@ export interface EducationRetrieveRequest {
 
 export interface EducationUpdateRequest {
     idEducation: number;
-    education: Omit<Education, 'id_education'|'created_at'>;
+    education: Omit<Education, 'created_at'>;
 }
 
 /**

@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { PersonalInfoForm } from "./components/personal-info-form/PersonalInfoForm.component";
 import { ProfileFormComponentType } from "./components/profile-form/components/profile-form-component/ProfileFormComponent.component";
 import {
@@ -9,7 +10,7 @@ import {
   UserDetailsInfoType,
 } from "./hooks/useGetUserData.hook";
 
-enum UserDataKeysEnum {
+export enum UserDataKeysEnum {
   certificates = "Certificates",
   education = "Education",
   skills = "Skills",
@@ -20,6 +21,7 @@ enum UserDataKeysEnum {
 }
 
 import { objectToCamel } from "ts-case-convert";
+import { componentMarketplaceRoute } from "../../routes/component-marketplace.routes";
 
 type UserDataKey = keyof typeof UserDataKeysEnum;
 
@@ -55,6 +57,12 @@ export const Home = () => {
             );
           })}
       </div>
+      <Link
+        to={componentMarketplaceRoute.to}
+        className="absolute top-12 right-2 border border-gray-300 rounded-md p-2 bg-button_blue text-white"
+      >
+        Style your portfolio
+      </Link>
     </div>
   );
 };

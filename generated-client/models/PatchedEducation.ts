@@ -32,7 +32,7 @@ export interface PatchedEducation {
      * @type {number}
      * @memberof PatchedEducation
      */
-    readonly idEducation?: number;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -100,7 +100,7 @@ export function PatchedEducationFromJSONTyped(json: any, ignoreDiscriminator: bo
     }
     return {
         
-        'idEducation': json['id_education'] == null ? undefined : json['id_education'],
+        'id': json['id'] == null ? undefined : json['id'],
         'title': json['title'] == null ? undefined : json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'location': json['location'] == null ? undefined : json['location'],
@@ -116,19 +116,20 @@ export function PatchedEducationToJSON(json: any): PatchedEducation {
     return PatchedEducationToJSONTyped(json, false);
 }
 
-export function PatchedEducationToJSONTyped(value?: Omit<PatchedEducation, 'id_education'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function PatchedEducationToJSONTyped(value?: Omit<PatchedEducation, 'created_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
+        'id': value['id'],
         'title': value['title'],
         'description': value['description'],
         'location': value['location'],
         'type': EducationTypeToJSON(value['type']),
-        'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString().substring(0,10)),
-        'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString().substring(0,10)),
+        'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString()),
+        'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString()),
         'link': value['link'],
     };
 }

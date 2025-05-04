@@ -32,7 +32,7 @@ export interface Education {
      * @type {number}
      * @memberof Education
      */
-    readonly idEducation: number;
+    id: number;
     /**
      * 
      * @type {string}
@@ -62,13 +62,13 @@ export interface Education {
      * @type {Date}
      * @memberof Education
      */
-    startDate: Date;
+    startDate?: Date;
     /**
      * 
      * @type {Date}
      * @memberof Education
      */
-    endDate: Date;
+    endDate?: Date;
     /**
      * 
      * @type {string}
@@ -87,12 +87,10 @@ export interface Education {
  * Check if a given object implements the Education interface.
  */
 export function instanceOfEducation(value: object): value is Education {
-    if (!('idEducation' in value) || value['idEducation'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
     if (!('location' in value) || value['location'] === undefined) return false;
-    if (!('startDate' in value) || value['startDate'] === undefined) return false;
-    if (!('endDate' in value) || value['endDate'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     return true;
 }
@@ -107,13 +105,13 @@ export function EducationFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     }
     return {
         
-        'idEducation': json['id_education'],
+        'id': json['id'],
         'title': json['title'],
         'description': json['description'],
         'location': json['location'],
         'type': json['type'] == null ? undefined : EducationTypeFromJSON(json['type']),
-        'startDate': (new Date(json['start_date'])),
-        'endDate': (new Date(json['end_date'])),
+        'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
+        'endDate': json['end_date'] == null ? undefined : (new Date(json['end_date'])),
         'link': json['link'] == null ? undefined : json['link'],
         'createdAt': (new Date(json['created_at'])),
     };
@@ -123,19 +121,20 @@ export function EducationToJSON(json: any): Education {
     return EducationToJSONTyped(json, false);
 }
 
-export function EducationToJSONTyped(value?: Omit<Education, 'id_education'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function EducationToJSONTyped(value?: Omit<Education, 'created_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
+        'id': value['id'],
         'title': value['title'],
         'description': value['description'],
         'location': value['location'],
         'type': EducationTypeToJSON(value['type']),
-        'start_date': ((value['startDate']).toISOString().substring(0,10)),
-        'end_date': ((value['endDate']).toISOString().substring(0,10)),
+        'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString()),
+        'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString()),
         'link': value['link'],
     };
 }

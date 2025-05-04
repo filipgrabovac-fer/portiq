@@ -33,8 +33,6 @@ export const usePostProfileComponent = ({
             "Content-Type": "application/json",
           },
         });
-
-      console.log(response);
     },
   });
 };

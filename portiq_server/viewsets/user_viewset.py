@@ -67,7 +67,7 @@ class UserDetailsViewSet(viewsets.ViewSet):
     def userDetails(self, request):
         cached_user = cache.get("user")
         
-        userId = cached_user.id_user
+        userId = cached_user["id_user"]
         user: User = self.queryset.filter(id_user=userId).first()
 
         # Get the data and convert to list of lists

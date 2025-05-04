@@ -16,23 +16,87 @@
 import * as runtime from '../runtime';
 import type {
   Development,
+  DevelopmentCodeResponse,
   DevelopmentResponse,
+  GetSelectedComponents,
 } from '../models/index';
 import {
     DevelopmentFromJSON,
     DevelopmentToJSON,
+    DevelopmentCodeResponseFromJSON,
+    DevelopmentCodeResponseToJSON,
     DevelopmentResponseFromJSON,
     DevelopmentResponseToJSON,
+    GetSelectedComponentsFromJSON,
+    GetSelectedComponentsToJSON,
 } from '../models/index';
 
 export interface DevelopmentSaveCodeCreateRequest {
     development: Development;
 }
 
+export interface DevelopmentUpdateSelectedComponentsCreateRequest {
+    getSelectedComponents?: GetSelectedComponents;
+}
+
 /**
  * 
  */
 export class DevelopmentApi extends runtime.BaseAPI {
+
+    /**
+     */
+    async developmentGetComponentDataRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<DevelopmentCodeResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/development/get-component-data/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DevelopmentCodeResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async developmentGetComponentDataRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DevelopmentCodeResponse> {
+        const response = await this.developmentGetComponentDataRetrieveRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async developmentGetSelectedComponentsRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetSelectedComponents>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/development/get-selected-components/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetSelectedComponentsFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async developmentGetSelectedComponentsRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetSelectedComponents> {
+        const response = await this.developmentGetSelectedComponentsRetrieveRaw(initOverrides);
+        return await response.value();
+    }
 
     /**
      */
@@ -69,6 +133,35 @@ export class DevelopmentApi extends runtime.BaseAPI {
     async developmentSaveCodeCreate(requestParameters: DevelopmentSaveCodeCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DevelopmentResponse> {
         const response = await this.developmentSaveCodeCreateRaw(requestParameters, initOverrides);
         return await response.value();
+    }
+
+    /**
+     */
+    async developmentUpdateSelectedComponentsCreateRaw(requestParameters: DevelopmentUpdateSelectedComponentsCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/development/update-selected-components/`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: GetSelectedComponentsToJSON(requestParameters['getSelectedComponents']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async developmentUpdateSelectedComponentsCreate(requestParameters: DevelopmentUpdateSelectedComponentsCreateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.developmentUpdateSelectedComponentsCreateRaw(requestParameters, initOverrides);
     }
 
 }

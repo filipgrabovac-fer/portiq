@@ -82,7 +82,7 @@ class ProfileComponentViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             model = MODEL_MAPPING[component_type]
             item = serializer.validated_data
-            item["id_user"] = User.objects.get(id_user=user.id_user)
+            item["id_user"] = User.objects.get(id_user=user["id_user"])
             model.objects.create(**serializer.validated_data)
             return Response({"message": "Component created successfully"}, status=status.HTTP_201_CREATED)
         return Response(
@@ -96,7 +96,7 @@ class ProfileComponentViewSet(viewsets.ViewSet):
         component_type = data["type"]
         item = data["item"]
         user = cache.get("user")
-        item["id_user"] = user.id_user
+        item["id_user"] = user["id_user"]
         instance = MODEL_MAPPING[component_type].objects.get(pk=item["id"])
 
         serializer = SERIALIZER_MAPPING[component_type](data=item, instance=instance, partial=True)

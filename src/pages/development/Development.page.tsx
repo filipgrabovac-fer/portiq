@@ -18,6 +18,9 @@ export enum GroupType {
   LANGUAGE = "language",
   PROJECT = "project",
   OTHER = "other",
+  CERTIFICATE = "certificate",
+  EDUCATION = "education",
+  HOBBY = "hobby",
 }
 
 const initialGroupData: GroupData[] = [
@@ -60,87 +63,46 @@ export const Development = () => {
     {
       key: "0",
       label: "Personal Info",
-      children: (
-        <CodeInputForm
-          html={html}
-          css={css}
-          js={js}
-          title={title}
-          setHtml={setHtml}
-          setCss={setCss}
-          setJs={setJs}
-          setTitle={setTitle}
-        />
-      ),
+      children: null,
     },
     {
       key: "1",
       label: "Skills",
-      children: (
-        <CodeInputForm
-          html={html}
-          css={css}
-          js={js}
-          title={title}
-          setHtml={setHtml}
-          setCss={setCss}
-          setJs={setJs}
-          setTitle={setTitle}
-        />
-      ),
+      children: null,
     },
     {
       key: "2",
       label: "Languages",
-      children: (
-        <CodeInputForm
-          html={html}
-          css={css}
-          js={js}
-          title={title}
-          setHtml={setHtml}
-          setCss={setCss}
-          setJs={setJs}
-          setTitle={setTitle}
-        />
-      ),
+      children: null,
     },
     {
       key: "3",
       label: "Projects",
-      children: (
-        <CodeInputForm
-          html={html}
-          css={css}
-          js={js}
-          title={title}
-          setHtml={setHtml}
-          setCss={setCss}
-          setJs={setJs}
-          setTitle={setTitle}
-        />
-      ),
+      children: null,
     },
     {
       key: "4",
+      label: "Certificates",
+      children: null,
+    },
+    {
+      key: "5",
+      label: "Education",
+      children: null,
+    },
+    {
+      key: "6",
+      label: "Hobbies",
+      children: null,
+    },
+    {
+      key: "7",
       label: "Other",
-      children: (
-        <CodeInputForm
-          html={html}
-          css={css}
-          js={js}
-          title={title}
-          setHtml={setHtml}
-          setCss={setCss}
-          setJs={setJs}
-          setTitle={setTitle}
-        />
-      ),
+      children: null,
     },
   ];
 
   const { mutate: saveCode } = useSaveCode();
-
   const handleSave = () => {
     saveCode({ groupData: groupData, createFullTemplate: createFullTemplate });
   };
@@ -157,7 +119,24 @@ export const Development = () => {
           </h3>
         </div>
         <div className="mt-4">
-          <Tabs items={items} onChange={handleChange} />
+          <Tabs
+            items={items.map((item) => ({
+              ...item,
+              children: (
+                <CodeInputForm
+                  html={html}
+                  css={css}
+                  js={js}
+                  title={title}
+                  setHtml={setHtml}
+                  setCss={setCss}
+                  setJs={setJs}
+                  setTitle={setTitle}
+                />
+              ),
+            }))}
+            onChange={handleChange}
+          />
         </div>
         <div className="flex ml-auto px-8 justify-between">
           <div className="flex gap-4 items-center">

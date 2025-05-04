@@ -26,7 +26,7 @@ import {
 } from '../models/index';
 
 export interface CertificateCreateRequest {
-    certificate: Omit<Certificate, 'id_certificate'|'created_at'>;
+    certificate: Omit<Certificate, 'created_at'>;
 }
 
 export interface CertificateDestroyRequest {
@@ -35,7 +35,7 @@ export interface CertificateDestroyRequest {
 
 export interface CertificatePartialUpdateRequest {
     idCertificate: number;
-    patchedCertificate?: Omit<PatchedCertificate, 'id_certificate'|'created_at'>;
+    patchedCertificate?: Omit<PatchedCertificate, 'created_at'>;
 }
 
 export interface CertificateRetrieveRequest {
@@ -44,7 +44,7 @@ export interface CertificateRetrieveRequest {
 
 export interface CertificateUpdateRequest {
     idCertificate: number;
-    certificate: Omit<Certificate, 'id_certificate'|'created_at'>;
+    certificate: Omit<Certificate, 'created_at'>;
 }
 
 export interface CertificateUserCertificatesRetrieveRequest {

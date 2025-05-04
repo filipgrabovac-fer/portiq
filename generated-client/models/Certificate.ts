@@ -24,7 +24,7 @@ export interface Certificate {
      * @type {number}
      * @memberof Certificate
      */
-    readonly idCertificate: number;
+    id: number;
     /**
      * 
      * @type {string}
@@ -42,13 +42,13 @@ export interface Certificate {
      * @type {Date}
      * @memberof Certificate
      */
-    startDate: Date;
+    startDate?: Date;
     /**
      * 
      * @type {Date}
      * @memberof Certificate
      */
-    endDate: Date;
+    endDate?: Date;
     /**
      * 
      * @type {string}
@@ -73,11 +73,9 @@ export interface Certificate {
  * Check if a given object implements the Certificate interface.
  */
 export function instanceOfCertificate(value: object): value is Certificate {
-    if (!('idCertificate' in value) || value['idCertificate'] === undefined) return false;
+    if (!('id' in value) || value['id'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('startDate' in value) || value['startDate'] === undefined) return false;
-    if (!('endDate' in value) || value['endDate'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     return true;
 }
@@ -92,11 +90,11 @@ export function CertificateFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'idCertificate': json['id_certificate'],
+        'id': json['id'],
         'title': json['title'],
         'description': json['description'],
-        'startDate': (new Date(json['start_date'])),
-        'endDate': (new Date(json['end_date'])),
+        'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
+        'endDate': json['end_date'] == null ? undefined : (new Date(json['end_date'])),
         'location': json['location'] == null ? undefined : json['location'],
         'link': json['link'] == null ? undefined : json['link'],
         'createdAt': (new Date(json['created_at'])),
@@ -107,17 +105,18 @@ export function CertificateToJSON(json: any): Certificate {
     return CertificateToJSONTyped(json, false);
 }
 
-export function CertificateToJSONTyped(value?: Omit<Certificate, 'id_certificate'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function CertificateToJSONTyped(value?: Omit<Certificate, 'created_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
+        'id': value['id'],
         'title': value['title'],
         'description': value['description'],
-        'start_date': ((value['startDate']).toISOString().substring(0,10)),
-        'end_date': ((value['endDate']).toISOString().substring(0,10)),
+        'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString()),
+        'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString()),
         'location': value['location'],
         'link': value['link'],
     };

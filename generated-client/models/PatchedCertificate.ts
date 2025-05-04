@@ -24,7 +24,7 @@ export interface PatchedCertificate {
      * @type {number}
      * @memberof PatchedCertificate
      */
-    readonly idCertificate?: number;
+    id?: number;
     /**
      * 
      * @type {string}
@@ -86,7 +86,7 @@ export function PatchedCertificateFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'idCertificate': json['id_certificate'] == null ? undefined : json['id_certificate'],
+        'id': json['id'] == null ? undefined : json['id'],
         'title': json['title'] == null ? undefined : json['title'],
         'description': json['description'] == null ? undefined : json['description'],
         'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
@@ -101,17 +101,18 @@ export function PatchedCertificateToJSON(json: any): PatchedCertificate {
     return PatchedCertificateToJSONTyped(json, false);
 }
 
-export function PatchedCertificateToJSONTyped(value?: Omit<PatchedCertificate, 'id_certificate'|'created_at'> | null, ignoreDiscriminator: boolean = false): any {
+export function PatchedCertificateToJSONTyped(value?: Omit<PatchedCertificate, 'created_at'> | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
 
     return {
         
+        'id': value['id'],
         'title': value['title'],
         'description': value['description'],
-        'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString().substring(0,10)),
-        'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString().substring(0,10)),
+        'start_date': value['startDate'] == null ? undefined : ((value['startDate']).toISOString()),
+        'end_date': value['endDate'] == null ? undefined : ((value['endDate']).toISOString()),
         'location': value['location'],
         'link': value['link'],
     };

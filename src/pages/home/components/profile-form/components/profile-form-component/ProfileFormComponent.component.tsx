@@ -38,7 +38,7 @@ export const profileFormInputsByCategory = {
   ],
   skills: ["title", "description", "location", "level", "link"],
   projects: ["title", "description", "startDate", "endDate", "location"],
-  language: ["title", "level"],
+  languages: ["title", "level"],
   other: ["title", "description", "startDate", "endDate", "location", "link"],
   hobbies: ["title", "description"],
 };
@@ -48,7 +48,7 @@ export type ProfileFormComponentType =
   | "education"
   | "skills"
   | "projects"
-  | "language"
+  | "languages"
   | "hobbies"
   | "other";
 

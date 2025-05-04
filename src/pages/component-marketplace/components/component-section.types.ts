@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Code, GetSelectedComponents } from "../../../../generated-client";
 
 export enum ComponentTypeMappingEnum {
-  personalInfo = "idUserInfoDevelopment",
+  info = "idUserInfoDevelopment",
   skills = "idSkillDevelopment",
   languages = "idLanguageDevelopment",
   projects = "idProjectDevelopment",

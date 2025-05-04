@@ -46,8 +46,9 @@ MODEL_MAPPING = {
     "language": LanguageDevelopment,
     "project": ProjectDevelopment,
     "other": OtherDevelopment,
-    "certificate": Certificate,
-    
+    "certificate": CertificateDevelopment,
+    "education": EducationDevelopment,
+    "hobby": HobbyDevelopment,
 }
 
 class DevelopmentViewSet(viewsets.ViewSet):
@@ -117,7 +118,7 @@ class DevelopmentViewSet(viewsets.ViewSet):
         skills = SkillDevelopment.objects.all().values("id_code", "title", "pk")
         languages = LanguageDevelopment.objects.all().values("id_code", "title", "pk")
         projects = ProjectDevelopment.objects.all().values("id_code", "title", "pk")
-        certificates = CertificateDevelopment.objects.all().values_list("id_code", "title", "pk")
+        certificates = CertificateDevelopment.objects.all().values("id_code", "title", "pk")
         education = EducationDevelopment.objects.all().values("id_code", "title", "pk")
         hobbies = HobbyDevelopment.objects.all().values("id_code", "title", "pk")
         other = OtherDevelopment.objects.all().values("id_code", "title", "pk")
@@ -132,7 +133,7 @@ class DevelopmentViewSet(viewsets.ViewSet):
         other = get_component_code(other)
 
         data = {
-            "personal_info": personal_info,
+            "info": personal_info,
             "skills": skills,
             "languages": languages,
             "projects": projects,

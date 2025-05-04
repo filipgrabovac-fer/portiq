@@ -177,7 +177,7 @@ class CodeSerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
     id = serializers.IntegerField(required=True)
 class DevelopmentCodeResponseSerializer(serializers.Serializer):
-    personal_info = CodeSerializer(many=True)
+    info = CodeSerializer(many=True)
     skills = CodeSerializer(many=True)
     languages = CodeSerializer(many=True)
     projects = CodeSerializer(many=True)

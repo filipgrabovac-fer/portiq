@@ -35,7 +35,7 @@ MODEL_MAPPING = {
     'education': Education,
     'skills': Skill,
     'projects': Project,
-    'language': Language,
+    'languages': Language,
     'other': Other,
     'hobbies': Hobby
 }
@@ -45,7 +45,7 @@ POST_SERIALIZER_MAPPING = {
     'education': PostEducationSerializer,
     'skills': PostSkillSerializer,
     'projects': PostProjectSerializer,
-    'language': PostLanguageSerializer,
+    'languages': PostLanguageSerializer,
     'other': PostOtherSerializer,
     'hobbies': PostHobbySerializer
 }

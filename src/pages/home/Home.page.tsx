@@ -15,7 +15,7 @@ export enum UserDataKeysEnum {
   education = "Education",
   skills = "Skills",
   projects = "Projects",
-  language = "Languages",
+  languages = "Languages",
   other = "Other",
   hobbies = "Hobbies",
 }
@@ -36,7 +36,9 @@ export const Home = () => {
     <div className="h-screen">
       <div className="flex flex-col gap-4 items-center p-2 mt-12">
         {userData && (
-          <PersonalInfoForm data={userData?.info as UserDetailsInfoType} />
+          <PersonalInfoForm
+            data={userData?.info?.[0] as unknown as UserDetailsInfoType}
+          />
         )}
 
         {userData &&

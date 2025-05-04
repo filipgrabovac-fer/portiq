@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { cn } from "../../../utils/cn.util";
-import { useGetSelectedComponents } from "../hooks/useGetSelectedComponents.hook";
 import {
   ComponentSectionProps,
   ComponentTypeMappingEnum,

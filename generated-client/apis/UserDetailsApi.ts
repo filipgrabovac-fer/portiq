@@ -22,6 +22,10 @@ import {
     UserDetailsToJSON,
 } from '../models/index';
 
+export interface UserDetailsUserDetailsRetrieveRequest {
+    userId: string;
+}
+
 /**
  * 
  */
@@ -29,7 +33,14 @@ export class UserDetailsApi extends runtime.BaseAPI {
 
     /**
      */
-    async userDetailsUserDetailsRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetails>> {
+    async userDetailsUserDetailsRetrieveRaw(requestParameters: UserDetailsUserDetailsRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetails>> {
+        if (requestParameters['userId'] == null) {
+            throw new runtime.RequiredError(
+                'userId',
+                'Required parameter "userId" was null or undefined when calling userDetailsUserDetailsRetrieve().'
+            );
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -38,7 +49,7 @@ export class UserDetailsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/user-details/user-details/`,
+            path: `/api/user-details/user-details/{userId}/`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters['userId']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -49,8 +60,8 @@ export class UserDetailsApi extends runtime.BaseAPI {
 
     /**
      */
-    async userDetailsUserDetailsRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetails> {
-        const response = await this.userDetailsUserDetailsRetrieveRaw(initOverrides);
+    async userDetailsUserDetailsRetrieve(requestParameters: UserDetailsUserDetailsRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetails> {
+        const response = await this.userDetailsUserDetailsRetrieveRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

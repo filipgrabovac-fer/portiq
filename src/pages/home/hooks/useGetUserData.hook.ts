@@ -28,7 +28,9 @@ export const useGetUserData = () => {
   return useQuery({
     queryKey: ["getUserData"],
     queryFn: async () => {
-      const response = await userDetailsApi.userDetailsUserDetailsRetrieve();
+      const response = await userDetailsApi.userDetailsUserDetailsRetrieve({
+        userId: "x",
+      });
       return response;
     },
   });

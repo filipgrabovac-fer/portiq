@@ -222,4 +222,31 @@ export class UserApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    /**
+     */
+    async userUserIdRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/user/user-id/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async userUserIdRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
+        const response = await this.userUserIdRetrieveRaw(initOverrides);
+        return await response.value();
+    }
+
 }

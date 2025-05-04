@@ -58,19 +58,24 @@ class UserViewSet(viewsets.ViewSet):
         else:
             return Response("User not found", status=status.HTTP_404_NOT_FOUND)
 
+    @action(detail=False, methods=['get'], url_path="user-id")
+    def getUserId(self, request):
+        cached_user = cache.get("user")
+        return Response({"id_user": cached_user["id_user"]}, status=status.HTTP_200_OK)
 
 class UserDetailsViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
     serializer_class = UserDetailsSerializer
 
-    @action(detail=False, methods=['get'], url_path="user-details")
-    def userDetails(self, request):
+    @action(detail=False, methods=['get'], url_path="user-details/(?P<userId>[^/.]+)?")
+    def getUserDetails(self, request, userId):
         cached_user = cache.get("user")
-        
-        userId = cached_user["id_user"]
+
+        if not userId or userId == "x":
+            userId = cached_user["id_user"]
+
         user: User = self.queryset.filter(id_user=userId).first()
 
-        # Get the data and convert to list of lists
         certificates = [list(cert) for cert in Certificate.objects.filter(id_user=userId).values_list("id_certificate", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
         education = [list(edu) for edu in Education.objects.filter(id_user=userId).values_list("id_education", "title", "description", "location", "type", "start_date", "end_date", "link", "created_at")]
         skills = [list(skill) for skill in Skill.objects.filter(id_user=userId).values_list("id_skill", "title", "description", "location", "level", "link", "created_at")]
@@ -81,7 +86,7 @@ class UserDetailsViewSet(viewsets.ViewSet):
         hobbies = [list(hobby) for hobby in Hobby.objects.filter(id_user=userId).values_list("id_hobby", "title", "description", "created_at")]
 
         user_details = {
-            "info": {
+            "info": [{
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "email": user.email,
@@ -92,7 +97,7 @@ class UserDetailsViewSet(viewsets.ViewSet):
                 "state": user.state,
                 "zip_code": user.zip_code,
                 "country": user.country,
-            },
+            }],
             "certificates": [
                 {
                     "id": cert[0],

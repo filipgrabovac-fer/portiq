@@ -8,8 +8,13 @@ import { logoutApi } from "../schema";
 import { loginRoute } from "../routes/login.routes";
 import { developmentRoute } from "../routes/development.routes";
 import QRCode from "react-qr-code";
+import { homeRoute } from "../routes/home.routes";
+import { useGetUserId } from "../pages/home/hooks/useGetUserId.hook";
+import { webPortfolioRoute } from "../routes/web-portfolio.routes";
 
 export const MainLayout = () => {
+  const { data: userId } = useGetUserId();
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   return (
@@ -40,12 +45,19 @@ export const MainLayout = () => {
               Scan QR Code
             </p>
             <QRCode
-              value={`http://localhost:3000/user/${123}/web-portfolio`}
+              value={`http://localhost:3000/user/${userId}/web-portfolio`}
               className="w-full h-full"
             />
           </div>
           <Button>Export to pdf</Button>
-          <Button>Web Portfolio</Button>
+          <Button
+            onClick={() =>
+              navigate({ to: webPortfolioRoute.to, params: { userId: userId } })
+            }
+          >
+            Web Portfolio
+          </Button>
+          <Button onClick={() => navigate({ to: homeRoute.to })}>Home</Button>
         </div>
         <div className="flex flex-col gap-2 mb-4">
           <button

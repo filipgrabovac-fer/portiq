@@ -32,7 +32,7 @@ export interface DevelopmentCodeResponse {
      * @type {Array<Code>}
      * @memberof DevelopmentCodeResponse
      */
-    personalInfo: Array<Code>;
+    info: Array<Code>;
     /**
      * 
      * @type {Array<Code>}
@@ -81,7 +81,7 @@ export interface DevelopmentCodeResponse {
  * Check if a given object implements the DevelopmentCodeResponse interface.
  */
 export function instanceOfDevelopmentCodeResponse(value: object): value is DevelopmentCodeResponse {
-    if (!('personalInfo' in value) || value['personalInfo'] === undefined) return false;
+    if (!('info' in value) || value['info'] === undefined) return false;
     if (!('skills' in value) || value['skills'] === undefined) return false;
     if (!('languages' in value) || value['languages'] === undefined) return false;
     if (!('projects' in value) || value['projects'] === undefined) return false;
@@ -102,7 +102,7 @@ export function DevelopmentCodeResponseFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'personalInfo': ((json['personal_info'] as Array<any>).map(CodeFromJSON)),
+        'info': ((json['info'] as Array<any>).map(CodeFromJSON)),
         'skills': ((json['skills'] as Array<any>).map(CodeFromJSON)),
         'languages': ((json['languages'] as Array<any>).map(CodeFromJSON)),
         'projects': ((json['projects'] as Array<any>).map(CodeFromJSON)),
@@ -124,7 +124,7 @@ export function DevelopmentCodeResponseToJSONTyped(value?: DevelopmentCodeRespon
 
     return {
         
-        'personal_info': ((value['personalInfo'] as Array<any>).map(CodeToJSON)),
+        'info': ((value['info'] as Array<any>).map(CodeToJSON)),
         'skills': ((value['skills'] as Array<any>).map(CodeToJSON)),
         'languages': ((value['languages'] as Array<any>).map(CodeToJSON)),
         'projects': ((value['projects'] as Array<any>).map(CodeToJSON)),

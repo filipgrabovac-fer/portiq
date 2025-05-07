@@ -205,3 +205,20 @@ class PutSelectedComponentsSerializer(serializers.ModelSerializer):
     class Meta:
         model=PortfolioTemplate
         fields = ["id_user", "id_portfolio_template","id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development" ]
+
+
+class CodeType(serializers.Serializer):
+    html = serializers.CharField(required=True)
+    css = serializers.CharField(required=True)
+    js = serializers.CharField(required=True)
+
+class GetComponentCodeSerializer(serializers.Serializer):
+    info = CodeType(required=True)
+    skills = CodeType(required=True)
+    languages = CodeType(required=True)
+    projects = CodeType(required=True)
+    certificates = CodeType(required=True)
+    education = CodeType(required=True)
+    hobbies = CodeType(required=True)
+    other = CodeType(required=True)
+    

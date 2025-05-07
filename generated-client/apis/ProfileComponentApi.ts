@@ -14,6 +14,13 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  GetComponentCode,
+} from '../models/index';
+import {
+    GetComponentCodeFromJSON,
+    GetComponentCodeToJSON,
+} from '../models/index';
 
 /**
  * 
@@ -70,6 +77,33 @@ export class ProfileComponentApi extends runtime.BaseAPI {
      */
     async profileComponentProfileComponentDeleteCreate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.profileComponentProfileComponentDeleteCreateRaw(initOverrides);
+    }
+
+    /**
+     */
+    async profileComponentProfileComponentGetCodeRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetComponentCode>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/profile-component/profile-component-get-code/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetComponentCodeFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async profileComponentProfileComponentGetCodeRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetComponentCode> {
+        const response = await this.profileComponentProfileComponentGetCodeRetrieveRaw(initOverrides);
+        return await response.value();
     }
 
     /**

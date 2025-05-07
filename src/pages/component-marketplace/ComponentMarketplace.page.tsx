@@ -47,6 +47,7 @@ export const ComponentMarketplace = () => {
               data={data}
               title={key}
               itemsToReplace={itemsToReplaceFn(
+                // @ts-ignore
                 userData?.[key as keyof UserDetails]?.[0] ?? {}
               )}
               selectedComponents={selectedComponents}

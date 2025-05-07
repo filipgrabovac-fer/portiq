@@ -60,7 +60,6 @@ export const ComponentSection = ({
           >
             <h2>{item.title}</h2>
             <div>
-              <div dangerouslySetInnerHTML={{ __html: html }} />
               <iframe
                 srcDoc={`
             <html>
@@ -69,12 +68,14 @@ export const ComponentSection = ({
             </head>
             <body>
             <script>${item.js}<\/script>
+            <div>${html}</div>
             </body>
             </html>
             `}
                 sandbox="allow-scripts"
-                style={{ height: 0 }}
+                style={{ height: "100%", width: "100%" }}
               />
+              {/* <div dangerouslySetInnerHTML={{ __html: html }} /> */}
             </div>
           </div>
         );

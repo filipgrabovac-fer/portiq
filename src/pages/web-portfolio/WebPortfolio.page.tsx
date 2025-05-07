@@ -29,15 +29,6 @@ export const WebPortfolio = () => {
     );
   }, [userData]);
 
-  useEffect(() => {
-    const iframe = document.querySelector("iframe");
-    if (iframe) {
-      iframe.onload = () => {
-        iframe.style.height =
-          iframe.contentWindow.document.body.scrollHeight + "px";
-      };
-    }
-  }, []);
   return (
     <div className="h-screen">
       <h1 className="text-xl md:text-5xl font-semibold text-center mt-20">

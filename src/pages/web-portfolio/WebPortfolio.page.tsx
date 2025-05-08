@@ -41,7 +41,7 @@ export const WebPortfolio = () => {
           componentData={userData?.info}
           componentCode={componentCodeData?.info}
         />
-        {/* <ComponentRender
+        <ComponentRender
           componentData={userData?.certificates}
           componentCode={componentCodeData?.certificates}
         />
@@ -68,7 +68,7 @@ export const WebPortfolio = () => {
         <ComponentRender
           componentData={userData?.other}
           componentCode={componentCodeData?.other}
-        /> */}
+        />
       </div>
     </div>
   );

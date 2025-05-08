@@ -6,9 +6,13 @@ import {
 
 export const formatHtml = ({
   html,
+  css,
+  js,
   itemsToReplace,
 }: {
   html: string;
+  css: string;
+  js: string;
   itemsToReplace: { key: string; value: string | number }[];
 }) => {
   let formattedHtml = html;
@@ -18,6 +22,8 @@ export const formatHtml = ({
       item.value.toString()
     );
   }
+
+  formattedHtml = `<style>${css}</style><script>${js}</script>${formattedHtml}`;
 
   return formattedHtml;
 };
@@ -40,6 +46,8 @@ export const ComponentSection = ({
         const html = formatHtml({
           html: item.html,
           itemsToReplace: itemsToReplace,
+          css: item.css,
+          js: item.js,
         });
 
         return (

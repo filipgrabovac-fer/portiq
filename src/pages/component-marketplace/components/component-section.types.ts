@@ -19,5 +19,6 @@ export type ComponentSectionProps = {
   setSelectedComponents: Dispatch<
     SetStateAction<GetSelectedComponents | undefined>
   >;
+  setHasSelectedComponentChanged: Dispatch<SetStateAction<boolean>>;
   itemsToReplace: { key: string; value: string | number }[];
 };

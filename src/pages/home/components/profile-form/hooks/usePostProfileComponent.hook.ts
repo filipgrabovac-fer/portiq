@@ -23,16 +23,15 @@ export const usePostProfileComponent = ({
   return useMutation({
     onSuccess: onSuccess,
     mutationFn: async ({ type, item }: UsePostProfileComponentProps) => {
-      const response =
-        await profileComponentApi.profileComponentProfileComponentCreate({
-          body: JSON.stringify({
-            type: type,
-            item: objectToSnake(item),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+      await profileComponentApi.profileComponentProfileComponentCreate({
+        body: JSON.stringify({
+          type: type,
+          item: objectToSnake(item),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
     },
   });
 };

@@ -3,7 +3,8 @@ import { Checkbox, Tabs, TabsProps } from "antd";
 import { InfoIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CodeInputForm } from "./components/code-input-form/CodeInputForm.component";
-import { useSaveCode } from "./hooks/useSaveCode.hook";
+import { usePostProfileComponentCode } from "./hooks/usePostProfileComponentCode";
+import { homeRoute } from "../../routes/home.routes";
 
 type GroupData = {
   title: string;
@@ -190,7 +191,9 @@ export const Development = () => {
     groupData[groupId].title = title;
   }, [html, css, js, title]);
 
-  const { mutate: saveCode } = useSaveCode();
+  const { mutate: saveCode } = usePostProfileComponentCode({
+    onSuccess: () => navigate({ to: homeRoute.to }),
+  });
   const handleSave = () => {
     saveCode({ groupData: groupData, createFullTemplate: createFullTemplate });
   };
@@ -268,13 +271,13 @@ export const Development = () => {
             />
           </div>
           <div className="flex ml-auto px-8 justify-between">
-            <div className="flex gap-4 items-center">
+            {/* <div className="flex gap-4 items-center">
               <Checkbox
                 onChange={() => setCreateFullTemplate(!createFullTemplate)}
               />
               Create full template
-            </div>
-            <div className="flex gap-4">
+            </div> */}
+            <div className="flex gap-4 ml-auto">
               <div className="m-auto w-max ">
                 <button
                   className="text-red-500 p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer"

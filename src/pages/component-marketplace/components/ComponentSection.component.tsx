@@ -1,32 +1,9 @@
 import { cn } from "../../../utils/cn.util";
+import { ComponentRender } from "../../web-portfolio/components/component-render/ComponentRender.component";
 import {
   ComponentSectionProps,
   ComponentTypeMappingEnum,
 } from "./component-section.types";
-
-export const formatHtml = ({
-  html,
-  css,
-  js,
-  itemsToReplace,
-}: {
-  html: string;
-  css: string;
-  js: string;
-  itemsToReplace: { key: string; value: string | number }[];
-}) => {
-  let formattedHtml = html;
-  for (const item of itemsToReplace) {
-    formattedHtml = formattedHtml.replace(
-      `{{${item.key}}}`,
-      item.value.toString()
-    );
-  }
-
-  formattedHtml = `<style>${css}</style><script>${js}</script>${formattedHtml}`;
-
-  return formattedHtml;
-};
 
 export const ComponentSection = ({
   data,
@@ -34,6 +11,7 @@ export const ComponentSection = ({
   itemsToReplace,
   selectedComponents,
   setSelectedComponents,
+  setHasSelectedComponentChanged,
 }: ComponentSectionProps) => {
   const preselectedItemKey =
     ComponentTypeMappingEnum[title as keyof typeof ComponentTypeMappingEnum];
@@ -43,13 +21,6 @@ export const ComponentSection = ({
       <h1 className="text-2xl font-bold">{title}</h1>
       {data.length == 0 && <p className="mx-auto">No components found</p>}
       {data.map((item) => {
-        const html = formatHtml({
-          html: item.html,
-          itemsToReplace: itemsToReplace,
-          css: item.css,
-          js: item.js,
-        });
-
         return (
           <div
             className={cn(
@@ -59,31 +30,20 @@ export const ComponentSection = ({
                 : "border-gray-300"
             )}
             key={item.id}
-            onClick={() =>
+            onClick={() => {
               setSelectedComponents({
                 ...selectedComponents,
                 [preselectedItemKey]: item.id,
-              })
-            }
+              });
+              setHasSelectedComponentChanged(true);
+            }}
           >
             <h2>{item.title}</h2>
             <div>
-              <iframe
-                srcDoc={`
-            <html>
-            <head>
-            <style>${item.css}</style>
-            </head>
-            <body>
-            <script>${item.js}<\/script>
-            <div>${html}</div>
-            </body>
-            </html>
-            `}
-                sandbox="allow-scripts"
-                style={{ height: "100%", width: "100%" }}
+              <ComponentRender
+                componentData={[itemsToReplace]}
+                componentCode={{ html: item.html, css: item.css, js: item.js }}
               />
-              {/* <div dangerouslySetInnerHTML={{ __html: html }} /> */}
             </div>
           </div>
         );

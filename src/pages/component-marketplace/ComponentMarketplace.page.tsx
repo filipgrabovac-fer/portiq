@@ -6,6 +6,7 @@ import { useGetSelectedComponents } from "./hooks/useGetSelectedComponents.hook"
 import { GetSelectedComponents, UserDetails } from "../../../generated-client";
 import { usePutSelectedComponents } from "./hooks/usePutSelectedComponents.hook";
 import { objectToCamel } from "ts-case-convert";
+import { cn } from "../../utils/cn.util";
 
 export const itemsToReplaceFn = (data: Record<string, any>) => {
   return Object.entries(objectToCamel(data) ?? {})
@@ -29,6 +30,8 @@ export const ComponentMarketplace = () => {
   const { data: componentData } = useGetComponentData();
   const { data: selectedComponentsData } = useGetSelectedComponents();
   const { mutate: putSelectedComponents } = usePutSelectedComponents();
+  const [hasSelectedComponentChanged, setHasSelectedComponentChanged] =
+    useState(false);
 
   const [selectedComponents, setSelectedComponents] = useState<
     GetSelectedComponents | undefined
@@ -46,22 +49,29 @@ export const ComponentMarketplace = () => {
             <ComponentSection
               data={data}
               title={key}
-              itemsToReplace={itemsToReplaceFn(
+              itemsToReplace={
                 // @ts-ignore
                 userData?.[key as keyof UserDetails]?.[0] ?? {}
-              )}
+              }
               selectedComponents={selectedComponents}
               setSelectedComponents={setSelectedComponents}
+              setHasSelectedComponentChanged={setHasSelectedComponentChanged}
             />
           );
         })}
       </div>
       <div className="top-16 right-2 flex-1">
         <button
-          className="bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer"
-          onClick={() =>
-            putSelectedComponents({ data: selectedComponents ?? {} })
-          }
+          disabled={!hasSelectedComponentChanged}
+          className={cn(
+            "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer",
+
+            !hasSelectedComponentChanged && "opacity-50 cursor-not-allowed"
+          )}
+          onClick={() => {
+            putSelectedComponents({ data: selectedComponents ?? {} });
+            setHasSelectedComponentChanged(false);
+          }}
         >
           Save changes
         </button>

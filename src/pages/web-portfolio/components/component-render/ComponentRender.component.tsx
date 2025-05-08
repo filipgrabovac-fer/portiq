@@ -1,7 +1,29 @@
 import { itemsToReplaceFn } from "../../../component-marketplace/ComponentMarketplace.page";
-import { formatHtml } from "../../../component-marketplace/components/ComponentSection.component";
-import { useRef } from "react";
 import Handlebars from "handlebars";
+
+export const formatHtml = ({
+  html,
+  css,
+  js,
+  itemsToReplace,
+}: {
+  html: string;
+  css: string;
+  js: string;
+  itemsToReplace: { key: string; value: string | number }[];
+}) => {
+  let formattedHtml = html;
+  for (const item of itemsToReplace) {
+    formattedHtml = formattedHtml.replace(
+      `{{${item.key}}}`,
+      item.value.toString()
+    );
+  }
+
+  formattedHtml = `<style>${css}</style><script>${js}</script>${formattedHtml}`;
+
+  return formattedHtml;
+};
 
 export const ComponentRender = ({
   componentData,
@@ -10,8 +32,6 @@ export const ComponentRender = ({
   componentData: any;
   componentCode?: { html: string; css: string; js: string };
 }) => {
-  const iframeRefs = useRef<(HTMLIFrameElement | null)[]>([]);
-
   if (!componentCode || !componentData) {
     return null;
   }
@@ -26,6 +46,8 @@ export const ComponentRender = ({
     });
 
     const template = Handlebars.compile(html);
+
+    console.log(template({}));
 
     return (
       <div

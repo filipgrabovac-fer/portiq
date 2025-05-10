@@ -26,7 +26,6 @@ dist-ssr
 db.sqlite3
 node_modules
 
-pnpm-lock.yaml
 
 .env
 

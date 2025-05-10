@@ -47,8 +47,6 @@ export const ComponentRender = ({
 
     const template = Handlebars.compile(html);
 
-    console.log(template({}));
-
     return (
       <div
         dangerouslySetInnerHTML={{

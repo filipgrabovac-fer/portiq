@@ -8,7 +8,7 @@ export default {
       },
       colors: {
         button_blue: "#111D4A",
-        border_gray: "#ec01eb",
+        border_gray: "#E5E7EB",
       },
       fontSize: {
         xs: 10,

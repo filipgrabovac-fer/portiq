@@ -42,8 +42,23 @@ export const ComponentMarketplace = () => {
   }, [selectedComponentsData]);
 
   return (
-    <div className="pt-16 flex gap-4 mx-4">
-      <div className="flex flex-col gap-4 w-3/5 mx-auto border border-gray-300 rounded-md p-4">
+    <div className="pt-16 flex gap-4 md:mx-4 mx-0 relative">
+      <div className="fixed h-16 top-0 w-full bg-white"></div>
+      <button
+        disabled={!hasSelectedComponentChanged}
+        className={cn(
+          "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer fixed top-3 right-8 md:right-14",
+
+          !hasSelectedComponentChanged && "opacity-50 cursor-not-allowed"
+        )}
+        onClick={() => {
+          putSelectedComponents({ data: selectedComponents ?? {} });
+          setHasSelectedComponentChanged(false);
+        }}
+      >
+        Save changes
+      </button>
+      <div className="flex flex-col gap-4 w-full mx-10 border border-gray-300 rounded-md p-0 md:p-4">
         {Object.entries(componentData ?? {}).map(([key, data]) => {
           return (
             <ComponentSection
@@ -59,22 +74,6 @@ export const ComponentMarketplace = () => {
             />
           );
         })}
-      </div>
-      <div className="top-16 right-2 flex-1">
-        <button
-          disabled={!hasSelectedComponentChanged}
-          className={cn(
-            "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer",
-
-            !hasSelectedComponentChanged && "opacity-50 cursor-not-allowed"
-          )}
-          onClick={() => {
-            putSelectedComponents({ data: selectedComponents ?? {} });
-            setHasSelectedComponentChanged(false);
-          }}
-        >
-          Save changes
-        </button>
       </div>
     </div>
   );

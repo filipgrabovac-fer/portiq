@@ -59,12 +59,6 @@ export const Home = () => {
             );
           })}
       </div>
-      <Link
-        to={componentMarketplaceRoute.to}
-        className="absolute top-12 right-2 border border-gray-300 rounded-md p-2 bg-button_blue text-white"
-      >
-        Style your portfolio
-      </Link>
     </div>
   );
 };

@@ -52,6 +52,16 @@ export type ProfileFormComponentType =
   | "hobbies"
   | "other";
 
+export const ProfileFormComponentTitle = {
+  certificates: "Certificates",
+  education: "Education",
+  skills: "Skills",
+  projects: "Projects",
+  languages: "Languages",
+  hobbies: "Hobbies",
+  other: "Other",
+};
+
 export type ProfileFormHookDataProps = {
   id: string;
   item: ProfileFormComponentItemType;

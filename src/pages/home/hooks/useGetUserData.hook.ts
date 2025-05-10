@@ -1,17 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { userDetailsApi } from "../../../schema";
 
-export type UserDetailsDataType = {
-  certificates: [];
-  education: [];
-  info: UserDetailsInfoType;
-  projects: [];
-  skills: [];
-  languages: [];
-  other: [];
-  hobbies: [];
-};
-
 export type UserDetailsInfoType = {
   address: string;
   city: string;

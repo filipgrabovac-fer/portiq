@@ -1,14 +1,13 @@
 import { DotIcon } from "lucide-react";
+import { useState } from "react";
 import { AddNewDataButton } from "../../../../components/add-new-data-button/AddNewDataButton.component";
+import { cn } from "../../../../utils/cn.util";
+import { AddNewDataModal } from "./components/profile-form-component/AddNewDataModal.component";
 import {
   ProfileFormComponent,
   ProfileFormComponentItemType,
   ProfileFormComponentType,
-  ProfileFormHookDataProps,
 } from "./components/profile-form-component/ProfileFormComponent.component";
-import { cn } from "../../../../utils/cn.util";
-import { AddNewDataModal } from "./components/profile-form-component/AddNewDataModal.component";
-import { useState } from "react";
 
 export type ProfileFormProps = {
   sectionTitle: string;

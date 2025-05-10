@@ -1,22 +1,33 @@
-import { Link, Outlet, useNavigate } from "@tanstack/react-router";
-import { Button } from "antd";
+import { Outlet, useNavigate } from "@tanstack/react-router";
+import {
+  FileIcon,
+  FileUserIcon,
+  HomeIcon,
+  MenuIcon,
+  PaintBucket,
+  XIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { cn } from "../utils/cn.util";
-import { MenuIcon, XIcon } from "lucide-react";
 
-import { logoutApi } from "../schema";
-import { loginRoute } from "../routes/login.routes";
-import { developmentRoute } from "../routes/development.routes";
 import QRCode from "react-qr-code";
-import { homeRoute } from "../routes/home.routes";
+import { ExportToPdfModal } from "../pages/home/components/export-to-pdf-modal/ExportToPdfModal.component";
+import { useGetUserData } from "../pages/home/hooks/useGetUserData.hook";
 import { useGetUserId } from "../pages/home/hooks/useGetUserId.hook";
+import { developmentRoute } from "../routes/development.routes";
+import { homeRoute } from "../routes/home.routes";
+import { loginRoute } from "../routes/login.routes";
 import { webPortfolioRoute } from "../routes/web-portfolio.routes";
+import { logoutApi } from "../schema";
+import { componentMarketplaceRoute } from "../routes/component-marketplace.routes";
 
 export const MainLayout = () => {
   const { data: userId } = useGetUserId();
-
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { data: userData } = useGetUserData();
+  const [isExportToPdfActive, setIsExportToPdfActive] = useState(false);
   return (
     <div className="h-screen w-screen flex">
       <button
@@ -49,15 +60,38 @@ export const MainLayout = () => {
               className="w-full h-full"
             />
           </div>
-          <Button>Export to pdf</Button>
-          <Button
-            onClick={() =>
-              navigate({ to: webPortfolioRoute.to, params: { userId: userId } })
-            }
-          >
-            Web Portfolio
-          </Button>
-          <Button onClick={() => navigate({ to: homeRoute.to })}>Home</Button>
+          <div className="flex gap-2">
+            <HomeIcon
+              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
+              onClick={() => {
+                setIsSidebarOpen(false);
+                navigate({ to: homeRoute.to });
+              }}
+            />
+
+            <FileUserIcon
+              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
+              onClick={() => {
+                setIsSidebarOpen(false);
+                navigate({
+                  to: webPortfolioRoute.to,
+                  params: { userId: userId },
+                });
+              }}
+            />
+            <FileIcon
+              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
+              onClick={() => setIsExportToPdfActive(true)}
+            />
+            <PaintBucket
+              onClick={() => {
+                setIsSidebarOpen(false);
+
+                navigate({ to: componentMarketplaceRoute.to });
+              }}
+              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-2 mb-4">
           <button
@@ -67,7 +101,7 @@ export const MainLayout = () => {
             Create a template
           </button>
           <button
-            className="bg-none text-red-600"
+            className="bg-none text-red-600 cursor-pointer"
             onClick={async () => {
               await logoutApi.logoutCreate();
               navigate({ to: loginRoute.to });
@@ -81,6 +115,12 @@ export const MainLayout = () => {
       <div className="w-full h-full overflow-y-scroll">
         <Outlet />
       </div>
+      {isExportToPdfActive && userData && (
+        <ExportToPdfModal
+          userData={userData}
+          setIsModalOpen={setIsExportToPdfActive}
+        />
+      )}
     </div>
   );
 };

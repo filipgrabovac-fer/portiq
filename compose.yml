@@ -33,7 +33,7 @@ services:
         - VITE_GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
         - VITE_GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
     environment:
-      - DB_HOST=host.docker.internal
+      - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}

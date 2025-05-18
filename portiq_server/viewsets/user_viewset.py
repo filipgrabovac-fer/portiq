@@ -6,7 +6,7 @@ from portiq_server.models.hobby import Hobby
 from portiq_server.models.language import Language
 from portiq_server.models.other import Other
 from portiq_server.models.user import User
-from portiq_server.serializers import PutUserDataSerializer, UserSerializer, UserDetailsSerializer
+from portiq_server.serializers import PutUserDataSerializer, UserLoggedInSerializer, UserSerializer, UserDetailsSerializer
 from portiq_server.models.certificate import Certificate
 from portiq_server.models.education import Education
 from portiq_server.models.skill import Skill
@@ -178,3 +178,18 @@ class UserDetailsViewSet(viewsets.ViewSet):
 
         return Response(user_details, status=status.HTTP_200_OK)
 
+
+    @extend_schema(
+        request=None,
+        responses={
+            200: UserLoggedInSerializer,
+        }
+    )
+    @action(detail=False, methods=['get'], url_path="user-logged-in")
+    def getUserLoggedIn(self, request):
+        cached_user = cache.get("user")
+
+        if cached_user:
+            return Response({"id_user": cached_user["id_user"]}, status=status.HTTP_200_OK)
+        else:
+            return Response({"id_user": None}, status=status.HTTP_200_OK)

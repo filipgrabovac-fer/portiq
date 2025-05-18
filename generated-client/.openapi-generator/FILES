@@ -27,5 +27,6 @@ models/SocialLogin.ts
 models/TypeEnum.ts
 models/User.ts
 models/UserDetails.ts
+models/UserLoggedIn.ts
 models/index.ts
 runtime.ts

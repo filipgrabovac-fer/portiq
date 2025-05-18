@@ -222,3 +222,5 @@ class GetComponentCodeSerializer(serializers.Serializer):
     hobbies = CodeType(required=True)
     other = CodeType(required=True)
     
+class UserLoggedInSerializer(serializers.Serializer):
+    id_user = serializers.IntegerField(required=True)

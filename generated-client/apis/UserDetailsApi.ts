@@ -16,10 +16,13 @@
 import * as runtime from '../runtime';
 import type {
   UserDetails,
+  UserLoggedIn,
 } from '../models/index';
 import {
     UserDetailsFromJSON,
     UserDetailsToJSON,
+    UserLoggedInFromJSON,
+    UserLoggedInToJSON,
 } from '../models/index';
 
 export interface UserDetailsUserDetailsRetrieveRequest {
@@ -62,6 +65,33 @@ export class UserDetailsApi extends runtime.BaseAPI {
      */
     async userDetailsUserDetailsRetrieve(requestParameters: UserDetailsUserDetailsRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetails> {
         const response = await this.userDetailsUserDetailsRetrieveRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async userDetailsUserLoggedInRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserLoggedIn>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/user-details/user-logged-in/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserLoggedInFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async userDetailsUserLoggedInRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserLoggedIn> {
+        const response = await this.userDetailsUserLoggedInRetrieveRaw(initOverrides);
         return await response.value();
     }
 

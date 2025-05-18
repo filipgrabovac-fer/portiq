@@ -64,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "portiq.middleware.user_authenticated.UserAuthenticatedMiddleware",
     "allauth.account.middleware.AccountMiddleware",
 ]
 

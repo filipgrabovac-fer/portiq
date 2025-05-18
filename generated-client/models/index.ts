@@ -19,3 +19,4 @@ export * from './SocialLogin';
 export * from './TypeEnum';
 export * from './User';
 export * from './UserDetails';
+export * from './UserLoggedIn';

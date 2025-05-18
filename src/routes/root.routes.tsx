@@ -5,13 +5,13 @@ import { loginRoute } from "./login.routes";
 const excludedRoutes = ["/login", "/", "/static", "/media"];
 
 export const rootRoute = createRootRoute({
-  beforeLoad: async ({ location }) => {
-    const data = await getUserLoggedIn();
+  // beforeLoad: async ({ location }) => {
+  //   const data = await getUserLoggedIn();
 
-    if (!data?.idUser && !excludedRoutes.includes(location.pathname)) {
-      throw redirect({ to: loginRoute.to });
-    }
-  },
+  //   if (!data?.idUser && !excludedRoutes.includes(location.pathname)) {
+  //     throw redirect({ to: loginRoute.to });
+  //   }
+  // },
 
   component: () => <Outlet />,
 });

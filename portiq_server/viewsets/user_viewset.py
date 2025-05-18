@@ -177,6 +177,7 @@ class UserDetailsViewSet(viewsets.ViewSet):
         }
 
         return Response(user_details, status=status.HTTP_200_OK)
+    
 
 
     @extend_schema(

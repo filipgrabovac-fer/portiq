@@ -145,7 +145,6 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'SERVERS': [
-        {'url': 'http://localhost:8000', 'description': 'development'},
         {'url': 'https://portiq-production.up.railway.app', 'description': 'production'},
     ],
     'TAGS': [

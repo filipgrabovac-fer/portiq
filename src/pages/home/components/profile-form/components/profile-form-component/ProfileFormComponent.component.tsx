@@ -38,7 +38,7 @@ export const profileFormInputsByCategory = {
   ],
   skills: ["title", "description", "location", "level", "link"],
   projects: ["title", "description", "startDate", "endDate", "location"],
-  languages: ["title", "level"],
+  languages: ["title", "languageLevel"],
   other: ["title", "description", "startDate", "endDate", "location", "link"],
   hobbies: ["title", "description"],
 };
@@ -92,6 +92,9 @@ export const ProfileFormComponent = ({
   const [link, setLink] = useState<string | undefined>(item.link);
   const [level, setLevel] = useState<string | undefined>(item.level);
   const [type, setType] = useState<string | undefined>(item.type);
+  const [languageLevel, setLanguageLevel] = useState<string | undefined>(
+    item.level
+  );
 
   const formInputs: FormInputProps[] = [
     {
@@ -143,6 +146,12 @@ export const ProfileFormComponent = ({
       label: "Level",
       value: level,
       onChange: (value) => setLevel(value),
+    },
+    {
+      name: "languageLevel",
+      label: "Language Level",
+      value: languageLevel,
+      onChange: (value) => setLanguageLevel(value),
     },
   ];
 
@@ -250,9 +259,10 @@ export const ProfileFormComponent = ({
               {allowedProfileFormInputs.includes("link") && (
                 <p>Link: {item.link}</p>
               )}
-              {allowedProfileFormInputs.includes("level") && (
-                <p>Level: {item.level}</p>
-              )}
+              {allowedProfileFormInputs.includes("level") ||
+                (allowedProfileFormInputs.includes("languageLevel") && (
+                  <p>Level: {item.level}</p>
+                ))}
               {allowedProfileFormInputs.includes("type") && (
                 <p>Type: {item.type}</p>
               )}

@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, Select } from "antd";
 import { Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react";
 import { cn } from "../../../utils/cn.util";
 
@@ -18,6 +18,7 @@ export type FormInputProps = {
   inputWrapperClass?: string;
   readonly?: boolean;
   className?: string;
+  options?: { label: string; value: string }[];
 };
 
 export const FormInputs = ({ formInputs, readonly }: FormProps) => {
@@ -26,18 +27,28 @@ export const FormInputs = ({ formInputs, readonly }: FormProps) => {
       {formInputs.map((formInput) => (
         <div className={formInput.className}>
           <label>{formInput.label ?? ""}</label>
-          <Input
-            name={formInput.name}
-            type={formInput.type ?? "text"}
-            placeholder={formInput.placeholder ?? ""}
-            value={formInput.value ?? ""}
-            onChange={(event) => formInput.onChange(event.target.value)}
-            readOnly={readonly}
-            className={cn(
-              readonly &&
-                "bg-gray-100 cursor-not-allowed hover:outline-none hover:border-none opacity-70"
-            )}
-          />
+
+          {formInput.type === "select" ? (
+            <Select
+              placeholder={formInput.placeholder ?? undefined}
+              value={formInput.value ?? ""}
+              onChange={(value) => formInput.onChange(value as string)}
+              options={formInput.options}
+            />
+          ) : (
+            <Input
+              name={formInput.name}
+              type={formInput.type ?? "text"}
+              placeholder={formInput.placeholder ?? ""}
+              value={formInput.value ?? ""}
+              onChange={(event) => formInput.onChange(event.target.value)}
+              readOnly={readonly}
+              className={cn(
+                readonly &&
+                  "bg-gray-100 cursor-not-allowed hover:outline-none hover:border-none opacity-70"
+              )}
+            />
+          )}
         </div>
       ))}
     </div>

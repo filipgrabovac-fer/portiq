@@ -8,10 +8,20 @@ import {
 } from "./ProfileFormComponent.component";
 import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
 import { useQueryClient } from "@tanstack/react-query";
+import { TypeEnum } from "../../../../../../../generated-client";
 
 export type AddNewDataModalProps = {
   setIsAddNewDataModalOpen: Dispatch<SetStateAction<boolean>>;
   dataType: ProfileFormComponentType;
+};
+
+export const educationTypeOptions = {
+  primary_school: "Primary School",
+  high_school: "High School",
+  faculty: "Faculty",
+  course: "Course",
+  workshop: "Workshop",
+  other: "Other",
 };
 
 export const AddNewDataModal = ({
@@ -26,6 +36,7 @@ export const AddNewDataModal = ({
   const [link, setLink] = useState<string>();
   const [level, setLevel] = useState<string>();
   const [type, setType] = useState<string>();
+  const [languageLevel, setLanguageLevel] = useState<string>();
 
   const formInputs: FormInputProps[] = [
     {
@@ -70,13 +81,40 @@ export const AddNewDataModal = ({
       name: "type",
       label: "Type",
       value: type,
+      options: Object.values(TypeEnum).map((type) => ({
+        label: educationTypeOptions[type],
+        value: type,
+      })),
+      type: "select",
       onChange: (value) => setType(value),
     },
     {
       name: "level",
       label: "Level",
+      type: "select",
       value: level,
+      options: [
+        { label: "Beginner", value: "Beginner" },
+        { label: "Intermediate", value: "Intermediate" },
+        { label: "Advanced", value: "Advanced" },
+      ],
       onChange: (value) => setLevel(value),
+    },
+    {
+      name: "languageLevel",
+      label: "Level",
+      value: languageLevel,
+      placeholder: "Select Language Level",
+      options: [
+        { label: "A1", value: "A1" },
+        { label: "A2", value: "A2" },
+        { label: "B1", value: "B1" },
+        { label: "B2", value: "B2" },
+        { label: "C1", value: "C1" },
+        { label: "C2", value: "C2" },
+      ],
+      type: "select",
+      onChange: (value) => setLanguageLevel(value),
     },
   ];
 
@@ -114,7 +152,7 @@ export const AddNewDataModal = ({
                 title,
                 description,
                 endDate: new Date(endDate ?? ""),
-                level,
+                level: level ?? languageLevel,
                 link,
                 location,
                 startDate: new Date(startDate ?? ""),

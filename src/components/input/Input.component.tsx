@@ -1,17 +1,5 @@
 import { cn } from "../../utils/cn.util";
-
-type InputProps = {
-  inputWrapperClass?: string;
-  rows?: number;
-  readonly?: boolean;
-  name: string;
-  label: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (value: string) => void;
-  props?: Record<string, unknown>;
-};
+import { InputProps } from "./input.types";
 
 export const Input = ({
   rows,

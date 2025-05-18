@@ -1,5 +1,5 @@
-import { itemsToReplaceFn } from "../../../component-marketplace/ComponentMarketplace.page";
 import Handlebars from "handlebars";
+import { itemsToReplaceFn } from "../../../component-marketplace/utils/itemsToReplaceFn.util";
 
 export const formatHtml = ({
   html,

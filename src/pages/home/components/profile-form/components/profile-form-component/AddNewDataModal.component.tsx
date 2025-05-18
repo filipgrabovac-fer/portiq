@@ -1,28 +1,18 @@
-import { XIcon } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
-import { FormInputProps, FormInputs } from "../../../FormInputs.component";
-import {
-  ProfileFormComponentTitle,
-  ProfileFormComponentType,
-  profileFormInputsByCategory,
-} from "./ProfileFormComponent.component";
-import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
 import { useQueryClient } from "@tanstack/react-query";
+import { XIcon } from "lucide-react";
+import { useState } from "react";
 import { TypeEnum } from "../../../../../../../generated-client";
-
-export type AddNewDataModalProps = {
-  setIsAddNewDataModalOpen: Dispatch<SetStateAction<boolean>>;
-  dataType: ProfileFormComponentType;
-};
-
-export const educationTypeOptions = {
-  primary_school: "Primary School",
-  high_school: "High School",
-  faculty: "Faculty",
-  course: "Course",
-  workshop: "Workshop",
-  other: "Other",
-};
+import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
+import {
+  AddNewDataModalProps,
+  educationTypeOptions,
+} from "./add-new-data-modal.types";
+import {
+  profileFormInputsByCategory,
+  ProfileFormComponentTitle,
+} from "./profile-form-component.types";
+import { FormInputProps } from "../../form-inputs.types";
+import { FormInputs } from "../../../FormInputs.component";
 
 export const AddNewDataModal = ({
   setIsAddNewDataModalOpen,
@@ -93,6 +83,7 @@ export const AddNewDataModal = ({
       label: "Level",
       type: "select",
       value: level,
+      placeholder: "Select Level",
       options: [
         { label: "Beginner", value: "Beginner" },
         { label: "Intermediate", value: "Intermediate" },

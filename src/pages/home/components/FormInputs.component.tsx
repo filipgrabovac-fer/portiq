@@ -1,25 +1,6 @@
 import { Input, Select } from "antd";
-import { Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react";
 import { cn } from "../../../utils/cn.util";
-
-export type FormProps = {
-  formInputs: FormInputProps[];
-  readonly?: boolean;
-};
-
-export type FormInputProps = {
-  label?: string;
-  name: string;
-  type?: HTMLInputTypeAttribute;
-  placeholder?: string;
-  value?: string;
-  onChange: Dispatch<SetStateAction<string | undefined>>;
-  props?: Record<string, unknown>;
-  inputWrapperClass?: string;
-  readonly?: boolean;
-  className?: string;
-  options?: { label: string; value: string }[];
-};
+import { FormProps } from "./profile-form/form-inputs.types";
 
 export const FormInputs = ({ formInputs, readonly }: FormProps) => {
   return (
@@ -30,8 +11,8 @@ export const FormInputs = ({ formInputs, readonly }: FormProps) => {
 
           {formInput.type === "select" ? (
             <Select
-              placeholder={formInput.placeholder ?? undefined}
-              value={formInput.value ?? ""}
+              placeholder={formInput.placeholder}
+              value={formInput.value}
               onChange={(value) => formInput.onChange(value as string)}
               options={formInput.options}
             />
@@ -39,8 +20,8 @@ export const FormInputs = ({ formInputs, readonly }: FormProps) => {
             <Input
               name={formInput.name}
               type={formInput.type ?? "text"}
-              placeholder={formInput.placeholder ?? ""}
-              value={formInput.value ?? ""}
+              placeholder={formInput.placeholder}
+              value={formInput.value}
               onChange={(event) => formInput.onChange(event.target.value)}
               readOnly={readonly}
               className={cn(

@@ -1,16 +1,6 @@
 import { Input } from "../../../../components/input/Input.component";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-
-type CodeInputFormProps = {
-  html: string;
-  css: string;
-  js: string;
-  title: string;
-  setHtml: (html: string) => void;
-  setCss: (css: string) => void;
-  setJs: (js: string) => void;
-  setTitle: (title: string) => void;
-};
+import { CodeInputFormProps } from "./code-input-form.types";
 
 export const CodeInputForm = ({
   html,

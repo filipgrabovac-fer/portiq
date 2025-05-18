@@ -2,7 +2,7 @@ import { UserDetails } from "../../../../../generated-client";
 import { cn } from "../../../../utils/cn.util";
 import { ComponentRender } from "../../../web-portfolio/components/component-render/ComponentRender.component";
 import { useGetProfileComponentCode } from "../../../web-portfolio/hooks/useGetProfileComponentCode.hook";
-import { ProfileFormComponentItemType } from "../profile-form/components/profile-form-component/ProfileFormComponent.component";
+import { ProfileFormComponentItemType } from "../profile-form/components/profile-form-component/profile-form-component.types";
 
 export const PdfPreview = ({
   userData,

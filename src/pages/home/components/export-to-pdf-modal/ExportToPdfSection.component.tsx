@@ -1,11 +1,10 @@
 import { Checkbox } from "antd";
+import { cn } from "../../../../utils/cn.util";
 import {
+  ProfileFormComponentType,
   ProfileFormComponentItemType,
   ProfileFormComponentTitle,
-  ProfileFormComponentType,
-} from "../profile-form/components/profile-form-component/ProfileFormComponent.component";
-import { useEffect, useState } from "react";
-import { cn } from "../../../../utils/cn.util";
+} from "../profile-form/components/profile-form-component/profile-form-component.types";
 
 export type ExportToPdfSectionProps = {
   items: Record<string, string>[];
@@ -13,6 +12,7 @@ export type ExportToPdfSectionProps = {
   selectedItemIds: Record<string, string[]>;
   setSelectedItemIds: (ids: Record<string, string[]>) => void;
 };
+
 export const ExportToPdfSection = ({
   items,
   type,

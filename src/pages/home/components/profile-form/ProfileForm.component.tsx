@@ -4,10 +4,10 @@ import { AddNewDataButton } from "../../../../components/add-new-data-button/Add
 import { cn } from "../../../../utils/cn.util";
 import { AddNewDataModal } from "./components/profile-form-component/AddNewDataModal.component";
 import {
-  ProfileFormComponent,
   ProfileFormComponentItemType,
   ProfileFormComponentType,
-} from "./components/profile-form-component/ProfileFormComponent.component";
+} from "./components/profile-form-component/profile-form-component.types";
+import { ProfileFormComponent } from "./components/profile-form-component/ProfileFormComponent.component";
 
 export type ProfileFormProps = {
   sectionTitle: string;

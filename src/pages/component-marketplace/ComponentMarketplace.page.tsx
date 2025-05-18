@@ -5,25 +5,7 @@ import { useGetComponentData } from "./hooks/useGetComponentData.hook";
 import { useGetSelectedComponents } from "./hooks/useGetSelectedComponents.hook";
 import { GetSelectedComponents, UserDetails } from "../../../generated-client";
 import { usePutSelectedComponents } from "./hooks/usePutSelectedComponents.hook";
-import { objectToCamel } from "ts-case-convert";
 import { cn } from "../../utils/cn.util";
-
-export const itemsToReplaceFn = (data: Record<string, any>) => {
-  return Object.entries(objectToCamel(data) ?? {})
-    .map(([variableName, variableValue]) => {
-      if (Array.isArray(variableValue)) {
-        return {
-          key: variableValue[0].toString(),
-          value: variableValue[0][1]?.toString() ?? "",
-        };
-      }
-      return {
-        key: variableName.toString(),
-        value: variableValue?.toString() ?? "",
-      };
-    })
-    .flat();
-};
 
 export const ComponentMarketplace = () => {
   const { data: userData } = useGetUserData();

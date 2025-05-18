@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "http://localhost:8000".replace(/\/+$/, "");
+export const BASE_PATH = "https://portiq-production.up.railway.app".replace(/\/+$/, "");
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path

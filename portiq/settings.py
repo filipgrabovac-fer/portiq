@@ -7,8 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-siy6g$u&^1(u1bc)5&9n4^9zg-s1we_cxsvk^*_c)2-)vz2d#f'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -149,7 +148,6 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'SERVERS': [
-        {'url': 'http://localhost:8000', 'description': 'Local Development server'},
         {'url': 'https://portiq-production.up.railway.app', 'description': 'production'},
     ],
     'TAGS': [

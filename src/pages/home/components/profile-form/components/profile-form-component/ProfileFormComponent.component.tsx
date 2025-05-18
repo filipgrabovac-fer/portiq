@@ -1,6 +1,5 @@
 import { Delete, EditIcon, SaveIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
-import { FormInputProps, FormInputs } from "../../../FormInputs.component";
 import { useDeleteProfileComponent } from "../../../../../hooks/useDeleteProfileComponent.hook";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePutProfileComponent } from "../../../../../hooks/usePutProfileComponent.hook";
@@ -9,6 +8,8 @@ import {
   profileFormInputsByCategory,
   ProfileFormHookDataProps,
 } from "./profile-form-component.types";
+import { FormInputProps } from "../../form-inputs.types";
+import { FormInputs } from "../../../FormInputs.component";
 
 export const ProfileFormComponent = ({
   item,

@@ -5,6 +5,7 @@ import {
   HomeIcon,
   MenuIcon,
   PaintBucket,
+  PaperclipIcon,
   XIcon,
 } from "lucide-react";
 import { useState } from "react";
@@ -14,12 +15,16 @@ import QRCode from "react-qr-code";
 import { ExportToPdfModal } from "../pages/home/components/export-to-pdf-modal/ExportToPdfModal.component";
 import { useGetUserData } from "../pages/home/hooks/useGetUserData.hook";
 import { useGetUserId } from "../pages/home/hooks/useGetUserId.hook";
+import { componentMarketplaceRoute } from "../routes/component-marketplace.routes";
 import { developmentRoute } from "../routes/development.routes";
 import { homeRoute } from "../routes/home.routes";
 import { loginRoute } from "../routes/login.routes";
 import { webPortfolioRoute } from "../routes/web-portfolio.routes";
 import { logoutApi } from "../schema";
-import { componentMarketplaceRoute } from "../routes/component-marketplace.routes";
+import {
+  NavigationIcon,
+  NavigationIconProps,
+} from "./components/NavigationIcon.component";
 
 export const MainLayout = () => {
   const { data: userId } = useGetUserId();
@@ -28,6 +33,38 @@ export const MainLayout = () => {
 
   const { data: userData } = useGetUserData();
   const [isExportToPdfActive, setIsExportToPdfActive] = useState(false);
+
+  const navigationIcons: NavigationIconProps[] = [
+    {
+      text: "Home",
+      Icon: HomeIcon,
+      setAction: () => {
+        setIsSidebarOpen(false);
+        navigate({ to: homeRoute.to });
+      },
+    },
+    {
+      text: "Portfolio",
+      Icon: FileUserIcon,
+      setAction: () => {
+        setIsSidebarOpen(false);
+        navigate({ to: webPortfolioRoute.to, params: { userId } });
+      },
+    },
+    {
+      text: "PDF",
+      Icon: FileIcon,
+      setAction: () => setIsExportToPdfActive(true),
+    },
+    {
+      text: "Style",
+      Icon: PaintBucket,
+      setAction: () => {
+        setIsSidebarOpen(false);
+        navigate({ to: componentMarketplaceRoute.to });
+      },
+    },
+  ];
   return (
     <div className="h-screen w-screen flex">
       <button
@@ -48,49 +85,30 @@ export const MainLayout = () => {
       >
         <div className="my-auto flex flex-col gap-4 items-center">
           <div className="w-40 m-auto rounded-md flex flex-col justify-center">
-            <p
+            <div
               className={cn(
-                "text-black top-[-1.5rem] font-bold z-0 text-center"
+                "text-black top-[-1.5rem] font-bold z-0 text-center flex items-center gap-2 mx-auto m-2"
               )}
             >
-              Scan QR Code
-            </p>
+              <p>Share QR Code</p>
+              <PaperclipIcon
+                className="w-6 h-6 cursor-pointer"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `http://localhost:3000/user/${userId}/web-portfolio`
+                  );
+                }}
+              />
+            </div>
             <QRCode
               value={`http://localhost:3000/user/${userId}/web-portfolio`}
               className="w-full h-full"
             />
           </div>
           <div className="flex gap-2">
-            <HomeIcon
-              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
-              onClick={() => {
-                setIsSidebarOpen(false);
-                navigate({ to: homeRoute.to });
-              }}
-            />
-
-            <FileUserIcon
-              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
-              onClick={() => {
-                setIsSidebarOpen(false);
-                navigate({
-                  to: webPortfolioRoute.to,
-                  params: { userId: userId },
-                });
-              }}
-            />
-            <FileIcon
-              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
-              onClick={() => setIsExportToPdfActive(true)}
-            />
-            <PaintBucket
-              onClick={() => {
-                setIsSidebarOpen(false);
-
-                navigate({ to: componentMarketplaceRoute.to });
-              }}
-              className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
-            />
+            {navigationIcons.map((icon) => (
+              <NavigationIcon key={icon.text} {...icon} />
+            ))}
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-4">

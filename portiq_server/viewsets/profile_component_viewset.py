@@ -160,6 +160,7 @@ class ProfileComponentViewSet(viewsets.ViewSet):
             "id_hobby_development",
             "id_project_development",
             "id_other_development",
+            "id_language_development",
         ).first()
 
         for portfolio_component_key, portfolio_component_value in portfolio_template.items():

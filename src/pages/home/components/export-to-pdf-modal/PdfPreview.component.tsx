@@ -1,4 +1,4 @@
-import { UserDetails } from "../../../../../generated-client";
+import { GetComponentCode, UserDetails } from "../../../../../generated-client";
 import { cn } from "../../../../utils/cn.util";
 import { ComponentRender } from "../../../web-portfolio/components/component-render/ComponentRender.component";
 import { useGetProfileComponentCode } from "../../../web-portfolio/hooks/useGetProfileComponentCode.hook";
@@ -41,13 +41,18 @@ export const PdfPreview = ({
       )}
     >
       <div ref={pdfRef}>
-        {filteredData.map((item) => (
-          <ComponentRender
-            componentData={Object.values(item ?? {})[0]}
-            // @ts-ignore
-            componentCode={componentCodeData?.[Object.keys(item ?? {})[0]]}
-          />
-        ))}
+        {filteredData.map((item) => {
+          return (
+            <ComponentRender
+              componentData={Object.values(item ?? {})[0]}
+              componentCode={
+                componentCodeData?.[
+                  Object.keys(item ?? {})[0] as keyof GetComponentCode
+                ]
+              }
+            />
+          );
+        })}
       </div>
     </div>
   );

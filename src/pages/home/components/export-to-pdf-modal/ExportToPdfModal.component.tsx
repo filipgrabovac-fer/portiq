@@ -2,13 +2,13 @@ import { DownloadIcon, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import { UserDetails } from "../../../../../generated-client";
-import {
-  ProfileFormComponentItemType,
-  ProfileFormComponentType,
-} from "../profile-form/components/profile-form-component/ProfileFormComponent.component";
 import { ExportToPdfSection } from "./ExportToPdfSection.component";
 import { PdfPreview } from "./PdfPreview.component";
 import { cn } from "../../../../utils/cn.util";
+import {
+  ProfileFormComponentItemType,
+  ProfileFormComponentType,
+} from "../profile-form/components/profile-form-component/profile-form-component.types";
 
 export type ExportToPdfModalProps = {
   userData: UserDetails;

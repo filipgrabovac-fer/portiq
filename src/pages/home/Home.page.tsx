@@ -1,6 +1,5 @@
-import { Link } from "@tanstack/react-router";
 import { PersonalInfoForm } from "./components/personal-info-form/PersonalInfoForm.component";
-import { ProfileFormComponentType } from "./components/profile-form/components/profile-form-component/ProfileFormComponent.component";
+import { ProfileFormComponentType } from "./components/profile-form/components/profile-form-component/profile-form-component.types";
 import {
   ProfileForm,
   ProfileFormProps,
@@ -21,7 +20,6 @@ export enum UserDataKeysEnum {
 }
 
 import { objectToCamel } from "ts-case-convert";
-import { componentMarketplaceRoute } from "../../routes/component-marketplace.routes";
 
 type UserDataKey = keyof typeof UserDataKeysEnum;
 

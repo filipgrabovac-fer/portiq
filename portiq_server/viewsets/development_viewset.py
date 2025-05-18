@@ -154,7 +154,6 @@ class DevelopmentViewSet(viewsets.ViewSet):
         selected_components = PortfolioTemplate.objects.filter(id_user=cache.get("user")["id_user"]).first()
         serializer = GetSelectedComponentsSerializer(instance=selected_components)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
     @extend_schema(
         request=GetSelectedComponentsSerializer,
@@ -163,14 +162,15 @@ class DevelopmentViewSet(viewsets.ViewSet):
     def update_selected_components(self, request):
         data = request.data
         user_id = cache.get("user")["id_user"]
-        selected_components = PortfolioTemplate.objects.filter(id_user=user_id).values()
+        user = User.objects.get(id_user=user_id)
         data["id_user"] = user_id
-        data["id_portfolio_template"] = selected_components[0]["id_portfolio_template"]
 
         serializer = PutSelectedComponentsSerializer(data=data)
        
         if serializer.is_valid():
             portfolio_template = PortfolioTemplate.objects.filter(id_user=user_id).first()
+            if not portfolio_template:
+                portfolio_template = PortfolioTemplate.objects.create(id_user=user)
 
             portfolio_template.id_user_info_development = UserInfoDevelopment.objects.filter(pk=data.get("id_user_info_development")).first()
             portfolio_template.id_skill_development = SkillDevelopment.objects.filter(pk=data.get("id_skill_development")).first()

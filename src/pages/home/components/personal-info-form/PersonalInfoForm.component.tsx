@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { FormInputs, FormInputProps } from "../FormInputs.component";
+import { FormInputs } from "../FormInputs.component";
 import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
 import { EditIcon, SaveIcon, TrashIcon } from "lucide-react";
 import { usePutUserData } from "../../hooks/usePutUserData.hook";
 import { useQueryClient } from "@tanstack/react-query";
+import { FormInputProps } from "../profile-form/form-inputs.types";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;

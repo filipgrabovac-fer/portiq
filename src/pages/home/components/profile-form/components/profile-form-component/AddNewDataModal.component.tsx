@@ -2,6 +2,7 @@ import { XIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FormInputProps, FormInputs } from "../../../FormInputs.component";
 import {
+  ProfileFormComponentTitle,
   ProfileFormComponentType,
   profileFormInputsByCategory,
 } from "./ProfileFormComponent.component";
@@ -95,7 +96,10 @@ export const AddNewDataModal = ({
   });
   return (
     <div className="absolute top-0 left-0 bg-black/80 h-screen w-screen z-10">
-      <div className="relative bg-white w-full sm:w-4/5 md:w-3/5 lg:w-2/5 max-w-6xl rounded-md p-16 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="relative bg-white w-full sm:w-4/5 md:w-3/5 lg:w-2/5 md:max-w-6xl pt-16 max-w-full rounded-md p-4 md:p-16 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full md:h-max flex flex-col">
+        <h1 className="text-2xl font-semibold mb-8">
+          {ProfileFormComponentTitle[dataType]}
+        </h1>
         <XIcon
           className="absolute top-5 right-5 cursor-pointer"
           onClick={() => setIsAddNewDataModalOpen(false)}

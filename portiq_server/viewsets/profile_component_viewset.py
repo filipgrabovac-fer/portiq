@@ -69,7 +69,7 @@ SERIALIZER_MAPPING = {
     'education': EducationSerializer,
     'skills': SkillSerializer,
     'projects': ProjectSerializer,
-    'language': LanguageSerializer,
+    'languages': LanguageSerializer,
     'other': OtherSerializer,
     'hobbies': HobbySerializer
 }
@@ -100,6 +100,7 @@ class ProfileComponentViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'], url_path="profile-component-delete")
     def component_delete(self, request):
         serializer = ProfileComponentDestroySerializer(data=request.data)
+
         if serializer.is_valid():
             model = MODEL_MAPPING[serializer.validated_data["type"]]
             model.objects.filter(pk=serializer.validated_data["id"]).delete()

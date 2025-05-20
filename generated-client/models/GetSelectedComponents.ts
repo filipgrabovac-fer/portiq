@@ -79,6 +79,12 @@ export interface GetSelectedComponents {
      * @memberof GetSelectedComponents
      */
     idWorkExperienceDevelopment?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetSelectedComponents
+     */
+    idGithubDataDevelopment?: number | null;
 }
 
 /**
@@ -108,6 +114,7 @@ export function GetSelectedComponentsFromJSONTyped(json: any, ignoreDiscriminato
         'idOtherDevelopment': json['id_other_development'] == null ? undefined : json['id_other_development'],
         'idReferenceDevelopment': json['id_reference_development'] == null ? undefined : json['id_reference_development'],
         'idWorkExperienceDevelopment': json['id_work_experience_development'] == null ? undefined : json['id_work_experience_development'],
+        'idGithubDataDevelopment': json['id_github_data_development'] == null ? undefined : json['id_github_data_development'],
     };
 }
 
@@ -132,6 +139,7 @@ export function GetSelectedComponentsToJSONTyped(value?: GetSelectedComponents |
         'id_other_development': value['idOtherDevelopment'],
         'id_reference_development': value['idReferenceDevelopment'],
         'id_work_experience_development': value['idWorkExperienceDevelopment'],
+        'id_github_data_development': value['idGithubDataDevelopment'],
     };
 }
 

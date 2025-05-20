@@ -8,6 +8,7 @@ from portiq_server.models.development.certificate_development import Certificate
 from portiq_server.models.development.code_development import CodeDevelopment
 from portiq_server.models.development.css_development import CssDevelopment
 from portiq_server.models.development.education_development import EducationDevelopment
+from portiq_server.models.development.github_data_development import GithubDataDevelopment
 from portiq_server.models.development.hobby_development import HobbyDevelopment
 from portiq_server.models.development.html_development import HtmlDevelopment
 from portiq_server.models.development.javascript_development import JavascriptDevelopment
@@ -98,7 +99,8 @@ COMPONENT_MODEL_MAPPING = {
     "hobbies": HobbyDevelopment,
     "info": UserInfoDevelopment,
     "work_experiences": WorkExperienceDevelopment,
-    "references": ReferenceDevelopment
+    "references": ReferenceDevelopment,
+    "github_data": GithubDataDevelopment
 }
 
 COMPONENT_TYPE_BY_ID = {
@@ -111,7 +113,8 @@ COMPONENT_TYPE_BY_ID = {
     "id_hobby_development": "hobbies",
     "id_user_info_development": "info",
     "id_work_experience_development": "work_experiences",
-    "id_reference_development": "references"
+    "id_reference_development": "references",
+    "id_github_data_development": "github_data"
 }
 
 class ProfileComponentViewSet(viewsets.ViewSet):
@@ -180,7 +183,8 @@ class ProfileComponentViewSet(viewsets.ViewSet):
             "id_other_development",
             "id_language_development",
             "id_work_experience_development",
-            "id_reference_development"
+            "id_reference_development",
+            "id_github_data_development"
         ).first()
 
         for portfolio_component_key, portfolio_component_value in portfolio_template.items():
@@ -188,7 +192,6 @@ class ProfileComponentViewSet(viewsets.ViewSet):
                 continue
             code = retrieve_component_code(portfolio_component_key, portfolio_component_value)
             portfolio_template_code.update({COMPONENT_TYPE_BY_ID[portfolio_component_key]: code})
-
 
         return Response(portfolio_template_code, status=status.HTTP_200_OK)
 

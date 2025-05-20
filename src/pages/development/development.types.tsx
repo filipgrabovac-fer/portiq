@@ -18,6 +18,7 @@ export enum GroupType {
   HOBBY = "hobby",
   REFERENCE = "reference",
   WORK_EXPERIENCE = "workExperience",
+  GITHUB = "githubData",
   OTHER = "other",
 }
 
@@ -79,6 +80,11 @@ export const items: TabsProps["items"] = [
   },
   {
     key: "9",
+    label: "Github",
+    children: null,
+  },
+  {
+    key: "10",
     label: "Other",
     children: null,
   },

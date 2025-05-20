@@ -1,9 +1,11 @@
+import { githubApi } from "../../schema";
 import { PersonalInfoForm } from "./components/personal-info-form/PersonalInfoForm.component";
 import { ProfileFormComponentType } from "./components/profile-form/components/profile-form-component/profile-form-component.types";
 import {
   ProfileForm,
   ProfileFormProps,
 } from "./components/profile-form/ProfileForm.component";
+import { useGetGithubRepo } from "./hooks/useGetGithubRepo.hook";
 import {
   useGetUserData,
   UserDetailsInfoType,
@@ -31,6 +33,7 @@ const isKeyOfUserData = (key: string): key is UserDataKey => {
 
 export const Home = () => {
   const { data: userData } = useGetUserData();
+  const { mutate: getGithubRepo } = useGetGithubRepo();
 
   return (
     <div className="h-screen">

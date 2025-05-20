@@ -10,6 +10,7 @@ from portiq_server.models.development.certificate_development import Certificate
 from portiq_server.models.development.code_development import CodeDevelopment
 from portiq_server.models.development.css_development import CssDevelopment
 from portiq_server.models.development.education_development import EducationDevelopment
+from portiq_server.models.development.github_data_development import GithubDataDevelopment
 from portiq_server.models.development.hobby_development import HobbyDevelopment
 from portiq_server.models.development.html_development import HtmlDevelopment
 from portiq_server.models.development.javascript_development import JavascriptDevelopment
@@ -53,6 +54,7 @@ MODEL_MAPPING = {
     "hobby": HobbyDevelopment,
     "references": ReferenceDevelopment,
     "workExperiences": WorkExperienceDevelopment,
+    "githubData": GithubDataDevelopment,
 }
 
 class DevelopmentViewSet(viewsets.ViewSet):
@@ -70,6 +72,7 @@ class DevelopmentViewSet(viewsets.ViewSet):
     skill = SkillDevelopment.objects.all()
     work_experience = WorkExperienceDevelopment.objects.all()
     reference = ReferenceDevelopment.objects.all()
+    github_data = GithubDataDevelopment.objects.all()
     @extend_schema(
         request=DevelopmentSerializer,
         responses={200: DevelopmentResponseSerializer},
@@ -129,6 +132,8 @@ class DevelopmentViewSet(viewsets.ViewSet):
         other = OtherDevelopment.objects.all().values("id_code", "title", "pk")
         work_experiences = WorkExperienceDevelopment.objects.all().values("id_code", "title", "pk")
         references = ReferenceDevelopment.objects.all().values("id_code", "title", "pk")
+        github_data = GithubDataDevelopment.objects.all().values("id_code", "title", "pk")
+
         personal_info = get_component_code(personal_info)
         skills = get_component_code(skills)
         languages = get_component_code(languages)
@@ -139,6 +144,7 @@ class DevelopmentViewSet(viewsets.ViewSet):
         other = get_component_code(other)
         work_experiences = get_component_code(work_experiences)
         references = get_component_code(references)
+        github_data = get_component_code(github_data)
 
         data = {
             "info": personal_info,
@@ -151,8 +157,11 @@ class DevelopmentViewSet(viewsets.ViewSet):
             "other": other,
             "work_experiences": work_experiences,
             "references": references,
+            "github_data": github_data,
         }
 
+
+        print(data)
         return Response(data, status=status.HTTP_200_OK)
     
 
@@ -192,6 +201,9 @@ class DevelopmentViewSet(viewsets.ViewSet):
             portfolio_template.id_other_development = OtherDevelopment.objects.filter(pk=data.get("id_other_development")).first()
             portfolio_template.id_reference_development = ReferenceDevelopment.objects.filter(pk=data.get("id_reference_development")).first()
             portfolio_template.id_work_experience_development = WorkExperienceDevelopment.objects.filter(pk=data.get("id_work_experience_development")).first()
+            portfolio_template.id_github_data_development = GithubDataDevelopment.objects.filter(pk=data.get("id_github_data_development")).first()
+
+            
             portfolio_template.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

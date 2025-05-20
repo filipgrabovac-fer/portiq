@@ -10,6 +10,11 @@ import {
 } from "./profile-form-component.types";
 import { FormInputProps } from "../../form-inputs.types";
 import { FormInputs } from "../../../FormInputs.component";
+import {
+  educationLevelOptions,
+  educationTypeOptions,
+  languageLevelOptions,
+} from "./add-new-data-modal.types";
 
 export const ProfileFormComponent = ({
   item,
@@ -30,9 +35,6 @@ export const ProfileFormComponent = ({
   const [link, setLink] = useState<string | undefined>(item.link);
   const [level, setLevel] = useState<string | undefined>(item.level);
   const [type, setType] = useState<string | undefined>(item.type);
-  const [languageLevel, setLanguageLevel] = useState<string | undefined>(
-    item.level
-  );
 
   const formInputs: FormInputProps[] = [
     {
@@ -77,19 +79,23 @@ export const ProfileFormComponent = ({
       name: "type",
       label: "Type",
       value: type,
+      type: "select",
+      options: Object.entries(educationTypeOptions).map(([key, value]) => ({
+        label: value,
+        value: key,
+      })),
       onChange: (value) => setType(value),
     },
     {
       name: "level",
       label: "Level",
       value: level,
+      type: "select",
+      options:
+        profileFormComponentType === "languages"
+          ? languageLevelOptions
+          : educationLevelOptions,
       onChange: (value) => setLevel(value),
-    },
-    {
-      name: "languageLevel",
-      label: "Language Level",
-      value: languageLevel,
-      onChange: (value) => setLanguageLevel(value),
     },
   ];
 
@@ -130,6 +136,14 @@ export const ProfileFormComponent = ({
     });
   };
 
+  const formattedLevel =
+    profileFormComponentType === "languages"
+      ? languageLevelOptions.find((option) => option.value === level)?.label
+      : educationLevelOptions.find((option) => option.value === level)?.label;
+
+  const formattedType =
+    educationTypeOptions[item.type as keyof typeof educationTypeOptions];
+
   return (
     <div className="flex flex-col gap-2 rounded-md flex-1 p-2 pb-2 relative">
       <div className="absolute top-0 right-0">
@@ -147,6 +161,7 @@ export const ProfileFormComponent = ({
                     endDate: endDate ?? "",
                     location: location ?? "",
                     link: link ?? "",
+                    level: level ?? "",
                   },
                 });
                 setIsEditing(false);
@@ -197,12 +212,11 @@ export const ProfileFormComponent = ({
               {allowedProfileFormInputs.includes("link") && (
                 <p>Link: {item.link}</p>
               )}
-              {allowedProfileFormInputs.includes("level") ||
-                (allowedProfileFormInputs.includes("languageLevel") && (
-                  <p>Level: {item.level}</p>
-                ))}
+              {allowedProfileFormInputs.includes("level") && (
+                <p>Level: {formattedLevel}</p>
+              )}
               {allowedProfileFormInputs.includes("type") && (
-                <p>Type: {item.type}</p>
+                <p>Type: {formattedType}</p>
               )}
             </div>
             <div>

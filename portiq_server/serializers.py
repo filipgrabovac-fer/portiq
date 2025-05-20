@@ -14,7 +14,7 @@ from .models.certificate import Certificate
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [ "id_user", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country", "created_at"]
+        fields = [ "id_user", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country", "created_at", "github_username"]
 
 class CertificateSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='id_certificate')
@@ -35,7 +35,7 @@ class EducationSerializer(serializers.ModelSerializer):
 class PutUserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [ "first_name", "last_name", "email", "phone_number", "address", "city", "state", "zip_code", "country"]
+        fields = [ "first_name", "last_name", "email", "phone_number", "address", "city", "state", "zip_code", "country", "github_username"]
 
 class ProfileComponentDestroySerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
@@ -187,12 +187,13 @@ class DevelopmentCodeResponseSerializer(serializers.Serializer):
     other = CodeSerializer(many=True)
     references = CodeSerializer(many=True)
     work_experiences = CodeSerializer(many=True)
+    github_data = CodeSerializer(many=True)
 
 class GetSelectedComponentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=PortfolioTemplate
-        fields = ["id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development", "id_reference_development", "id_work_experience_development"]
+        fields = ["id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development", "id_reference_development", "id_work_experience_development", "id_github_data_development"]
 
 class PutSelectedComponentsSerializer(serializers.ModelSerializer):
     id_user_info_development = serializers.IntegerField(required=False, allow_null=True)
@@ -205,10 +206,10 @@ class PutSelectedComponentsSerializer(serializers.ModelSerializer):
     id_other_development = serializers.IntegerField(required=False, allow_null=True)
     id_reference_development = serializers.IntegerField(required=False, allow_null=True)
     id_work_experience_development = serializers.IntegerField(required=False, allow_null=True)
-
+    id_github_data_development = serializers.IntegerField(required=False, allow_null=True)
     class Meta:
         model=PortfolioTemplate
-        fields = ["id_user", "id_portfolio_template","id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development", "id_reference_development", "id_work_experience_development"]
+        fields = ["id_user", "id_portfolio_template","id_user_info_development","id_skill_development","id_language_development","id_project_development","id_certificate_development","id_education_development" ,"id_hobby_development","id_other_development", "id_reference_development", "id_work_experience_development", "id_github_data_development"]
 
 
 class CodeType(serializers.Serializer):
@@ -227,6 +228,7 @@ class GetComponentCodeSerializer(serializers.Serializer):
     other = CodeType(required=True)
     references = CodeType(required=True)
     work_experiences = CodeType(required=True)
+    github_data = CodeType(required=True)
     
 class UserLoggedInSerializer(serializers.Serializer):
     id_user = serializers.IntegerField(required=True)

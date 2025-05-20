@@ -73,6 +73,12 @@ export interface PutUserData {
      * @memberof PutUserData
      */
     country?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof PutUserData
+     */
+    githubUsername?: string | null;
 }
 
 /**
@@ -104,6 +110,7 @@ export function PutUserDataFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'state': json['state'] == null ? undefined : json['state'],
         'zipCode': json['zip_code'] == null ? undefined : json['zip_code'],
         'country': json['country'] == null ? undefined : json['country'],
+        'githubUsername': json['github_username'] == null ? undefined : json['github_username'],
     };
 }
 
@@ -127,6 +134,7 @@ export function PutUserDataToJSONTyped(value?: PutUserData | null, ignoreDiscrim
         'state': value['state'],
         'zip_code': value['zipCode'],
         'country': value['country'],
+        'github_username': value['githubUsername'],
     };
 }
 

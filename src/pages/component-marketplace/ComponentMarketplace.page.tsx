@@ -6,6 +6,7 @@ import { useGetSelectedComponents } from "./hooks/useGetSelectedComponents.hook"
 import { GetSelectedComponents, UserDetails } from "../../../generated-client";
 import { usePutSelectedComponents } from "./hooks/usePutSelectedComponents.hook";
 import { cn } from "../../utils/cn.util";
+import { ComponentTitleMappingEnum } from "./components/component-section.types";
 
 export const ComponentMarketplace = () => {
   const { data: userData } = useGetUserData();
@@ -45,7 +46,7 @@ export const ComponentMarketplace = () => {
           return (
             <ComponentSection
               data={data}
-              title={key}
+              title={key as keyof typeof ComponentTitleMappingEnum}
               itemsToReplace={
                 // @ts-ignore
                 userData?.[key as keyof UserDetails]?.[0] ?? {}

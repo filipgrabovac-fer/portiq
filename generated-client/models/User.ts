@@ -91,6 +91,12 @@ export interface User {
      * @memberof User
      */
     readonly createdAt: Date;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    githubUsername?: string | null;
 }
 
 /**
@@ -127,6 +133,7 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
         'zipCode': json['zip_code'] == null ? undefined : json['zip_code'],
         'country': json['country'] == null ? undefined : json['country'],
         'createdAt': (new Date(json['created_at'])),
+        'githubUsername': json['github_username'] == null ? undefined : json['github_username'],
     };
 }
 
@@ -151,6 +158,7 @@ export function UserToJSONTyped(value?: Omit<User, 'id_user'|'created_at'> | nul
         'state': value['state'],
         'zip_code': value['zipCode'],
         'country': value['country'],
+        'github_username': value['githubUsername'],
     };
 }
 

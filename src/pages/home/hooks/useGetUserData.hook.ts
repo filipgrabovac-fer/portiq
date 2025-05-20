@@ -7,6 +7,7 @@ export type UserDetailsInfoType = {
   country: string;
   email: string;
   first_name: string;
+  github_username?: string;
   image_url?: string;
   last_name: string;
   phone_number: string;

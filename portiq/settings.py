@@ -154,10 +154,6 @@ SPECTACULAR_SETTINGS = {
         'description': 'User management endpoints'
     },
     {
-        'name': 'certificate',
-        'description': 'Certificate management endpoints'
-    },
-    {
         'name': 'logout',
         'description': 'Authentication related endpoints'
     },
@@ -173,6 +169,10 @@ SPECTACULAR_SETTINGS = {
         'name': 'profile-component',
         'description': 'Profile component endpoints'
     },
+    {
+        'name':"github",
+        'description': 'Github endpoints'
+    }
     ],
     'SCHEMA_PATH_PREFIX': '/api/',
 }

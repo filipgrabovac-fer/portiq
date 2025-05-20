@@ -87,6 +87,12 @@ export interface GetComponentCode {
      * @memberof GetComponentCode
      */
     workExperiences: CodeType;
+    /**
+     * 
+     * @type {CodeType}
+     * @memberof GetComponentCode
+     */
+    githubData: CodeType;
 }
 
 /**
@@ -103,6 +109,7 @@ export function instanceOfGetComponentCode(value: object): value is GetComponent
     if (!('other' in value) || value['other'] === undefined) return false;
     if (!('references' in value) || value['references'] === undefined) return false;
     if (!('workExperiences' in value) || value['workExperiences'] === undefined) return false;
+    if (!('githubData' in value) || value['githubData'] === undefined) return false;
     return true;
 }
 
@@ -126,6 +133,7 @@ export function GetComponentCodeFromJSONTyped(json: any, ignoreDiscriminator: bo
         'other': CodeTypeFromJSON(json['other']),
         'references': CodeTypeFromJSON(json['references']),
         'workExperiences': CodeTypeFromJSON(json['work_experiences']),
+        'githubData': CodeTypeFromJSON(json['github_data']),
     };
 }
 
@@ -150,6 +158,7 @@ export function GetComponentCodeToJSONTyped(value?: GetComponentCode | null, ign
         'other': CodeTypeToJSON(value['other']),
         'references': CodeTypeToJSON(value['references']),
         'work_experiences': CodeTypeToJSON(value['workExperiences']),
+        'github_data': CodeTypeToJSON(value['githubData']),
     };
 }
 

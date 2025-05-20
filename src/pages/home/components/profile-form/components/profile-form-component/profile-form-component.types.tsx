@@ -31,7 +31,7 @@ export const profileFormInputsByCategory = {
   ],
   skills: ["title", "description", "location", "level", "link"],
   projects: ["title", "description", "startDate", "endDate", "location"],
-  languages: ["title", "languageLevel"],
+  languages: ["title", "level"],
   other: ["title", "description", "startDate", "endDate", "location", "link"],
   hobbies: ["title", "description"],
   workExperiences: ["title", "description", "startDate", "endDate", "location"],

@@ -1,5 +1,6 @@
 import {
   DevelopmentApi,
+  GithubApi,
   LogoutApi,
   ProfileComponentApi,
   UserApi,
@@ -12,3 +13,4 @@ export const userDetailsApi: UserDetailsApi = new UserDetailsApi();
 export const developmentApi: DevelopmentApi = new DevelopmentApi();
 export const profileComponentApi: ProfileComponentApi =
   new ProfileComponentApi();
+export const githubApi: GithubApi = new GithubApi();

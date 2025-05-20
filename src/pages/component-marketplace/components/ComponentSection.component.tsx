@@ -2,6 +2,7 @@ import { cn } from "../../../utils/cn.util";
 import { ComponentRender } from "../../web-portfolio/components/component-render/ComponentRender.component";
 import {
   ComponentSectionProps,
+  ComponentTitleMappingEnum,
   ComponentTypeMappingEnum,
 } from "./component-section.types";
 
@@ -18,7 +19,13 @@ export const ComponentSection = ({
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <h1 className="text-2xl font-bold">{title}</h1>
+      <h1 className="text-2xl font-bold">
+        {
+          ComponentTitleMappingEnum[
+            title as keyof typeof ComponentTitleMappingEnum
+          ]
+        }
+      </h1>
       {data.length == 0 && <p className="mx-auto">No components found</p>}
       {data.map((item) => {
         return (

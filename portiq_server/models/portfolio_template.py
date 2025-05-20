@@ -2,6 +2,7 @@ from django.db import models
 
 from portiq_server.models.development.certificate_development import CertificateDevelopment
 from portiq_server.models.development.education_development import EducationDevelopment
+from portiq_server.models.development.github_data_development import GithubDataDevelopment
 from portiq_server.models.development.hobby_development import HobbyDevelopment
 from portiq_server.models.development.language_development import LanguageDevelopment
 from portiq_server.models.development.other_development import OtherDevelopment
@@ -31,6 +32,7 @@ class PortfolioTemplate(models.Model):
     id_language_development = models.ForeignKey(LanguageDevelopment, on_delete=models.CASCADE, null=True, blank=True)
     id_reference_development = models.ForeignKey(ReferenceDevelopment, on_delete=models.CASCADE, null=True, blank=True)
     id_work_experience_development = models.ForeignKey(WorkExperienceDevelopment, on_delete=models.CASCADE, null=True, blank=True)
+    id_github_data_development = models.ForeignKey(GithubDataDevelopment, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.status

@@ -12,6 +12,20 @@ export enum ComponentTypeMappingEnum {
   other = "idOtherDevelopment",
   references = "idReferenceDevelopment",
   workExperiences = "idWorkExperienceDevelopment",
+  githubData = "idGithubDataDevelopment",
+}
+export enum ComponentTitleMappingEnum {
+  info = "Personal Information",
+  skills = "Skills",
+  languages = "Languages",
+  projects = "Projects",
+  certificates = "Certificates",
+  education = "Education",
+  hobbies = "Hobbies",
+  other = "Other",
+  references = "References",
+  workExperiences = "Work Experiences",
+  githubData = "Github Data",
 }
 
 export type ComponentSectionProps = {

@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { FormInputs } from "../FormInputs.component";
-import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
-import { EditIcon, SaveIcon, TrashIcon } from "lucide-react";
-import { usePutUserData } from "../../hooks/usePutUserData.hook";
 import { useQueryClient } from "@tanstack/react-query";
+import { EditIcon, SaveIcon, TrashIcon } from "lucide-react";
+import { useState } from "react";
+import { cn } from "../../../../utils/cn.util";
+import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
+import { usePutUserData } from "../../hooks/usePutUserData.hook";
+import { FormInputs } from "../FormInputs.component";
 import { FormInputProps } from "../profile-form/form-inputs.types";
+import { useGetGithubRepo } from "../../hooks/useGetGithubRepo.hook";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;
@@ -21,6 +23,7 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
   const [zipCode, setZipCode] = useState(data?.zip_code);
   const [country, setCountry] = useState(data?.country);
   const [readonly, setReadonly] = useState(true);
+  const [githubUsername, setGithubUsername] = useState(data?.github_username);
 
   const formInputs: FormInputProps[] = [
     {
@@ -99,9 +102,18 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
       onChange: setCountry,
       value: country,
     },
+    {
+      label: "Github Username",
+      name: "github_username",
+      type: "text",
+      placeholder: "Github Username",
+      onChange: setGithubUsername,
+      value: githubUsername,
+    },
   ];
 
-  const { mutate: updateUserData } = usePutUserData();
+  const { mutate: updateUserData, isLoading } = usePutUserData();
+  const { mutate: getGithubRepo } = useGetGithubRepo();
   const queryClient = useQueryClient();
 
   return (
@@ -131,6 +143,7 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
                     state: state ?? "",
                     zip_code: zipCode ?? "",
                     country: country ?? "",
+                    github_username: githubUsername ?? "",
                   },
                 });
                 setReadonly(true);
@@ -150,6 +163,18 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
         )}
       </div>
       <FormInputs formInputs={formInputs} readonly={readonly} />
+
+      <button
+        className={cn(
+          "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer",
+          !githubUsername &&
+            "cursor-not-allowed opacity-50 pointer-events-none",
+          isLoading && "opacity-50 pointer-events-none"
+        )}
+        onClick={() => getGithubRepo()}
+      >
+        {isLoading ? "Loading..." : "Connect with Github"}
+      </button>
     </div>
   );
 };

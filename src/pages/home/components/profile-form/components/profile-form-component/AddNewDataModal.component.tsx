@@ -4,7 +4,9 @@ import { useState } from "react";
 import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
 import {
   AddNewDataModalProps,
+  educationLevelOptions,
   educationTypeOptions,
+  languageLevelOptions,
 } from "./add-new-data-modal.types";
 import {
   profileFormInputsByCategory,
@@ -84,11 +86,7 @@ export const AddNewDataModal = ({
       type: "select",
       value: level,
       placeholder: "Select Level",
-      options: [
-        { label: "Beginner", value: "Beginner" },
-        { label: "Intermediate", value: "Intermediate" },
-        { label: "Advanced", value: "Advanced" },
-      ],
+      options: educationLevelOptions,
       onChange: (value) => setLevel(value),
     },
     {
@@ -96,14 +94,7 @@ export const AddNewDataModal = ({
       label: "Level",
       value: languageLevel,
       placeholder: "Select Language Level",
-      options: [
-        { label: "A1", value: "A1" },
-        { label: "A2", value: "A2" },
-        { label: "B1", value: "B1" },
-        { label: "B2", value: "B2" },
-        { label: "C1", value: "C1" },
-        { label: "C2", value: "C2" },
-      ],
+      options: languageLevelOptions,
       type: "select",
       onChange: (value) => setLanguageLevel(value),
     },

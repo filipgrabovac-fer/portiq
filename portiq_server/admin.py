@@ -17,6 +17,7 @@ from portiq_server.models.development.skill_development import SkillDevelopment
 from portiq_server.models.development.user_info_development import UserInfoDevelopment
 from portiq_server.models.development.work_experience_development import WorkExperienceDevelopment
 from portiq_server.models.education import Education
+from portiq_server.models.github_data import GithubData
 from portiq_server.models.hobby import Hobby
 from portiq_server.models.other import Other
 from portiq_server.models.portfolio_template import PortfolioTemplate
@@ -60,3 +61,4 @@ admin.site.register(Reference)
 admin.site.register(ReferenceDevelopment)
 admin.site.register(WorkExperience)
 admin.site.register(WorkExperienceDevelopment)
+admin.site.register(GithubData)

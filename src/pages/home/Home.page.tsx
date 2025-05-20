@@ -17,6 +17,8 @@ export enum UserDataKeysEnum {
   languages = "Languages",
   other = "Other",
   hobbies = "Hobbies",
+  workExperiences = "Work Experiences",
+  references = "References",
 }
 
 import { objectToCamel } from "ts-case-convert";
@@ -46,7 +48,7 @@ export const Home = () => {
               (componentData[1] as ProfileFormProps["data"]) ?? {}
             );
 
-            if (!isKeyOfUserData(key) || !data) return null;
+            if (!isKeyOfUserData(key)) return null;
 
             return (
               <ProfileForm

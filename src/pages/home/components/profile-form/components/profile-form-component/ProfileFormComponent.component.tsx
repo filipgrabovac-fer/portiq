@@ -207,13 +207,13 @@ export const ProfileFormComponent = ({
             </div>
             <div>
               {allowedProfileFormInputs.includes("startDate") && (
-                <p>Start Date: {item.startDate}</p>
+                <p>Start Date: {item.startDate?.slice(0, 10)}</p>
               )}
               {allowedProfileFormInputs.includes("endDate") && (
-                <p>End Date: {item.endDate}</p>
+                <p>End Date: {item.endDate?.slice(0, 10)}</p>
               )}
               {allowedProfileFormInputs.includes("createdAt") && (
-                <p>Created At: {item.createdAt}</p>
+                <p>Created At: {item.createdAt?.slice(0, 10)}</p>
               )}
             </div>
           </div>

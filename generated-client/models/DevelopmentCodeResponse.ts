@@ -75,6 +75,18 @@ export interface DevelopmentCodeResponse {
      * @memberof DevelopmentCodeResponse
      */
     other: Array<Code>;
+    /**
+     * 
+     * @type {Array<Code>}
+     * @memberof DevelopmentCodeResponse
+     */
+    references: Array<Code>;
+    /**
+     * 
+     * @type {Array<Code>}
+     * @memberof DevelopmentCodeResponse
+     */
+    workExperiences: Array<Code>;
 }
 
 /**
@@ -89,6 +101,8 @@ export function instanceOfDevelopmentCodeResponse(value: object): value is Devel
     if (!('education' in value) || value['education'] === undefined) return false;
     if (!('hobbies' in value) || value['hobbies'] === undefined) return false;
     if (!('other' in value) || value['other'] === undefined) return false;
+    if (!('references' in value) || value['references'] === undefined) return false;
+    if (!('workExperiences' in value) || value['workExperiences'] === undefined) return false;
     return true;
 }
 
@@ -110,6 +124,8 @@ export function DevelopmentCodeResponseFromJSONTyped(json: any, ignoreDiscrimina
         'education': ((json['education'] as Array<any>).map(CodeFromJSON)),
         'hobbies': ((json['hobbies'] as Array<any>).map(CodeFromJSON)),
         'other': ((json['other'] as Array<any>).map(CodeFromJSON)),
+        'references': ((json['references'] as Array<any>).map(CodeFromJSON)),
+        'workExperiences': ((json['work_experiences'] as Array<any>).map(CodeFromJSON)),
     };
 }
 
@@ -132,6 +148,8 @@ export function DevelopmentCodeResponseToJSONTyped(value?: DevelopmentCodeRespon
         'education': ((value['education'] as Array<any>).map(CodeToJSON)),
         'hobbies': ((value['hobbies'] as Array<any>).map(CodeToJSON)),
         'other': ((value['other'] as Array<any>).map(CodeToJSON)),
+        'references': ((value['references'] as Array<any>).map(CodeToJSON)),
+        'work_experiences': ((value['workExperiences'] as Array<any>).map(CodeToJSON)),
     };
 }
 

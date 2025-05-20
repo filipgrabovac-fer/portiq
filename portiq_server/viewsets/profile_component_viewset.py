@@ -14,23 +14,28 @@ from portiq_server.models.development.javascript_development import JavascriptDe
 from portiq_server.models.development.language_development import LanguageDevelopment
 from portiq_server.models.development.other_development import OtherDevelopment
 from portiq_server.models.development.project_development import ProjectDevelopment
+from portiq_server.models.development.reference_development import ReferenceDevelopment
 from portiq_server.models.development.skill_development import SkillDevelopment
 from portiq_server.models.development.user_info_development import UserInfoDevelopment
+from portiq_server.models.development.work_experience_development import WorkExperienceDevelopment
 from portiq_server.models.education import Education
 from portiq_server.models.hobby import Hobby
 from portiq_server.models.language import Language
 from portiq_server.models.other import Other
 from portiq_server.models.portfolio_template import PortfolioTemplate
 from portiq_server.models.project import Project
+from portiq_server.models.reference import Reference
 from portiq_server.models.skill import Skill
 
 from portiq_server.models.user import User
+from portiq_server.models.work_experience import WorkExperience
 from portiq_server.serializers import (
     CertificateSerializer,
     EducationSerializer,
     GetComponentCodeSerializer,
     PostCertificateSerializer,
     PostHobbySerializer,
+    PostWorkExperienceSerializer,
     ProfileComponentDestroySerializer,
     PostProjectSerializer,
     PostSkillSerializer,
@@ -41,7 +46,10 @@ from portiq_server.serializers import (
     LanguageSerializer,
     OtherSerializer,
     HobbySerializer,
-    ProjectSerializer
+    ProjectSerializer,
+    WorkExperienceSerializer,
+    ReferenceSerializer,
+    PostReferenceSerializer
 )
 
 MODEL_MAPPING = {
@@ -51,7 +59,9 @@ MODEL_MAPPING = {
     'projects': Project,
     'languages': Language,
     'other': Other,
-    'hobbies': Hobby
+    'hobbies': Hobby,
+    'workExperiences': WorkExperience,
+    'references': Reference
 }
 
 POST_SERIALIZER_MAPPING = {
@@ -61,7 +71,9 @@ POST_SERIALIZER_MAPPING = {
     'projects': PostProjectSerializer,
     'languages': PostLanguageSerializer,
     'other': PostOtherSerializer,
-    'hobbies': PostHobbySerializer
+    'hobbies': PostHobbySerializer,
+    'workExperiences': PostWorkExperienceSerializer,
+    'references': PostReferenceSerializer
 }
 
 SERIALIZER_MAPPING = {
@@ -71,7 +83,9 @@ SERIALIZER_MAPPING = {
     'projects': ProjectSerializer,
     'languages': LanguageSerializer,
     'other': OtherSerializer,
-    'hobbies': HobbySerializer
+    'hobbies': HobbySerializer,
+    'workExperiences': WorkExperienceSerializer,
+    'references': ReferenceSerializer
 }
 
 COMPONENT_MODEL_MAPPING = {
@@ -82,7 +96,9 @@ COMPONENT_MODEL_MAPPING = {
     "languages": LanguageDevelopment,
     "other": OtherDevelopment,
     "hobbies": HobbyDevelopment,
-    "info": UserInfoDevelopment
+    "info": UserInfoDevelopment,
+    "work_experiences": WorkExperienceDevelopment,
+    "references": ReferenceDevelopment
 }
 
 COMPONENT_TYPE_BY_ID = {
@@ -93,7 +109,9 @@ COMPONENT_TYPE_BY_ID = {
     "id_language_development": "languages",
     "id_other_development": "other",
     "id_hobby_development": "hobbies",
-    "id_user_info_development": "info"
+    "id_user_info_development": "info",
+    "id_work_experience_development": "work_experiences",
+    "id_reference_development": "references"
 }
 
 class ProfileComponentViewSet(viewsets.ViewSet):
@@ -161,6 +179,8 @@ class ProfileComponentViewSet(viewsets.ViewSet):
             "id_project_development",
             "id_other_development",
             "id_language_development",
+            "id_work_experience_development",
+            "id_reference_development"
         ).first()
 
         for portfolio_component_key, portfolio_component_value in portfolio_template.items():
@@ -168,6 +188,7 @@ class ProfileComponentViewSet(viewsets.ViewSet):
                 continue
             code = retrieve_component_code(portfolio_component_key, portfolio_component_value)
             portfolio_template_code.update({COMPONENT_TYPE_BY_ID[portfolio_component_key]: code})
+
 
         return Response(portfolio_template_code, status=status.HTTP_200_OK)
 

@@ -28,7 +28,10 @@ export const usePutProfileComponent = ({
     mutationFn: async ({ type, item }: UsePutProfileComponentProps) => {
       const response =
         await profileComponentApi.profileComponentProfileComponentUpdateCreate({
-          body: JSON.stringify({ type, item: objectToSnake(item) }),
+          body: JSON.stringify({
+            type,
+            item: objectToSnake(item),
+          }),
           headers: {
             "Content-Type": "application/json",
           },

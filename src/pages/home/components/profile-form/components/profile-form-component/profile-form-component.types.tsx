@@ -34,6 +34,8 @@ export const profileFormInputsByCategory = {
   languages: ["title", "languageLevel"],
   other: ["title", "description", "startDate", "endDate", "location", "link"],
   hobbies: ["title", "description"],
+  workExperiences: ["title", "description", "startDate", "endDate", "location"],
+  references: ["title", "description", "link"],
 };
 
 export type ProfileFormComponentType =
@@ -43,7 +45,9 @@ export type ProfileFormComponentType =
   | "projects"
   | "languages"
   | "hobbies"
-  | "other";
+  | "other"
+  | "workExperiences"
+  | "references";
 
 export const ProfileFormComponentTitle = {
   certificates: "Certificates",
@@ -53,6 +57,8 @@ export const ProfileFormComponentTitle = {
   languages: "Languages",
   hobbies: "Hobbies",
   other: "Other",
+  workExperiences: "Work Experiences",
+  references: "References",
 };
 
 export type ProfileFormHookDataProps = {

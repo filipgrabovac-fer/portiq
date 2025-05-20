@@ -5,7 +5,9 @@ from rest_framework.decorators import action
 from portiq_server.models.hobby import Hobby
 from portiq_server.models.language import Language
 from portiq_server.models.other import Other
+from portiq_server.models.reference import Reference
 from portiq_server.models.user import User
+from portiq_server.models.work_experience import WorkExperience
 from portiq_server.serializers import PutUserDataSerializer, UserLoggedInSerializer, UserSerializer, UserDetailsSerializer
 from portiq_server.models.certificate import Certificate
 from portiq_server.models.education import Education
@@ -84,6 +86,9 @@ class UserDetailsViewSet(viewsets.ViewSet):
         languages = [list(lang) for lang in Language.objects.filter(id_user=userId).values_list("id_language", "title", "level", "created_at")]
         other = [list(other) for other in Other.objects.filter(id_user=userId).values_list("id_other", "title", "description", "start_date", "end_date", "location", "link", "created_at")]
         hobbies = [list(hobby) for hobby in Hobby.objects.filter(id_user=userId).values_list("id_hobby", "title", "description", "created_at")]
+
+        work_experiences = [list(work_experience) for work_experience in WorkExperience.objects.filter(id_user=userId).values_list("id_work_experience", "title", "description", "start_date", "end_date", "location", "created_at")]
+        references = [list(reference) for reference in Reference.objects.filter(id_user=userId).values_list("id_reference", "title", "description", "link", "created_at")]
 
         user_details = {
             "info": [{
@@ -173,6 +178,26 @@ class UserDetailsViewSet(viewsets.ViewSet):
                     "created_at": hobby[3]
                 } for hobby in hobbies
             ],
+            "work_experiences": [
+                {
+                    "id": work_experience[0],
+                    "title": work_experience[1],
+                    "description": work_experience[2],
+                    "start_date": work_experience[3],
+                    "end_date": work_experience[4],
+                    "location": work_experience[5],
+                    "created_at": work_experience[6]
+                } for work_experience in work_experiences
+            ],
+            "references": [
+                {
+                    "id": reference[0],
+                    "title": reference[1],
+                    "description": reference[2],
+                    "link": reference[3],
+                    "created_at": reference[4]
+                } for reference in references
+            ]   
 
         }
 

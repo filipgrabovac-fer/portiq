@@ -67,6 +67,18 @@ export interface GetSelectedComponents {
      * @memberof GetSelectedComponents
      */
     idOtherDevelopment?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetSelectedComponents
+     */
+    idReferenceDevelopment?: number | null;
+    /**
+     * 
+     * @type {number}
+     * @memberof GetSelectedComponents
+     */
+    idWorkExperienceDevelopment?: number | null;
 }
 
 /**
@@ -94,6 +106,8 @@ export function GetSelectedComponentsFromJSONTyped(json: any, ignoreDiscriminato
         'idEducationDevelopment': json['id_education_development'] == null ? undefined : json['id_education_development'],
         'idHobbyDevelopment': json['id_hobby_development'] == null ? undefined : json['id_hobby_development'],
         'idOtherDevelopment': json['id_other_development'] == null ? undefined : json['id_other_development'],
+        'idReferenceDevelopment': json['id_reference_development'] == null ? undefined : json['id_reference_development'],
+        'idWorkExperienceDevelopment': json['id_work_experience_development'] == null ? undefined : json['id_work_experience_development'],
     };
 }
 
@@ -116,6 +130,8 @@ export function GetSelectedComponentsToJSONTyped(value?: GetSelectedComponents |
         'id_education_development': value['idEducationDevelopment'],
         'id_hobby_development': value['idHobbyDevelopment'],
         'id_other_development': value['idOtherDevelopment'],
+        'id_reference_development': value['idReferenceDevelopment'],
+        'id_work_experience_development': value['idWorkExperienceDevelopment'],
     };
 }
 

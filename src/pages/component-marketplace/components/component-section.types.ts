@@ -10,6 +10,8 @@ export enum ComponentTypeMappingEnum {
   education = "idEducationDevelopment",
   hobbies = "idHobbyDevelopment",
   other = "idOtherDevelopment",
+  references = "idReferenceDevelopment",
+  workExperiences = "idWorkExperienceDevelopment",
 }
 
 export type ComponentSectionProps = {

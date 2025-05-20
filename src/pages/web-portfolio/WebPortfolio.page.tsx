@@ -67,6 +67,14 @@ export const WebPortfolio = () => {
           componentData={userData?.other}
           componentCode={componentCodeData?.other}
         />
+        <ComponentRender
+          componentData={userData?.references}
+          componentCode={componentCodeData?.references}
+        />
+        <ComponentRender
+          componentData={userData?.workExperiences}
+          componentCode={componentCodeData?.workExperiences}
+        />
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
-import { TypeEnum } from "../../../../../../../generated-client";
 import { usePostProfileComponent } from "../../hooks/usePostProfileComponent.hook";
 import {
   AddNewDataModalProps,
@@ -13,6 +12,7 @@ import {
 } from "./profile-form-component.types";
 import { FormInputProps } from "../../form-inputs.types";
 import { FormInputs } from "../../../FormInputs.component";
+import { TypeEnum } from "../../../../../../../generated-client/models/TypeEnum";
 
 export const AddNewDataModal = ({
   setIsAddNewDataModalOpen,

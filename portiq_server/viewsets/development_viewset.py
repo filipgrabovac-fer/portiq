@@ -16,8 +16,10 @@ from portiq_server.models.development.javascript_development import JavascriptDe
 from portiq_server.models.development.language_development import LanguageDevelopment
 from portiq_server.models.development.other_development import OtherDevelopment
 from portiq_server.models.development.project_development import ProjectDevelopment
+from portiq_server.models.development.reference_development import ReferenceDevelopment
 from portiq_server.models.development.skill_development import SkillDevelopment
 from portiq_server.models.development.user_info_development import UserInfoDevelopment
+from portiq_server.models.development.work_experience_development import WorkExperienceDevelopment
 from portiq_server.models.portfolio_template import PortfolioTemplate
 from portiq_server.models.user import User
 from portiq_server.serializers import DevelopmentCodeResponseSerializer, GetSelectedComponentsSerializer, PutSelectedComponentsSerializer
@@ -49,6 +51,8 @@ MODEL_MAPPING = {
     "certificate": CertificateDevelopment,
     "education": EducationDevelopment,
     "hobby": HobbyDevelopment,
+    "references": ReferenceDevelopment,
+    "workExperiences": WorkExperienceDevelopment,
 }
 
 class DevelopmentViewSet(viewsets.ViewSet):
@@ -64,7 +68,8 @@ class DevelopmentViewSet(viewsets.ViewSet):
     other = OtherDevelopment.objects.all()
     project = ProjectDevelopment.objects.all()
     skill = SkillDevelopment.objects.all()
-
+    work_experience = WorkExperienceDevelopment.objects.all()
+    reference = ReferenceDevelopment.objects.all()
     @extend_schema(
         request=DevelopmentSerializer,
         responses={200: DevelopmentResponseSerializer},
@@ -122,7 +127,8 @@ class DevelopmentViewSet(viewsets.ViewSet):
         education = EducationDevelopment.objects.all().values("id_code", "title", "pk")
         hobbies = HobbyDevelopment.objects.all().values("id_code", "title", "pk")
         other = OtherDevelopment.objects.all().values("id_code", "title", "pk")
-
+        work_experiences = WorkExperienceDevelopment.objects.all().values("id_code", "title", "pk")
+        references = ReferenceDevelopment.objects.all().values("id_code", "title", "pk")
         personal_info = get_component_code(personal_info)
         skills = get_component_code(skills)
         languages = get_component_code(languages)
@@ -131,6 +137,8 @@ class DevelopmentViewSet(viewsets.ViewSet):
         education = get_component_code(education)
         hobbies = get_component_code(hobbies)
         other = get_component_code(other)
+        work_experiences = get_component_code(work_experiences)
+        references = get_component_code(references)
 
         data = {
             "info": personal_info,
@@ -141,6 +149,8 @@ class DevelopmentViewSet(viewsets.ViewSet):
             "education": education,
             "hobbies": hobbies,
             "other": other,
+            "work_experiences": work_experiences,
+            "references": references,
         }
 
         return Response(data, status=status.HTTP_200_OK)
@@ -180,7 +190,8 @@ class DevelopmentViewSet(viewsets.ViewSet):
             portfolio_template.id_education_development = EducationDevelopment.objects.filter(pk=data.get("id_education_development")).first()
             portfolio_template.id_hobby_development = HobbyDevelopment.objects.filter(pk=data.get("id_hobby_development")).first()
             portfolio_template.id_other_development = OtherDevelopment.objects.filter(pk=data.get("id_other_development")).first()
-
+            portfolio_template.id_reference_development = ReferenceDevelopment.objects.filter(pk=data.get("id_reference_development")).first()
+            portfolio_template.id_work_experience_development = WorkExperienceDevelopment.objects.filter(pk=data.get("id_work_experience_development")).first()
             portfolio_template.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

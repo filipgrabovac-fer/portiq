@@ -18,7 +18,6 @@ export const Development = () => {
   const [html, setHtml] = useState<string>("");
   const [css, setCss] = useState<string>("");
   const [js, setJs] = useState<string>("");
-  const [createFullTemplate, setCreateFullTemplate] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const navigate = useNavigate();
 
@@ -27,6 +26,7 @@ export const Development = () => {
   const handleChange = (key: string) => {
     setGroupId(Number(key));
     const selectedGroupData = groupData[Number(key)];
+
     setHtml(selectedGroupData.html);
     setCss(selectedGroupData.css);
     setJs(selectedGroupData.js);
@@ -44,7 +44,7 @@ export const Development = () => {
     onSuccess: () => navigate({ to: homeRoute.to }),
   });
   const handleSave = () => {
-    saveCode({ groupData: groupData, createFullTemplate: createFullTemplate });
+    saveCode({ groupData: groupData, createFullTemplate: false });
   };
 
   return (

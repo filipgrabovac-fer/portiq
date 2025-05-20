@@ -6,7 +6,9 @@ from portiq_server.models.development.hobby_development import HobbyDevelopment
 from portiq_server.models.development.language_development import LanguageDevelopment
 from portiq_server.models.development.other_development import OtherDevelopment
 from portiq_server.models.development.project_development import ProjectDevelopment
+from portiq_server.models.development.reference_development import ReferenceDevelopment
 from portiq_server.models.development.skill_development import SkillDevelopment
+from portiq_server.models.development.work_experience_development import WorkExperienceDevelopment
 from portiq_server.models.user import User
 from portiq_server.models.development.user_info_development import UserInfoDevelopment
 
@@ -27,6 +29,8 @@ class PortfolioTemplate(models.Model):
     id_project_development = models.ForeignKey(ProjectDevelopment, on_delete=models.CASCADE, null=True, blank=True)
     id_other_development = models.ForeignKey(OtherDevelopment, on_delete=models.CASCADE, null=True, blank=True)
     id_language_development = models.ForeignKey(LanguageDevelopment, on_delete=models.CASCADE, null=True, blank=True)
+    id_reference_development = models.ForeignKey(ReferenceDevelopment, on_delete=models.CASCADE, null=True, blank=True)
+    id_work_experience_development = models.ForeignKey(WorkExperienceDevelopment, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.status

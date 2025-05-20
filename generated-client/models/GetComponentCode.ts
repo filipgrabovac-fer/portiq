@@ -75,6 +75,18 @@ export interface GetComponentCode {
      * @memberof GetComponentCode
      */
     other: CodeType;
+    /**
+     * 
+     * @type {CodeType}
+     * @memberof GetComponentCode
+     */
+    references: CodeType;
+    /**
+     * 
+     * @type {CodeType}
+     * @memberof GetComponentCode
+     */
+    workExperiences: CodeType;
 }
 
 /**
@@ -89,6 +101,8 @@ export function instanceOfGetComponentCode(value: object): value is GetComponent
     if (!('education' in value) || value['education'] === undefined) return false;
     if (!('hobbies' in value) || value['hobbies'] === undefined) return false;
     if (!('other' in value) || value['other'] === undefined) return false;
+    if (!('references' in value) || value['references'] === undefined) return false;
+    if (!('workExperiences' in value) || value['workExperiences'] === undefined) return false;
     return true;
 }
 
@@ -110,6 +124,8 @@ export function GetComponentCodeFromJSONTyped(json: any, ignoreDiscriminator: bo
         'education': CodeTypeFromJSON(json['education']),
         'hobbies': CodeTypeFromJSON(json['hobbies']),
         'other': CodeTypeFromJSON(json['other']),
+        'references': CodeTypeFromJSON(json['references']),
+        'workExperiences': CodeTypeFromJSON(json['work_experiences']),
     };
 }
 
@@ -132,6 +148,8 @@ export function GetComponentCodeToJSONTyped(value?: GetComponentCode | null, ign
         'education': CodeTypeToJSON(value['education']),
         'hobbies': CodeTypeToJSON(value['hobbies']),
         'other': CodeTypeToJSON(value['other']),
+        'references': CodeTypeToJSON(value['references']),
+        'work_experiences': CodeTypeToJSON(value['workExperiences']),
     };
 }
 

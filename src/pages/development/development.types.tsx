@@ -13,10 +13,12 @@ export enum GroupType {
   SKILL = "skill",
   LANGUAGE = "language",
   PROJECT = "project",
-  OTHER = "other",
   CERTIFICATE = "certificate",
   EDUCATION = "education",
   HOBBY = "hobby",
+  REFERENCE = "reference",
+  WORK_EXPERIENCE = "workExperience",
+  OTHER = "other",
 }
 
 export const initialGroupData: GroupData[] = [
@@ -67,10 +69,21 @@ export const items: TabsProps["items"] = [
   },
   {
     key: "7",
+    label: "References",
+    children: null,
+  },
+  {
+    key: "8",
+    label: "Work Experience",
+    children: null,
+  },
+  {
+    key: "9",
     label: "Other",
     children: null,
   },
 ];
+
 export const componentInfo = [
   {
     label: "User Info",
@@ -152,6 +165,21 @@ export const componentInfo = [
       "endDate",
       "location",
       "link",
+      "createdAt",
+    ],
+  },
+  {
+    label: "References",
+    variables: ["title", "description", "link", "createdAt"],
+  },
+  {
+    label: "Work Experience",
+    variables: [
+      "title",
+      "description",
+      "link",
+      "startDate",
+      "endDate",
       "createdAt",
     ],
   },

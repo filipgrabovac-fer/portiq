@@ -20,6 +20,7 @@ export const useGetUserData = () => {
       const response = await userDetailsApi.userDetailsUserDetailsRetrieve({
         userId: "x",
       });
+
       return response;
     },
   });

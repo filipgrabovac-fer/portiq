@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from portiq_server.models.github_data import GithubData
 from portiq_server.models.hobby import Hobby
 from portiq_server.models.language import Language
 from portiq_server.models.other import Other
@@ -89,6 +90,8 @@ class UserDetailsViewSet(viewsets.ViewSet):
 
         work_experiences = [list(work_experience) for work_experience in WorkExperience.objects.filter(id_user=userId).values_list("id_work_experience", "title", "description", "start_date", "end_date", "location", "created_at")]
         references = [list(reference) for reference in Reference.objects.filter(id_user=userId).values_list("id_reference", "title", "description", "link", "created_at")]
+
+        github_data = [list(github) for github in GithubData.objects.filter(id_user=userId).values_list( "avatar_url", "followers", "following", "public_repos", "github_url", "created_at")]
 
         user_details = {
             "info": [{
@@ -198,7 +201,18 @@ class UserDetailsViewSet(viewsets.ViewSet):
                     "link": reference[3],
                     "created_at": reference[4]
                 } for reference in references
-            ]   
+            ],
+
+            "github_data": [
+                {
+                    "avatar_url": github[0],
+                    "followers": github[1],
+                    "following": github[2],
+                    "public_repos": github[3],
+                    "github_url": github[4],
+                    "created_at": github[5]
+                } for github in github_data
+            ]
 
         }
 

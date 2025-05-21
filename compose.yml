@@ -18,6 +18,7 @@ services:
       - ./index.html:/app/index.html
       - ./vite.config.ts:/app/vite.config.ts
       - ./tsconfig.json:/app/tsconfig.json
+      - ./generated-client:/app/generated-client
 
   redis:
     image: redis:latest

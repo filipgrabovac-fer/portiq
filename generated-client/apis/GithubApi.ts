@@ -14,6 +14,20 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  GithubRequest,
+  GithubResponse,
+} from '../models/index';
+import {
+    GithubRequestFromJSON,
+    GithubRequestToJSON,
+    GithubResponseFromJSON,
+    GithubResponseToJSON,
+} from '../models/index';
+
+export interface GithubPutGithubReposCreateRequest {
+    githubRequest: GithubRequest;
+}
 
 /**
  * 
@@ -22,7 +36,7 @@ export class GithubApi extends runtime.BaseAPI {
 
     /**
      */
-    async githubGithubReposRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async githubDeleteGithubDataDestroyRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -31,8 +45,8 @@ export class GithubApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/github/github-repos/`,
-            method: 'GET',
+            path: `/api/github/delete-github-data/`,
+            method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
@@ -42,8 +56,72 @@ export class GithubApi extends runtime.BaseAPI {
 
     /**
      */
-    async githubGithubReposRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.githubGithubReposRetrieveRaw(initOverrides);
+    async githubDeleteGithubDataDestroy(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.githubDeleteGithubDataDestroyRaw(initOverrides);
+    }
+
+    /**
+     */
+    async githubGetGithubDataRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GithubResponse>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/github/get-github-data/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GithubResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async githubGetGithubDataRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GithubResponse> {
+        const response = await this.githubGetGithubDataRetrieveRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
+    async githubPutGithubReposCreateRaw(requestParameters: GithubPutGithubReposCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GithubResponse>> {
+        if (requestParameters['githubRequest'] == null) {
+            throw new runtime.RequiredError(
+                'githubRequest',
+                'Required parameter "githubRequest" was null or undefined when calling githubPutGithubReposCreate().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/github/put-github-repos/`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: GithubRequestToJSON(requestParameters['githubRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => GithubResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async githubPutGithubReposCreate(requestParameters: GithubPutGithubReposCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GithubResponse> {
+        const response = await this.githubPutGithubReposCreateRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
 }

@@ -79,6 +79,12 @@ export interface UserDetails {
      * @memberof UserDetails
      */
     references: Array<Array<string | null>>;
+    /**
+     * 
+     * @type {Array<Array<string | null>>}
+     * @memberof UserDetails
+     */
+    githubData: Array<Array<string | null>>;
 }
 
 /**
@@ -95,6 +101,7 @@ export function instanceOfUserDetails(value: object): value is UserDetails {
     if (!('hobbies' in value) || value['hobbies'] === undefined) return false;
     if (!('workExperiences' in value) || value['workExperiences'] === undefined) return false;
     if (!('references' in value) || value['references'] === undefined) return false;
+    if (!('githubData' in value) || value['githubData'] === undefined) return false;
     return true;
 }
 
@@ -118,6 +125,7 @@ export function UserDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'hobbies': json['hobbies'],
         'workExperiences': json['work_experiences'],
         'references': json['references'],
+        'githubData': json['github_data'],
     };
 }
 
@@ -142,6 +150,7 @@ export function UserDetailsToJSONTyped(value?: UserDetails | null, ignoreDiscrim
         'hobbies': value['hobbies'],
         'work_experiences': value['workExperiences'],
         'references': value['references'],
+        'github_data': value['githubData'],
     };
 }
 

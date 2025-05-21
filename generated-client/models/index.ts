@@ -7,6 +7,8 @@ export * from './DevelopmentCodeResponse';
 export * from './DevelopmentResponse';
 export * from './GetComponentCode';
 export * from './GetSelectedComponents';
+export * from './GithubRequest';
+export * from './GithubResponse';
 export * from './PutUserData';
 export * from './SocialLogin';
 export * from './User';

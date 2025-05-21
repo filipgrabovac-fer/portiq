@@ -69,7 +69,7 @@ class UserDetailsSerializer(serializers.Serializer):
     hobbies = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     work_experiences = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     references = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
-    
+    github_data = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
 class PostProjectSerializer(serializers.Serializer):
     title = serializers.CharField(required=False)
     description = serializers.CharField(required=False, allow_blank=True)
@@ -243,3 +243,15 @@ class PostReferenceSerializer(serializers.Serializer):
     title = serializers.CharField(required=False)
     description = serializers.CharField(required=False, allow_blank=True)
     link = serializers.CharField(required=False, allow_blank=True)
+
+
+class GithubRequestSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+
+
+class GithubResponseSerializer(serializers.Serializer):
+    public_repos = serializers.IntegerField(required=True)
+    followers = serializers.IntegerField(required=True)
+    following = serializers.IntegerField(required=True)
+    avatar_url = serializers.CharField(required=True)
+    github_url = serializers.CharField(required=True)

@@ -1,18 +1,26 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { EditIcon, SaveIcon, TrashIcon } from "lucide-react";
+import { EditIcon, Github, Loader2, SaveIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../../../utils/cn.util";
 import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
 import { usePutUserData } from "../../hooks/usePutUserData.hook";
 import { FormInputs } from "../FormInputs.component";
 import { FormInputProps } from "../profile-form/form-inputs.types";
-import { useGetGithubRepo } from "../../hooks/useGetGithubRepo.hook";
+
+import { usePutGithubData } from "../../hooks/usePutGithubData.hook";
+import { GithubResponse } from "../../../../../generated-client";
+import { useDeleteGithubData } from "../../hooks/useDeleteGithubData.hook";
+import { GithubData } from "./GithubData.component";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;
+  githubData?: GithubResponse;
 };
 
-export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
+export const PersonalInfoForm = ({
+  data,
+  githubData,
+}: PersonalInfoFormProps) => {
   const [name, setName] = useState(data?.first_name);
   const [surname, setSurname] = useState(data?.last_name);
   const [email, setEmail] = useState(data?.email);
@@ -111,11 +119,20 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
       value: githubUsername,
     },
   ];
-
-  const { mutate: updateUserData, isLoading } = usePutUserData();
-  const { mutate: getGithubRepo } = useGetGithubRepo();
   const queryClient = useQueryClient();
 
+  const { mutate: updateUserData, isLoading: isPutUserDataLoading } =
+    usePutUserData();
+  const { mutate: putGithubData, isLoading: isPutGithubDataLoading } =
+    usePutGithubData({
+      onSuccess: () =>
+        queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
+    });
+  const { mutate: deleteGithubData, isLoading: isDeleteGithubDataLoading } =
+    useDeleteGithubData({
+      onSuccess: () =>
+        queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
+    });
   return (
     <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
       <div className="flex justify-between items-center">
@@ -164,17 +181,36 @@ export const PersonalInfoForm = ({ data }: PersonalInfoFormProps) => {
       </div>
       <FormInputs formInputs={formInputs} readonly={readonly} />
 
-      <button
-        className={cn(
-          "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer",
-          !githubUsername &&
-            "cursor-not-allowed opacity-50 pointer-events-none",
-          isLoading && "opacity-50 pointer-events-none"
-        )}
-        onClick={() => getGithubRepo()}
-      >
-        {isLoading ? "Loading..." : "Connect with Github"}
-      </button>
+      {githubData && githubData.avatarUrl && <GithubData {...githubData} />}
+
+      {isPutGithubDataLoading || isDeleteGithubDataLoading ? (
+        <Loader2 className="animate-spin mx-auto text-button_blue" />
+      ) : (
+        <div className="flex flex-col gap-2">
+          {
+            <button
+              className={cn(
+                "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer",
+                !githubUsername &&
+                  "cursor-not-allowed opacity-50 pointer-events-none"
+              )}
+              onClick={() => putGithubData({ username: githubUsername ?? "" })}
+            >
+              {githubData && !githubData.avatarUrl
+                ? "Connect with Github"
+                : "Update Github Data"}
+            </button>
+          }
+          {githubData && githubData.avatarUrl && (
+            <button
+              className="text-red-500 px-4 py-2 rounded-md cursor-pointer"
+              onClick={() => deleteGithubData()}
+            >
+              Disconnect Github Account
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

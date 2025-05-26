@@ -36,6 +36,13 @@ export const profileFormInputsByCategory = {
   hobbies: ["title", "description"],
   workExperiences: ["title", "description", "startDate", "endDate", "location"],
   references: ["title", "description", "link"],
+  githubData: [
+    "avatarUrl",
+    "followers",
+    "following",
+    "publicRepos",
+    "githubUrl",
+  ],
 };
 
 export type ProfileFormComponentType =
@@ -47,7 +54,8 @@ export type ProfileFormComponentType =
   | "hobbies"
   | "other"
   | "workExperiences"
-  | "references";
+  | "references"
+  | "githubData";
 
 export const ProfileFormComponentTitle = {
   certificates: "Certificates",
@@ -59,6 +67,7 @@ export const ProfileFormComponentTitle = {
   other: "Other",
   workExperiences: "Work Experiences",
   references: "References",
+  githubData: "Github Data",
 };
 
 export type ProfileFormHookDataProps = {

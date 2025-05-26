@@ -23,6 +23,9 @@ env = environ.Env(
     GOOGLE_CLIENT_ID=(str, ''),
     GOOGLE_CLIENT_SECRET=(str, ''),
     GOOGLE_REDIRECT_URI=(str, ''),
+    LINKEDIN_CLIENT_ID=(str, ''),
+    LINKEDIN_CLIENT_SECRET=(str, ''),
+    LINKEDIN_REDIRECT_URI=(str, ''),
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -172,7 +175,11 @@ SPECTACULAR_SETTINGS = {
     {
         'name':"github",
         'description': 'Github endpoints'
-    }
+    },
+    {
+        'name': 'linkedin-data',
+        'description': 'Linkedin endpoints'
+    },
     ],
     'SCHEMA_PATH_PREFIX': '/api/',
 }
@@ -205,6 +212,7 @@ CACHES = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+APPEND_SLASH = False
 
 # Add to INSTALLED_APPS if not already there
 if 'django.contrib.staticfiles' not in INSTALLED_APPS:

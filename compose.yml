@@ -11,8 +11,10 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+      - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
+      - LINKEDIN_REDIRECT_URI=${LINKEDIN_REDIRECT_URI}
     volumes:
-      # Mount source code for development
       - ./src:/app/src
       - ./public:/app/public
       - ./index.html:/app/index.html
@@ -33,6 +35,9 @@ services:
         - VITE_GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
         - VITE_GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
         - VITE_GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+        - VITE_LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+        - VITE_LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
+        - VITE_LINKEDIN_REDIRECT_URI=${LINKEDIN_REDIRECT_URI}
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -42,19 +47,20 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+      - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
+      - LINKEDIN_REDIRECT_URI=${LINKEDIN_REDIRECT_URI}
     ports:
       - "8000:8000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      # Mount Django project files
       - ./portiq:/app/portiq
       - ./portiq_server:/app/portiq_server
       - ./react_server:/app/react_server
       - ./manage.py:/app/manage.py
 
 volumes:
-  # Define named volumes
   frontend_node_modules:
   frontend_dist:
   backend_pycache:

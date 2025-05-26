@@ -7,6 +7,7 @@ import { loginRoute } from "./routes/login.routes";
 import { mainLayoutRoute } from "./routes/main-layout.routes";
 import { rootRoute } from "./routes/root.routes";
 import { webPortfolioRoute } from "./routes/web-portfolio.routes";
+import { linkedinDataRoute } from "./routes/linkedin-data.routes";
 
 const routeTree = rootRoute.addChildren([
   landingRoute,
@@ -14,6 +15,7 @@ const routeTree = rootRoute.addChildren([
   mainLayoutRoute.addChildren([homeRoute, componentMarketplaceRoute]),
   developmentRoute,
   webPortfolioRoute,
+  linkedinDataRoute,
 ]);
 
 export const router = createRouter({ routeTree });

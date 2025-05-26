@@ -169,7 +169,10 @@ export const ProfileFormComponent = ({
               className="cursor-pointer hover:text-button_blue duration-300"
             />
             <Delete
-              onClick={() => setIsEditing(false)}
+              onClick={() => {
+                setIsEditing(false);
+                queryClient.invalidateQueries({ queryKey: ["getUserData"] });
+              }}
               className="cursor-pointer hover:text-red-500 duration-300"
             />
           </div>

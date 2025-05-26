@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { EditIcon, Github, Loader2, SaveIcon, TrashIcon } from "lucide-react";
+import { EditIcon, Loader2, SaveIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../../../utils/cn.util";
 import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
@@ -7,9 +7,9 @@ import { usePutUserData } from "../../hooks/usePutUserData.hook";
 import { FormInputs } from "../FormInputs.component";
 import { FormInputProps } from "../profile-form/form-inputs.types";
 
-import { usePutGithubData } from "../../hooks/usePutGithubData.hook";
 import { GithubResponse } from "../../../../../generated-client";
 import { useDeleteGithubData } from "../../hooks/useDeleteGithubData.hook";
+import { usePutGithubData } from "../../hooks/usePutGithubData.hook";
 import { GithubData } from "./GithubData.component";
 
 export type PersonalInfoFormProps = {
@@ -32,6 +32,19 @@ export const PersonalInfoForm = ({
   const [country, setCountry] = useState(data?.country);
   const [readonly, setReadonly] = useState(true);
   const [githubUsername, setGithubUsername] = useState(data?.github_username);
+
+  const resetData = () => {
+    setName(data?.first_name);
+    setSurname(data?.last_name);
+    setEmail(data?.email);
+    setPhone(data?.phone_number);
+    setAddress(data?.address);
+    setCity(data?.city);
+    setState(data?.state);
+    setZipCode(data?.zip_code);
+    setCountry(data?.country);
+    setGithubUsername(data?.github_username);
+  };
 
   const formInputs: FormInputProps[] = [
     {
@@ -121,8 +134,7 @@ export const PersonalInfoForm = ({
   ];
   const queryClient = useQueryClient();
 
-  const { mutate: updateUserData, isLoading: isPutUserDataLoading } =
-    usePutUserData();
+  const { mutate: updateUserData } = usePutUserData();
   const { mutate: putGithubData, isLoading: isPutGithubDataLoading } =
     usePutGithubData({
       onSuccess: () =>
@@ -133,6 +145,7 @@ export const PersonalInfoForm = ({
       onSuccess: () =>
         queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
     });
+
   return (
     <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
       <div className="flex justify-between items-center">
@@ -169,10 +182,11 @@ export const PersonalInfoForm = ({
             />
             <TrashIcon
               onClick={() => {
-                setReadonly(true);
                 queryClient.invalidateQueries({
                   queryKey: ["getUserData"],
                 });
+                setReadonly(true);
+                resetData();
               }}
               className="cursor-pointer hover:text-red-500 duration-300"
             />
@@ -196,7 +210,7 @@ export const PersonalInfoForm = ({
               )}
               onClick={() => putGithubData({ username: githubUsername ?? "" })}
             >
-              {githubData && !githubData.avatarUrl
+              {!githubData?.avatarUrl
                 ? "Connect with Github"
                 : "Update Github Data"}
             </button>

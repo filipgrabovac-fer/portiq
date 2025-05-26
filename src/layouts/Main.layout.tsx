@@ -65,6 +65,14 @@ export const MainLayout = () => {
       },
     },
   ];
+
+  console.log(
+    `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${
+      import.meta.env.LINKEDIN_CLIENT_ID
+    }&redirect_uri=${
+      import.meta.env.LINKEDIN_REDIRECT_URI
+    }&scope=r_liteprofile%20r_emailaddress`
+  );
   return (
     <div className="h-screen w-screen flex">
       <button
@@ -112,6 +120,15 @@ export const MainLayout = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-4">
+          <a
+            href={`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${
+              import.meta.env.LINKEDIN_CLIENT_ID
+            }&redirect_uri=${
+              import.meta.env.LINKEDIN_REDIRECT_URI
+            }&scope=r_liteprofile%20r_emailaddress`}
+          >
+            Import data from LinkedIn
+          </a>
           <button
             className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer mx-auto"
             onClick={() => navigate({ to: developmentRoute.to })}

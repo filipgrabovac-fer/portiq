@@ -229,7 +229,7 @@ class UserDetailsViewSet(viewsets.ViewSet):
     def getUserLoggedIn(self, request):
         cached_user = cache.get("user")
 
-        if cached_user and "id_user" in cached_user:
+        if cached_user:
             return Response({"id_user": cached_user["id_user"]}, status=status.HTTP_200_OK)
         else:
             return Response({"id_user": None}, status=status.HTTP_200_OK)

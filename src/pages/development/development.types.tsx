@@ -189,4 +189,15 @@ export const componentInfo = [
       "createdAt",
     ],
   },
+  {
+    label: "Github",
+    variables: [
+      "avatarUrl",
+      "githubUrl",
+      "publicRepos",
+      "followers",
+      "following",
+      "createdAt",
+    ],
+  },
 ];

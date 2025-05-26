@@ -15,6 +15,15 @@ export default defineConfig({
     "import.meta.env.GOOGLE_REDIRECT_URI": JSON.stringify(
       process.env.GOOGLE_REDIRECT_URI
     ),
+    "import.meta.env.LINKEDIN_CLIENT_ID": JSON.stringify(
+      process.env.LINKEDIN_CLIENT_ID
+    ),
+    "import.meta.env.LINKEDIN_CLIENT_SECRET": JSON.stringify(
+      process.env.LINKEDIN_CLIENT_SECRET
+    ),
+    "import.meta.env.LINKEDIN_REDIRECT_URI": JSON.stringify(
+      process.env.LINKEDIN_REDIRECT_URI
+    ),
   },
   build: {
     outDir: "dist",

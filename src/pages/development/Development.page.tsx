@@ -49,10 +49,10 @@ export const Development = () => {
 
   return (
     <>
-      <div className="w-screen h-screen">
+      <div className="w-screen h-screen ">
         {infoModalOpen && (
-          <div className="absolute h-screen w-screen bg-black/50 flex justify-center items-center -mt-20 z-100">
-            <div className=" bg-white p-8 rounded-md flex flex-col gap-4 relative">
+          <div className="max-md:hidden absolute h-screen w-screen bg-black/50 flex justify-center items-center -mt-20 z-100 overflow-y-scroll">
+            <div className=" bg-white p-8 rounded-md flex flex-col gap-8 relative">
               <XIcon
                 onClick={() => setInfoModalOpen(false)}
                 className="absolute top-4 right-4 cursor-pointer"
@@ -61,7 +61,7 @@ export const Development = () => {
                 Variables you can use based on the component you are building:
               </p>
 
-              <div className="flex flex-wrap gap-8">
+              <div className="grid md:grid-cols-4 grid-cols-2 lg:grid-cols-6 gap-4">
                 {componentInfo.map((info) => (
                   <div>
                     <label className="text-xl font-semibold">
@@ -83,7 +83,7 @@ export const Development = () => {
             </div>
           </div>
         )}
-        <div className="max-sm:hidden mt-20 w-4/5 md:w-1/2 m-auto">
+        <div className="max-md:hidden mt-20 w-4/5 md:w-1/2 m-auto">
           <div className="flex flex-col gap-2 ">
             <div className="flex gap-8 items-center">
               <h1 className="text-3xl md:text-5xl font-semibold">
@@ -141,7 +141,7 @@ export const Development = () => {
           </div>
         </div>
 
-        <h1 className="sm:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+        <h1 className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
           You can create templates only on desktop!
         </h1>
       </div>

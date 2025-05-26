@@ -1,6 +1,8 @@
 apis/DevelopmentApi.ts
 apis/DjRestAuthApi.ts
 apis/GithubApi.ts
+apis/LinkedinApi.ts
+apis/LinkedinDataApi.ts
 apis/LogoutApi.ts
 apis/ProfileComponentApi.ts
 apis/UserApi.ts

@@ -94,7 +94,7 @@ export const ExportToPdfModal = ({
             Object.entries(userData).map(
               (entry) =>
                 entry[0] !== "info" &&
-                entry[1].length > 0 && (
+                entry[1]?.length > 0 && (
                   <ExportToPdfSection
                     selectedItemIds={selectedItemIds}
                     setSelectedItemIds={setSelectedItemIds}

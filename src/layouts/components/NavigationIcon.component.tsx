@@ -14,11 +14,12 @@ export const NavigationIcon = ({
   text,
 }: NavigationIconProps) => {
   return (
-    <div className="relative group  cursor-pointer" onClick={setAction}>
-      <Icon className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer" />
-      <p className="absolute left-1/2 -translate-x-1/2 group-hover:opacity-100 opacity-0 transition-all duration-300 text-button_blue">
-        {text}
-      </p>
+    <div
+      className="flex flex-col gap-1 justify-center items-center group  cursor-pointer w-[calc(50%-0.5rem)] bg-white rounded-md p-1 hover:bg-button_blue/20 transition-all duration-300"
+      onClick={setAction}
+    >
+      <Icon className="w-8 h-8 rounded-md p-1 text-button_blue cursor-pointer" />
+      <p className="text-button_blue">{text}</p>
     </div>
   );
 };

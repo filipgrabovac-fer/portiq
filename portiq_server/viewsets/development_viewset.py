@@ -160,8 +160,6 @@ class DevelopmentViewSet(viewsets.ViewSet):
             "github_data": github_data,
         }
 
-
-        print(data)
         return Response(data, status=status.HTTP_200_OK)
     
 

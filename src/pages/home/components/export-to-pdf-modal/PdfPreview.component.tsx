@@ -37,7 +37,7 @@ export const PdfPreview = ({
   return (
     <div
       className={cn(
-        "mx-auto outline-gray-200 w-[210mm] max-[210mm]:w-full outline rounded-md "
+        "mx-auto outline-gray-200 w-[210mm] max-[210mm]:w-full outline rounded-md min-h-screen "
       )}
     >
       <div ref={pdfRef}>

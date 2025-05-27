@@ -59,7 +59,7 @@ export const ExportToPdfSection = ({
     : null;
 
   return (
-    <div className="flex flex-col gap-2 shadow-sm border-0 bg-white/70 backdrop-blur-sm p-4 rounded-md">
+    <div className="flex flex-col gap-2 shadow-sm border-0 bg-white/70 backdrop-blur-sm p-4 rounded-md xl:w-4/5 w-full mx-auto">
       <h1 className="text-2xl font-bold flex items-center gap-2 my-4">
         {SectionIcon && <SectionIcon />}
         {ProfileFormComponentTitle[type]}
@@ -86,7 +86,7 @@ export const ExportToPdfSection = ({
           data.map((item) => (
             <div
               className={cn(
-                "border border-gray-200 rounded-md py-2 px-4 flex gap-4 justify-between items-center hover:bg-button_blue  hover:border-button_blue hover:text-white cursor-pointer transition-all duration-300 w-full ",
+                "border border-gray-200 rounded-md py-2 px-4 flex gap-4 justify-between items-center hover:bg-button_blue  hover:border-button_blue hover:text-white cursor-pointer transition-all duration-300 w-full group",
                 selectedItemIds[type]?.includes(item.id ?? "") &&
                   " outline-2 outline-button_blue border-none"
               )}
@@ -100,7 +100,7 @@ export const ExportToPdfSection = ({
                 <h2 className="text-lg font-medium">{item.title}</h2>
                 <p className="text-sm ">{item.description}</p>
               </div>
-              <div className="grid grid-cols-1 grid-rows-[auto auto] md:grid-rows-1 md:grid-cols-2 w-full text-gray-500 text-sm flex-1">
+              <div className="grid grid-cols-1 grid-rows-[auto auto] md:grid-rows-1 md:grid-cols-2 w-full text-gray-500 text-sm flex-1 group-hover:text-white">
                 <div>
                   {item.location && <p>Location: {item.location}</p>}
                   {item.link && <p>Link: {item.link}</p>}

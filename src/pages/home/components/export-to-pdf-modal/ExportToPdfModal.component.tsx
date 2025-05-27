@@ -1,4 +1,4 @@
-import { DownloadIcon, XIcon } from "lucide-react";
+import { DownloadIcon, MousePointer2, ScanEye, XIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import generatePDF from "react-to-pdf";
 import { UserDetails } from "../../../../../generated-client";
@@ -34,11 +34,11 @@ export const ExportToPdfModal = ({
   };
 
   return (
-    <div className="h-screen w-screen bg-black/50 absolute z-100 ">
+    <div className="h-screen w-screen bg-black/50 absolute z-100">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col w-full h-screen rounded-none lg:w-4/5  bg-white md:rounded-md p-4">
-        <div className="flex justify-between">
+        <div className="flex justify-between ">
           <div className="flex-1">
-            <div className="relative flex text-white font-medium max-w-40 border border-button_blue/20 rounded-lg">
+            <div className="relative flex text-white font-medium max-w-48 border border-button_blue/20 rounded-lg">
               <span
                 className={cn(
                   "absolute top-0 left-0 w-1/2 h-full bg-button_blue rounded-md transition-all duration-300 outline outline-button_blue",
@@ -48,19 +48,21 @@ export const ExportToPdfModal = ({
               <button
                 onClick={() => setIsPreview(false)}
                 className={cn(
-                  "w-full z-10 transition-all duration-300 cursor-pointer",
+                  "w-full z-10 transition-all duration-300 cursor-pointer flex items-center justify-center gap-1",
                   isPreview && "text-button_blue"
                 )}
               >
+                <MousePointer2 className="w-4 h-4" />
                 Select
               </button>
               <button
                 className={cn(
-                  "z-10 w-full text-center transition-all duration-300 h-10 cursor-pointer",
+                  "z-10 w-full text-center transition-all duration-300 h-10 cursor-pointer flex items-center justify-center gap-1",
                   !isPreview && "text-button_blue"
                 )}
                 onClick={() => setIsPreview(true)}
               >
+                <ScanEye className="w-4 h-4" />
                 Preview
               </button>
             </div>
@@ -81,7 +83,7 @@ export const ExportToPdfModal = ({
           <div className="w-5 flex-1"></div>
         </div>
 
-        <div className="overflow-y-scroll max-h-[100vh] flex flex-col gap-4">
+        <div className="overflow-y-scroll max-h-[100vh] flex flex-col gap-4  pt-2">
           {isPreview ? (
             <PdfPreview
               userData={userData}

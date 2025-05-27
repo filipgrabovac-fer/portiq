@@ -39,11 +39,6 @@ export const FormInputs = ({
                   setFieldValue(formInput.name, event.target.value);
                 }}
                 readOnly={readonly}
-                onClick={() =>
-                  console.log(
-                    errors?.[formInput.name as keyof FormInputErrorType]
-                  )
-                }
                 className={cn(
                   readonly &&
                     "bg-gray-100 cursor-not-allowed hover:outline-none hover:border-none opacity-70",

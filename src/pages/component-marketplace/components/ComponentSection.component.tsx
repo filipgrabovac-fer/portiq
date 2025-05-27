@@ -38,10 +38,17 @@ export const ComponentSection = ({
             )}
             key={item.id}
             onClick={() => {
-              setSelectedComponents({
-                ...selectedComponents,
-                [preselectedItemKey]: item.id,
-              });
+              if (selectedComponents?.[preselectedItemKey] === item.id) {
+                setSelectedComponents({
+                  ...selectedComponents,
+                  [preselectedItemKey]: undefined,
+                });
+              } else {
+                setSelectedComponents({
+                  ...selectedComponents,
+                  [preselectedItemKey]: item.id,
+                });
+              }
               setHasSelectedComponentChanged(true);
             }}
           >

@@ -51,14 +51,14 @@ export const LinkedinDataComponent = ({
         onChange={handleCheckboxChange}
       />
       <div className="flex-1">
-        <p className="text-lg font-medium">
+        <p className="font-medium">
           {
             linkedinDataType[
               Object.keys(item)[0] as keyof typeof linkedinDataType
             ]
           }
         </p>
-        <p className="text-lg font-medium">
+        <p className=" font-medium">
           {
             linkedinDataType[
               Object.keys(item)[0] as keyof typeof linkedinDataType

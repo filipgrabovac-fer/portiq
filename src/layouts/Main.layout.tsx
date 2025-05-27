@@ -85,7 +85,7 @@ export const MainLayout = () => {
           "h-screen w-120 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all border-r border-gray-200 bg-gray-50 z-10"
         )}
       >
-        <div className="my-auto flex flex-col gap-4 items-center">
+        <div className="my-auto flex flex-col gap-6 items-center">
           <div className="w-40 m-auto rounded-md flex flex-col justify-center">
             <div
               className={cn(
@@ -102,7 +102,7 @@ export const MainLayout = () => {
             </div>
             <QRCode value={webPortfolioUrl} className="w-full h-full" />
           </div>
-          <div className="flex gap-2">
+          <div className="flex w-4/5 gap-2 flex-wrap ">
             {navigationIcons.map((icon) => (
               <NavigationIcon key={icon.text} {...icon} />
             ))}
@@ -110,13 +110,13 @@ export const MainLayout = () => {
         </div>
         <div className="flex flex-col gap-2 mb-4">
           <button
-            className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer mx-auto"
+            className="bg-white hover:bg-button_blue/20 text-button_blue p-3 rounded-md max-w-40 hover:opacity-90  cursor-pointer mx-auto transition-all duration-300"
             onClick={() => navigate({ to: developmentRoute.to })}
           >
-            Create a template
+            Create template
           </button>
           <button
-            className="bg-none text-red-600 cursor-pointer"
+            className="bg-white p-3 text-red-500 cursor-pointer rounded-md max-w-40 mx-auto hover:bg-red-500/20 transition-all duration-300"
             onClick={async () => {
               await logoutApi.logoutCreate();
               navigate({ to: loginRoute.to });

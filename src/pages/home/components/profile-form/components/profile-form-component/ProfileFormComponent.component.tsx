@@ -7,6 +7,7 @@ import {
   ProfileFormComponentProps,
   profileFormInputsByCategory,
   ProfileFormHookDataProps,
+  profileFormComponentValidationSchema,
 } from "./profile-form-component.types";
 import { FormInputProps } from "../../form-inputs.types";
 import { FormInputs } from "../../../FormInputs.component";
@@ -15,6 +16,8 @@ import {
   educationTypeOptions,
   languageLevelOptions,
 } from "./add-new-data-modal.types";
+import { Form, Formik, useFormik } from "formik";
+import * as yup from "yup";
 
 export const ProfileFormComponent = ({
   item,
@@ -42,12 +45,14 @@ export const ProfileFormComponent = ({
       label: "Title",
       value: title,
       onChange: (value) => setTitle(value),
+      required: true,
     },
     {
       name: "description",
       label: "Description",
       value: description,
       onChange: (value) => setDescription(value),
+      required: true,
     },
     {
       name: "startDate",
@@ -55,6 +60,7 @@ export const ProfileFormComponent = ({
       type: "date",
       value: startDate,
       onChange: (value) => setStartDate(value),
+      required: true,
     },
     {
       name: "endDate",
@@ -62,6 +68,7 @@ export const ProfileFormComponent = ({
       type: "date",
       value: endDate,
       onChange: (value) => setEndDate(value),
+      required: true,
     },
     {
       name: "location",
@@ -85,6 +92,7 @@ export const ProfileFormComponent = ({
         value: key,
       })),
       onChange: (value) => setType(value),
+      required: true,
     },
     {
       name: "level",
@@ -96,6 +104,7 @@ export const ProfileFormComponent = ({
           ? languageLevelOptions
           : educationLevelOptions,
       onChange: (value) => setLevel(value),
+      required: true,
     },
   ];
 
@@ -144,98 +153,146 @@ export const ProfileFormComponent = ({
   const formattedType =
     educationTypeOptions[item.type as keyof typeof educationTypeOptions];
 
-  return (
-    <div className="flex flex-col gap-2 rounded-md flex-1 p-2 pb-2 relative">
-      <div className="absolute top-0 right-0">
-        {isEditing ? (
-          <div className="flex gap-2">
-            <SaveIcon
-              onClick={() => {
-                updateHook({
-                  id: item.id ?? "",
-                  type: profileFormComponentType,
-                  item: {
-                    title: title ?? "",
-                    description: description ?? "",
-                    startDate: startDate ?? "",
-                    endDate: endDate ?? "",
-                    location: location ?? "",
-                    link: link ?? "",
-                    level: level ?? "",
-                  },
-                });
-                setIsEditing(false);
-              }}
-              className="cursor-pointer hover:text-button_blue duration-300"
-            />
-            <Delete
-              onClick={() => {
-                setIsEditing(false);
-                queryClient.invalidateQueries({ queryKey: ["getUserData"] });
-              }}
-              className="cursor-pointer hover:text-red-500 duration-300"
-            />
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <EditIcon
-              width={24}
-              height={24}
-              className="cursor-pointer hover:text-button_blue duration-300"
-              onClick={() => setIsEditing(true)}
-            />
-            <TrashIcon
-              onClick={() => {
-                setIsEditing(false);
-                deleteHook({
-                  id: item.id ?? "",
-                  type: profileFormComponentType,
-                  item: item,
-                });
-              }}
-              className="cursor-pointer hover:text-red-500 duration-300"
-            />
-          </div>
-        )}
-      </div>
+  const requiredParameters: Record<string, yup.AnySchema> = {};
 
-      {isEditing ? (
-        <FormInputs formInputs={filteredFormInputs} />
-      ) : (
-        <>
-          <div>
-            <h2 className="text-xl font-medium">{item.title}</h2>
-            <p className="text-sm ">{item.description}</p>
-          </div>
-          <div className="grid grid-cols-1 grid-rows-[auto auto] md:grid-rows-1 md:grid-cols-2 w-full text-gray-500 text-sm">
-            <div>
-              {allowedProfileFormInputs.includes("location") && (
-                <p>Location: {item.location}</p>
-              )}
-              {allowedProfileFormInputs.includes("link") && (
-                <p>Link: {item.link}</p>
-              )}
-              {allowedProfileFormInputs.includes("level") && (
-                <p>Level: {formattedLevel}</p>
-              )}
-              {allowedProfileFormInputs.includes("type") && (
-                <p>Type: {formattedType}</p>
+  Object.keys(profileFormComponentValidationSchema).forEach((field) => {
+    if (filteredFormInputs.find((input) => input.name === field)?.required) {
+      requiredParameters[field] = profileFormComponentValidationSchema[
+        field as keyof typeof profileFormComponentValidationSchema
+      ].required("This field is required");
+    } else
+      requiredParameters[field] =
+        profileFormComponentValidationSchema[
+          field as keyof typeof profileFormComponentValidationSchema
+        ];
+  });
+
+  const ValidationSchema = yup.object().shape(requiredParameters);
+
+  const initialValues = {
+    id: item.id,
+    title: item.title,
+    description: item.description,
+    startDate: item.startDate,
+    endDate: item.endDate,
+    location: item.location,
+    link: item.link,
+    level: item.level,
+    type: item.type,
+    createdAt: item.createdAt,
+  };
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => {
+        updateHook({
+          id: item.id ?? "",
+          type: profileFormComponentType,
+          item: {
+            title: values.title,
+            description: values.description,
+            startDate: values.startDate,
+            endDate: values.endDate,
+            location: values.location,
+            link: values.link,
+            level: values.level,
+          },
+        });
+        setIsEditing(false);
+      }}
+      validationSchema={ValidationSchema}
+    >
+      {({ submitForm, setFieldValue, validateForm }) => (
+        <Form className="w-full">
+          <div className="flex flex-col gap-2 rounded-md flex-1 p-2 pb-2 relative">
+            <div className="absolute top-0 right-0">
+              {isEditing ? (
+                <div className="flex gap-2">
+                  <SaveIcon
+                    onClick={async () => {
+                      if (Object.entries(await validateForm()).length === 0) {
+                        submitForm();
+                      }
+                    }}
+                    className="cursor-pointer hover:text-button_blue duration-300"
+                  />
+                  <Delete
+                    onClick={() => {
+                      setIsEditing(false);
+                      queryClient.invalidateQueries({
+                        queryKey: ["getUserData"],
+                      });
+                    }}
+                    className="cursor-pointer hover:text-red-500 duration-300"
+                  />
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <EditIcon
+                    width={24}
+                    height={24}
+                    className="cursor-pointer hover:text-button_blue duration-300"
+                    onClick={() => setIsEditing(true)}
+                  />
+                  <TrashIcon
+                    onClick={() => {
+                      setIsEditing(false);
+                      deleteHook({
+                        id: item.id ?? "",
+                        type: profileFormComponentType,
+                        item: item,
+                      });
+                    }}
+                    className="cursor-pointer hover:text-red-500 duration-300"
+                  />
+                </div>
               )}
             </div>
-            <div>
-              {allowedProfileFormInputs.includes("startDate") && (
-                <p>Start Date: {item.startDate?.slice(0, 10)}</p>
-              )}
-              {allowedProfileFormInputs.includes("endDate") && (
-                <p>End Date: {item.endDate?.slice(0, 10)}</p>
-              )}
-              {allowedProfileFormInputs.includes("createdAt") && (
-                <p>Created At: {item.createdAt?.slice(0, 10)}</p>
-              )}
-            </div>
+
+            {isEditing ? (
+              <FormInputs
+                formInputs={filteredFormInputs}
+                setFieldValue={setFieldValue}
+              />
+            ) : (
+              <>
+                <div>
+                  <h2 className="text-xl font-medium">{item.title}</h2>
+                  <p className="text-sm ">{item.description}</p>
+                </div>
+                <div className="grid grid-cols-1 grid-rows-[auto auto] md:grid-rows-1 md:grid-cols-2 w-full text-gray-500 text-sm">
+                  <div>
+                    {allowedProfileFormInputs.includes("location") && (
+                      <p>Location: {item.location}</p>
+                    )}
+                    {allowedProfileFormInputs.includes("link") && (
+                      <p>Link: {item.link}</p>
+                    )}
+                    {allowedProfileFormInputs.includes("level") && (
+                      <p>Level: {formattedLevel}</p>
+                    )}
+                    {allowedProfileFormInputs.includes("type") && (
+                      <p>Type: {formattedType}</p>
+                    )}
+                  </div>
+                  <div>
+                    {allowedProfileFormInputs.includes("startDate") && (
+                      <p>Start Date: {item.startDate?.slice(0, 10)}</p>
+                    )}
+                    {allowedProfileFormInputs.includes("endDate") && (
+                      <p>End Date: {item.endDate?.slice(0, 10)}</p>
+                    )}
+                    {allowedProfileFormInputs.includes("createdAt") && (
+                      <p>Created At: {item.createdAt?.slice(0, 10)}</p>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
-        </>
+        </Form>
       )}
-    </div>
+    </Formik>
   );
 };

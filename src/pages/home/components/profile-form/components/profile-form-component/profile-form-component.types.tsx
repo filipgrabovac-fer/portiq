@@ -1,7 +1,9 @@
+import * as yup from "yup";
+
 export type ProfileFormComponentItemType = {
   id?: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   startDate?: string;
   endDate?: string;
   location?: string;
@@ -79,4 +81,17 @@ export type ProfileFormHookDataProps = {
 export type ProfileFormComponentProps = {
   item: ProfileFormComponentItemType;
   profileFormComponentType: ProfileFormComponentType;
+};
+
+export const profileFormComponentValidationSchema = {
+  id: yup.string().nullable(),
+  title: yup.string().nullable(),
+  description: yup.string().nullable(),
+  startDate: yup.string().nullable(),
+  endDate: yup.string().nullable(),
+  location: yup.string().nullable(),
+  link: yup.string().nullable(),
+  createdAt: yup.string().nullable(),
+  level: yup.string().nullable(),
+  type: yup.string().nullable(),
 };

@@ -3,6 +3,8 @@ import { Dispatch, HTMLInputTypeAttribute, SetStateAction } from "react";
 export type FormProps = {
   formInputs: FormInputProps[];
   readonly?: boolean;
+  setFieldValue: (field: string, value: string) => void;
+  errors?: FormInputErrorType;
 };
 
 export type FormInputProps = {
@@ -17,4 +19,16 @@ export type FormInputProps = {
   readonly?: boolean;
   className?: string;
   options?: { label: string; value: string }[];
+  required?: boolean;
+};
+
+export type FormInputErrorType = {
+  title?: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+  location?: string;
+  link?: string;
+  level?: string;
+  type?: string;
 };

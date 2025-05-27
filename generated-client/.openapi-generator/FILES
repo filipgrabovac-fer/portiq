@@ -18,6 +18,7 @@ models/GetComponentCode.ts
 models/GetSelectedComponents.ts
 models/GithubRequest.ts
 models/GithubResponse.ts
+models/PutLinkedinData.ts
 models/PutUserData.ts
 models/SocialLogin.ts
 models/User.ts

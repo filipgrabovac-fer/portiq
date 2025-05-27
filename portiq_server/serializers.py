@@ -70,6 +70,14 @@ class UserDetailsSerializer(serializers.Serializer):
     work_experiences = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     references = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     github_data = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
+
+class PutLinkedinDataSerializer(serializers.Serializer):
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    phone_number = serializers.CharField(required=False)
+    image_url = serializers.CharField(required=False)
+
 class PostProjectSerializer(serializers.Serializer):
     title = serializers.CharField(required=False)
     description = serializers.CharField(required=False, allow_blank=True)

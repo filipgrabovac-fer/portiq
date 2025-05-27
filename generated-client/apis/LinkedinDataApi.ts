@@ -14,6 +14,17 @@
 
 
 import * as runtime from '../runtime';
+import type {
+  PutLinkedinData,
+} from '../models/index';
+import {
+    PutLinkedinDataFromJSON,
+    PutLinkedinDataToJSON,
+} from '../models/index';
+
+export interface LinkedinDataUpdateDetailsUpdateRequest {
+    putLinkedinData?: PutLinkedinData;
+}
 
 /**
  * 
@@ -22,7 +33,7 @@ export class LinkedinDataApi extends runtime.BaseAPI {
 
     /**
      */
-    async linkedinDataDetailsRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async linkedinDataDetailsUpdateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -32,7 +43,7 @@ export class LinkedinDataApi extends runtime.BaseAPI {
         }
         const response = await this.request({
             path: `/api/linkedin-data/details/`,
-            method: 'GET',
+            method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
@@ -42,8 +53,37 @@ export class LinkedinDataApi extends runtime.BaseAPI {
 
     /**
      */
-    async linkedinDataDetailsRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.linkedinDataDetailsRetrieveRaw(initOverrides);
+    async linkedinDataDetailsUpdate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.linkedinDataDetailsUpdateRaw(initOverrides);
+    }
+
+    /**
+     */
+    async linkedinDataUpdateDetailsUpdateRaw(requestParameters: LinkedinDataUpdateDetailsUpdateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/linkedin-data/update-details/`,
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PutLinkedinDataToJSON(requestParameters['putLinkedinData']),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     */
+    async linkedinDataUpdateDetailsUpdate(requestParameters: LinkedinDataUpdateDetailsUpdateRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.linkedinDataUpdateDetailsUpdateRaw(requestParameters, initOverrides);
     }
 
 }

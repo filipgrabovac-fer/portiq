@@ -1,5 +1,12 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { EditIcon, Loader2, SaveIcon, TrashIcon } from "lucide-react";
+import {
+  EditIcon,
+  Github,
+  Loader2,
+  SaveIcon,
+  TrashIcon,
+  XIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../../../utils/cn.util";
 import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
@@ -11,6 +18,7 @@ import { GithubResponse } from "../../../../../generated-client";
 import { useDeleteGithubData } from "../../hooks/useDeleteGithubData.hook";
 import { usePutGithubData } from "../../hooks/usePutGithubData.hook";
 import { GithubData } from "./GithubData.component";
+import { LinkedinData } from "./LinkedinData.component";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;
@@ -197,34 +205,55 @@ export const PersonalInfoForm = ({
 
       {githubData && githubData.avatarUrl && <GithubData {...githubData} />}
 
-      {isPutGithubDataLoading || isDeleteGithubDataLoading ? (
-        <Loader2 className="animate-spin mx-auto text-button_blue" />
-      ) : (
-        <div className="flex flex-col gap-2">
-          {
-            <button
-              className={cn(
-                "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer",
-                !githubUsername &&
-                  "cursor-not-allowed opacity-50 pointer-events-none"
-              )}
-              onClick={() => putGithubData({ username: githubUsername ?? "" })}
-            >
-              {!githubData?.avatarUrl
-                ? "Connect with Github"
-                : "Update Github Data"}
-            </button>
-          }
-          {githubData && githubData.avatarUrl && (
-            <button
-              className="text-red-500 px-4 py-2 rounded-md cursor-pointer"
-              onClick={() => deleteGithubData()}
-            >
-              Disconnect Github Account
-            </button>
-          )}
-        </div>
-      )}
+      <div className="flex justify-between gap-4">
+        <LinkedinData />
+
+        {isPutGithubDataLoading || isDeleteGithubDataLoading ? (
+          <Loader2 className="animate-spin mx-auto text-button_blue" />
+        ) : (
+          <div className="flex flex-col gap-2 flex-1">
+            {
+              <button
+                className={cn(
+                  "bg-[#24292e] text-white px-4 py-2 rounded-md cursor-pointer font-semibold flex gap-2 items-center w-full mx-auto h-16",
+                  !githubUsername &&
+                    "cursor-not-allowed opacity-50 pointer-events-none"
+                )}
+              >
+                <button
+                  className="cursor-pointer flex gap-2 w-full justify-center items-center"
+                  onClick={() =>
+                    putGithubData({ username: githubUsername ?? "" })
+                  }
+                >
+                  <Github className="h-6 w-6 text-white" />
+                  <div className="flex flex-col items-start  ">
+                    <span className="font-semibold leading-tight">
+                      {!githubData?.avatarUrl
+                        ? "Connect with GitHub"
+                        : "Update GitHub Data"}
+                    </span>
+                    <span className="text-xs text-gray-300 opacity-90">
+                      {!githubData?.avatarUrl
+                        ? "Import your repositories"
+                        : "Refresh your data"}
+                    </span>
+                  </div>
+                </button>
+                {githubData && githubData.avatarUrl && (
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-2 bg-white hover:bg-red-500 transition-all duration-300 font-medium px-4 py-2 rounded-md ml-auto cursor-pointer group"
+                    onClick={() => deleteGithubData()}
+                  >
+                    <XIcon className="w-6 h-6 text-red-500 hover:text-white group-hover:text-white transition-all duration-300" />
+                  </button>
+                )}
+              </button>
+            }
+          </div>
+        )}
+      </div>
     </div>
   );
 };

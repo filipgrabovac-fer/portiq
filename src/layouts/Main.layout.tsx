@@ -66,13 +66,7 @@ export const MainLayout = () => {
     },
   ];
 
-  console.log(
-    `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${
-      import.meta.env.LINKEDIN_CLIENT_ID
-    }&redirect_uri=${
-      import.meta.env.LINKEDIN_REDIRECT_URI
-    }&scope=r_liteprofile%20r_emailaddress`
-  );
+  const webPortfolioUrl = `http://localhost:3000/user/${userId}/web-portfolio`;
   return (
     <div className="h-screen w-screen flex">
       <button
@@ -88,7 +82,7 @@ export const MainLayout = () => {
       <div
         className={cn(
           isSidebarOpen && "max-sm:translate-x-[0]",
-          "h-screen w-80 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all border-r border-gray-200 bg-gray-50 z-10"
+          "h-screen w-120 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all border-r border-gray-200 bg-gray-50 z-10"
         )}
       >
         <div className="my-auto flex flex-col gap-4 items-center">
@@ -102,16 +96,11 @@ export const MainLayout = () => {
               <PaperclipIcon
                 className="w-6 h-6 cursor-pointer"
                 onClick={() => {
-                  navigator.clipboard.writeText(
-                    `http://localhost:3000/user/${userId}/web-portfolio`
-                  );
+                  navigator.clipboard.writeText(webPortfolioUrl);
                 }}
               />
             </div>
-            <QRCode
-              value={`http://localhost:3000/user/${userId}/web-portfolio`}
-              className="w-full h-full"
-            />
+            <QRCode value={webPortfolioUrl} className="w-full h-full" />
           </div>
           <div className="flex gap-2">
             {navigationIcons.map((icon) => (
@@ -120,15 +109,6 @@ export const MainLayout = () => {
           </div>
         </div>
         <div className="flex flex-col gap-2 mb-4">
-          <a
-            href={`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${
-              import.meta.env.LINKEDIN_CLIENT_ID
-            }&redirect_uri=${
-              import.meta.env.LINKEDIN_REDIRECT_URI
-            }&scope=r_liteprofile%20r_emailaddress`}
-          >
-            Import data from LinkedIn
-          </a>
           <button
             className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer mx-auto"
             onClick={() => navigate({ to: developmentRoute.to })}

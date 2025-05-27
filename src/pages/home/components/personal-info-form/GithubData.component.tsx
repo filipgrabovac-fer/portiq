@@ -10,7 +10,7 @@ export const GithubData = ({
   const username = githubUrl.replace("https://github.com/", "");
 
   return (
-    <div className="flex flex-col gap-4 bg-white border border-gray-200 rounded-xl  p-6">
+    <div className="flex flex-col gap-4 bg-white border border-gray-200 rounded-xl p-6">
       <div className="flex items-center gap-4 ">
         <a href={githubUrl} target="_blank">
           <img

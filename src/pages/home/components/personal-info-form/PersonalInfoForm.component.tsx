@@ -12,13 +12,18 @@ import { cn } from "../../../../utils/cn.util";
 import { UserDetailsInfoType } from "../../hooks/useGetUserData.hook";
 import { usePutUserData } from "../../hooks/usePutUserData.hook";
 import { FormInputs } from "../FormInputs.component";
-import { FormInputProps } from "../profile-form/form-inputs.types";
+import {
+  FormInputProps,
+  PersonalInfoFormProps,
+} from "../profile-form/form-inputs.types";
 
 import { GithubResponse } from "../../../../../generated-client";
 import { useDeleteGithubData } from "../../hooks/useDeleteGithubData.hook";
 import { usePutGithubData } from "../../hooks/usePutGithubData.hook";
 import { GithubData } from "./GithubData.component";
 import { LinkedinData } from "./LinkedinData.component";
+import { Form, Formik } from "formik";
+import * as yup from "yup";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;
@@ -63,6 +68,7 @@ export const PersonalInfoForm = ({
       onChange: setName,
       value: name,
       inputWrapperClass: "w-max",
+      required: true,
     },
     {
       label: "Surname",
@@ -72,6 +78,7 @@ export const PersonalInfoForm = ({
       onChange: setSurname,
       value: surname,
       inputWrapperClass: "w-max",
+      required: true,
     },
     {
       label: "Email",
@@ -80,6 +87,7 @@ export const PersonalInfoForm = ({
       placeholder: "Email",
       onChange: setEmail,
       value: email,
+      required: true,
       inputWrapperClass: "min-lg:w-2/5 max-lg:w-full",
     },
 
@@ -89,6 +97,7 @@ export const PersonalInfoForm = ({
       type: "number",
       placeholder: "Phone",
       onChange: setPhone,
+      required: true,
       value: phone,
     },
     {
@@ -97,6 +106,7 @@ export const PersonalInfoForm = ({
       type: "text",
       placeholder: "Address",
       onChange: setAddress,
+      required: true,
       value: address,
     },
     {
@@ -105,6 +115,7 @@ export const PersonalInfoForm = ({
       type: "text",
       placeholder: "City",
       onChange: setCity,
+      required: true,
       value: city,
     },
     {
@@ -113,6 +124,7 @@ export const PersonalInfoForm = ({
       type: "text",
       placeholder: "State",
       onChange: setState,
+      required: true,
       value: state,
     },
     {
@@ -121,6 +133,7 @@ export const PersonalInfoForm = ({
       type: "text",
       placeholder: "Zip Code",
       onChange: setZipCode,
+      required: true,
       value: zipCode,
     },
     {
@@ -129,6 +142,7 @@ export const PersonalInfoForm = ({
       type: "text",
       placeholder: "Country",
       onChange: setCountry,
+      required: true,
       value: country,
     },
     {
@@ -154,106 +168,160 @@ export const PersonalInfoForm = ({
         queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
     });
 
+  const requiredParameters: Record<string, yup.AnySchema> = {};
+
+  Object.keys(PersonalInfoFormProps).forEach((field) => {
+    if (formInputs.find((input) => input.name === field)?.required) {
+      requiredParameters[field] = PersonalInfoFormProps[
+        field as keyof typeof PersonalInfoFormProps
+      ].required("This field is required");
+    } else
+      requiredParameters[field] =
+        PersonalInfoFormProps[field as keyof typeof PersonalInfoFormProps];
+  });
+
+  const ValidationSchema = yup.object().shape(requiredParameters);
+
+  const initialValues = {
+    name: data?.first_name,
+    surname: data?.last_name,
+    email: data?.email,
+    phone: data?.phone_number,
+    address: data?.address,
+    city: data?.city,
+    state: data?.state,
+    zip_code: data?.zip_code,
+    country: data?.country,
+    github_username: data?.github_username,
+  };
+
   return (
-    <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold pb-2">Personal Info</h2>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values) => {
+        updateUserData({
+          info: {
+            first_name: values.name ?? "",
+            last_name: values.surname ?? "",
+            email: values.email ?? "",
+            phone_number: values.phone ?? "",
+            address: values.address ?? "",
+            city: values.city ?? "",
+            state: values.state ?? "",
+            zip_code: values.zip_code ?? "",
+            country: values.country ?? "",
+            github_username: values.github_username ?? "",
+          },
+        });
+        setReadonly(true);
+      }}
+      validationSchema={ValidationSchema}
+    >
+      {({ setFieldValue, errors, submitForm, validateForm }) => (
+        <Form className="w-full">
+          <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold pb-2">Personal Info</h2>
 
-        {readonly ? (
-          <EditIcon
-            width={24}
-            height={24}
-            className="cursor-pointer hover:text-button_blue duration-300"
-            onClick={() => setReadonly(false)}
-          />
-        ) : (
-          <div className="flex gap-2">
-            <SaveIcon
-              onClick={() => {
-                updateUserData({
-                  info: {
-                    first_name: name ?? "",
-                    last_name: surname ?? "",
-                    email: email ?? "",
-                    phone_number: phone ?? "",
-                    address: address ?? "",
-                    city: city ?? "",
-                    state: state ?? "",
-                    zip_code: zipCode ?? "",
-                    country: country ?? "",
-                    github_username: githubUsername ?? "",
-                  },
-                });
-                setReadonly(true);
-              }}
-              className="cursor-pointer hover:text-button_blue duration-300"
+              {readonly ? (
+                <EditIcon
+                  width={24}
+                  height={24}
+                  className="cursor-pointer hover:text-button_blue duration-300"
+                  onClick={() => setReadonly(false)}
+                />
+              ) : (
+                <div className="flex gap-2">
+                  <SaveIcon
+                    onClick={async () => {
+                      const errors = await validateForm();
+                      if (Object.keys(errors).length == 0) {
+                        submitForm();
+                      }
+                    }}
+                    className="cursor-pointer hover:text-button_blue duration-300"
+                  />
+                  <TrashIcon
+                    onClick={() => {
+                      queryClient.invalidateQueries({
+                        queryKey: ["getUserData"],
+                      });
+                      setReadonly(true);
+                      resetData();
+                    }}
+                    className="cursor-pointer hover:text-red-500 duration-300"
+                  />
+                </div>
+              )}
+            </div>
+
+            <FormInputs
+              formInputs={formInputs}
+              readonly={readonly}
+              setFieldValue={setFieldValue}
+              errors={errors}
             />
-            <TrashIcon
-              onClick={() => {
-                queryClient.invalidateQueries({
-                  queryKey: ["getUserData"],
-                });
-                setReadonly(true);
-                resetData();
-              }}
-              className="cursor-pointer hover:text-red-500 duration-300"
-            />
-          </div>
-        )}
-      </div>
-      <FormInputs formInputs={formInputs} readonly={readonly} />
 
-      {githubData && githubData.avatarUrl && <GithubData {...githubData} />}
+            {githubData && githubData.avatarUrl && (
+              <GithubData {...githubData} />
+            )}
 
-      <div className="flex justify-between gap-4">
-        <LinkedinData />
+            <div className="flex flex-col xl:flex-row gap-4 items-center">
+              <LinkedinData />
 
-        {isPutGithubDataLoading || isDeleteGithubDataLoading ? (
-          <Loader2 className="animate-spin mx-auto text-button_blue" />
-        ) : (
-          <div className="flex flex-col gap-2 flex-1">
-            {
-              <button
-                className={cn(
-                  "bg-[#24292e] text-white px-4 py-2 rounded-md cursor-pointer font-semibold flex gap-2 items-center w-full mx-auto h-16",
-                  !githubUsername &&
-                    "cursor-not-allowed opacity-50 pointer-events-none"
-                )}
-              >
-                <button
-                  className="cursor-pointer flex gap-2 w-full justify-center items-center"
-                  onClick={() =>
-                    putGithubData({ username: githubUsername ?? "" })
-                  }
-                >
-                  <Github className="h-6 w-6 text-white" />
-                  <div className="flex flex-col items-start  ">
-                    <span className="font-semibold leading-tight">
-                      {!githubData?.avatarUrl
-                        ? "Connect with GitHub"
-                        : "Update GitHub Data"}
-                    </span>
-                    <span className="text-xs text-gray-300 opacity-90">
-                      {!githubData?.avatarUrl
-                        ? "Import your repositories"
-                        : "Refresh your data"}
-                    </span>
-                  </div>
-                </button>
-                {githubData && githubData.avatarUrl && (
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-2 bg-white hover:bg-red-500 transition-all duration-300 font-medium px-4 py-2 rounded-md ml-auto cursor-pointer group"
-                    onClick={() => deleteGithubData()}
+              <div className="flex flex-col gap-2 w-full">
+                {
+                  <div
+                    className={cn(
+                      "bg-[#24292e] text-white px-4 py-2 rounded-md cursor-pointer font-semibold flex gap-2 items-center w-full mx-auto h-16",
+                      !githubUsername &&
+                        "cursor-not-allowed opacity-50 pointer-events-none"
+                    )}
                   >
-                    <XIcon className="w-6 h-6 text-red-500 hover:text-white group-hover:text-white transition-all duration-300" />
-                  </button>
-                )}
-              </button>
-            }
+                    <div
+                      className="cursor-pointer flex gap-2 w-full justify-center items-center"
+                      onClick={() =>
+                        putGithubData({ username: githubUsername ?? "" })
+                      }
+                    >
+                      {isPutGithubDataLoading || isDeleteGithubDataLoading ? (
+                        <div className="w-full flex justify-center items-center">
+                          <Loader2 className="animate-spin mx-auto text-white" />
+                        </div>
+                      ) : (
+                        <>
+                          <Github className="h-6 w-6 text-white" />
+                          <div className="flex flex-col items-start  ">
+                            <span className="font-semibold leading-tight">
+                              {!githubData?.avatarUrl
+                                ? "Connect with GitHub"
+                                : "Update Data"}
+                            </span>
+                            <span className="text-xs text-gray-300 opacity-90">
+                              {!githubData?.avatarUrl
+                                ? "Import your repositories"
+                                : "Refresh your data"}
+                            </span>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    {githubData && githubData.avatarUrl && (
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 bg-white hover:bg-red-500 transition-all duration-300 font-medium px-4 py-2 rounded-md ml-auto cursor-pointer group"
+                        onClick={() => deleteGithubData()}
+                      >
+                        <XIcon className="w-6 h-6 text-red-500 hover:text-white group-hover:text-white transition-all duration-300" />
+                      </button>
+                    )}
+                  </div>
+                }
+              </div>
+            </div>
           </div>
-        )}
-      </div>
-    </div>
+        </Form>
+      )}
+    </Formik>
   );
 };

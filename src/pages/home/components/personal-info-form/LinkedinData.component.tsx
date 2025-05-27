@@ -6,7 +6,7 @@ export const LinkedinData = () => {
       }&redirect_uri=${
         import.meta.env.LINKEDIN_REDIRECT_URI
       }&scope=r_liteprofile%20r_emailaddress&state=nekiRandomString`}
-      className="flex items-center gap-2 bg-[#0077B5] hover:bg-[#005983] text-white font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300 mb-2 h-16 w-1/2"
+      className="flex items-center gap-2 bg-[#0077B5] hover:bg-[#005983] text-white font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300  h-16 w-full"
       style={{ textDecoration: "none" }}
     >
       <div className="flex items-center gap-2 mx-auto">

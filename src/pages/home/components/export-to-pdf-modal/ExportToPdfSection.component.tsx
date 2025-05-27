@@ -6,6 +6,8 @@ import {
   ProfileFormComponentTitle,
 } from "../profile-form/components/profile-form-component/profile-form-component.types";
 import { GithubResponse } from "../../../../../generated-client";
+import { sectionIcons } from "./export-to-pdf.types";
+import { objectToCamel } from "ts-case-convert";
 
 export type ExportToPdfSectionProps = {
   items: Record<string, string>[];
@@ -52,9 +54,16 @@ export const ExportToPdfSection = ({
     }
   };
 
+  const SectionIcon = sectionIcons[type as keyof typeof sectionIcons]
+    ? sectionIcons[type as keyof typeof sectionIcons]()
+    : null;
+
   return (
-    <div className="flex flex-col gap-2">
-      <h1 className="text-2xl font-bold">{ProfileFormComponentTitle[type]}</h1>
+    <div className="flex flex-col gap-2 shadow-sm border-0 bg-white/70 backdrop-blur-sm p-4 rounded-md">
+      <h1 className="text-2xl font-bold flex items-center gap-2 my-4">
+        {SectionIcon && <SectionIcon />}
+        {ProfileFormComponentTitle[type]}
+      </h1>
       <div className="flex gap-2 flex-wrap">
         {type === "githubData" ? (
           <div
@@ -77,7 +86,7 @@ export const ExportToPdfSection = ({
           data.map((item) => (
             <div
               className={cn(
-                "border border-gray-200 rounded-md py-2 px-4 flex gap-4 justify-between items-center hover:bg-button_blue  hover:border-button_blue hover:text-white cursor-pointer transition-all duration-300 w-full lg:w-[calc(50%-0.5rem)]",
+                "border border-gray-200 rounded-md py-2 px-4 flex gap-4 justify-between items-center hover:bg-button_blue  hover:border-button_blue hover:text-white cursor-pointer transition-all duration-300 w-full ",
                 selectedItemIds[type]?.includes(item.id ?? "") &&
                   " outline-2 outline-button_blue border-none"
               )}

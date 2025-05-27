@@ -81,7 +81,7 @@ export const ExportToPdfModal = ({
           <div className="w-5 flex-1"></div>
         </div>
 
-        <div className="overflow-y-scroll max-h-[100vh] flex flex-col gap-4 p-8">
+        <div className="overflow-y-scroll max-h-[100vh] flex flex-col gap-4">
           {isPreview ? (
             <PdfPreview
               userData={userData}

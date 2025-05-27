@@ -172,6 +172,7 @@ class ProfileComponentViewSet(viewsets.ViewSet):
     def get_component_code(self, request):
         portfolio_template_code = {}
         user = cache.get("user")
+        db_user = User.objects.get(id_user=user["id_user"])
 
         portfolio_template = PortfolioTemplate.objects.filter(id_user=user["id_user"]).values(
             "id_user_info_development",
@@ -186,6 +187,9 @@ class ProfileComponentViewSet(viewsets.ViewSet):
             "id_reference_development",
             "id_github_data_development"
         ).first()
+
+        if not portfolio_template:
+            portfolio_template = PortfolioTemplate.objects.create(id_user=db_user)
 
         for portfolio_component_key, portfolio_component_value in portfolio_template.items():
             if not portfolio_component_value:

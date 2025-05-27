@@ -106,6 +106,7 @@ class UserDetailsViewSet(viewsets.ViewSet):
                 "zip_code": user.zip_code,
                 "country": user.country,
                 "github_username": user.github_username,
+                "image_url": user.image_url,
             }],
             "certificates": [
                 {

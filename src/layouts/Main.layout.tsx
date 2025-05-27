@@ -1,5 +1,6 @@
 import { Outlet, useNavigate } from "@tanstack/react-router";
 import {
+  ChevronDown,
   FileIcon,
   FileUserIcon,
   HomeIcon,
@@ -25,6 +26,7 @@ import {
   NavigationIcon,
   NavigationIconProps,
 } from "./components/NavigationIcon.component";
+import { Button, Menu, Popover } from "antd";
 
 export const MainLayout = () => {
   const { data: userId } = useGetUserId();
@@ -67,6 +69,26 @@ export const MainLayout = () => {
   ];
 
   const webPortfolioUrl = `http://localhost:3000/user/${userId}/web-portfolio`;
+
+  const content = (
+    <>
+      <button
+        className="w-full text-button_blue hover:bg-button_blue/20 p-2 rounded-md transition-all duration-300 cursor-pointer"
+        onClick={() => navigate({ to: developmentRoute.to })}
+      >
+        Create template
+      </button>
+      <button
+        className="w-full text-red-500 hover:bg-red-500/20 p-2 rounded-md transition-all duration-300 cursor-pointer"
+        onClick={async () => {
+          await logoutApi.logoutCreate();
+          navigate({ to: loginRoute.to });
+        }}
+      >
+        Logout
+      </button>
+    </>
+  );
   return (
     <div className="h-screen w-screen flex">
       <button
@@ -79,12 +101,31 @@ export const MainLayout = () => {
           <MenuIcon width={24} height={24} color="white" />
         )}
       </button>
+
       <div
         className={cn(
           isSidebarOpen && "max-sm:translate-x-[0]",
           "h-screen w-120 flex flex-col max-sm:absolute max-sm:translate-x-[-100%] max-sm:w-full duration-300 transition-all border-r border-gray-200 bg-gray-50 z-10"
         )}
       >
+        <div className="w-full bg-white flex gap-2  items-center h-16 justify-between">
+          <img
+            // @ts-ignore
+            src={userData?.info?.[0]?.image_url ?? ""}
+            className="w-10 h-10 rounded-full z-100 ml-2 hidden sm:block"
+            alt=""
+          />
+          <Popover
+            content={content}
+            title=""
+            placement="bottomRight"
+            arrow={false}
+          >
+            <div className="p-2 border border-gray-200 rounded-md mr-2 ml-auto">
+              <ChevronDown className="w-6 h-6 cursor-pointer" />
+            </div>
+          </Popover>
+        </div>
         <div className="my-auto flex flex-col gap-6 items-center">
           <div className="w-40 m-auto rounded-md flex flex-col justify-center">
             <div
@@ -107,23 +148,6 @@ export const MainLayout = () => {
               <NavigationIcon key={icon.text} {...icon} />
             ))}
           </div>
-        </div>
-        <div className="flex flex-col gap-2 mb-4">
-          <button
-            className="bg-white hover:bg-button_blue/20 text-button_blue p-3 rounded-md max-w-40 hover:opacity-90  cursor-pointer mx-auto transition-all duration-300"
-            onClick={() => navigate({ to: developmentRoute.to })}
-          >
-            Create template
-          </button>
-          <button
-            className="bg-white p-3 text-red-500 cursor-pointer rounded-md max-w-40 mx-auto hover:bg-red-500/20 transition-all duration-300"
-            onClick={async () => {
-              await logoutApi.logoutCreate();
-              navigate({ to: loginRoute.to });
-            }}
-          >
-            Logout
-          </button>
         </div>
       </div>
 

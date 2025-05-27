@@ -120,23 +120,19 @@ export const Development = () => {
             />
           </div>
           <div className="flex ml-auto px-8 justify-between">
-            <div className="flex gap-4 ml-auto">
-              <div className="m-auto w-max ">
-                <button
-                  className="text-red-500 p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer"
-                  onClick={() => navigate({ to: "/home" })}
-                >
-                  Discard
-                </button>
-              </div>
-              <div className="m-auto w-max">
-                <button
-                  className="bg-button_blue text-white p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer"
-                  onClick={handleSave}
-                >
-                  Save template
-                </button>
-              </div>
+            <div className="flex gap-4 ml-auto ">
+              <button
+                className="text-red-500 hover:bg-red-500/20 p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer "
+                onClick={() => navigate({ to: "/home" })}
+              >
+                Discard
+              </button>
+              <button
+                className="text-button_blue hover:bg-button_blue/20  p-2 rounded-md max-w-40 hover:opacity-90  duration-300 cursor-pointer "
+                onClick={handleSave}
+              >
+                Save template
+              </button>
             </div>
           </div>
         </div>

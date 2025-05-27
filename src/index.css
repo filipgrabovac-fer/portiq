@@ -8,3 +8,8 @@ body {
 @theme {
   --color-button_blue: #5853ef;
 }
+
+.ant-popover-inner {
+  box-shadow: none !important;
+  margin-top: 14px !important;
+}

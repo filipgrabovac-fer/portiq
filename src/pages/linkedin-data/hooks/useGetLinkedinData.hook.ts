@@ -1,18 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-// import { linkedinApi } from "../../../schema";
+import { linkedinApi } from "../../../schema";
+import { GetLinkedinData } from "../../../../generated-client";
 
 export const useGetLinkedinData = () => {
   return useQuery({
     queryKey: ["linkedin-data"],
-    queryFn: async () =>
-      //   (await linkedinApi.linkedinDataDetailsRetrieve()) ?? [],
-      mockLinkedinData,
-  });
-};
+    queryFn: async () => {
+      const response: GetLinkedinData =
+        (await linkedinApi.linkedinDataDetailsRetrieve()) ?? [];
 
-export const mockLinkedinData = {
-  name: "John Doe",
-  email: "john.doe@example.com",
-  phone: "1234567890",
-  address: "123 Main St, Anytown, USA",
+      return response;
+    },
+  });
 };

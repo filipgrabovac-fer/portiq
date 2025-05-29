@@ -5,7 +5,7 @@ export const LinkedinData = () => {
         import.meta.env.LINKEDIN_CLIENT_ID
       }&redirect_uri=${
         import.meta.env.LINKEDIN_REDIRECT_URI
-      }&scope=r_liteprofile%20r_emailaddress&state=nekiRandomString`}
+      }&scope=profile%20openid%20email&state=nekiRandomString`}
       className="flex items-center gap-2 bg-[#0077B5] hover:bg-[#005983] text-white font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300  h-16 w-full"
       style={{ textDecoration: "none" }}
     >

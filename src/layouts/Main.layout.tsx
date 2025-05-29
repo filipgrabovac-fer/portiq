@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { cn } from "../utils/cn.util";
 
+import { Popover } from "antd";
 import QRCode from "react-qr-code";
 import { ExportToPdfModal } from "../pages/home/components/export-to-pdf-modal/ExportToPdfModal.component";
 import { useGetUserData } from "../pages/home/hooks/useGetUserData.hook";
@@ -26,7 +27,6 @@ import {
   NavigationIcon,
   NavigationIconProps,
 } from "./components/NavigationIcon.component";
-import { Button, Menu, Popover } from "antd";
 
 export const MainLayout = () => {
   const { data: userId } = useGetUserId();

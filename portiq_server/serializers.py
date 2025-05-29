@@ -264,3 +264,14 @@ class GithubResponseSerializer(serializers.Serializer):
     following = serializers.IntegerField(required=True)
     avatar_url = serializers.CharField(required=True)
     github_url = serializers.CharField(required=True)
+
+
+class GetLinkedinDataSerializer(serializers.Serializer):
+    sub = serializers.CharField(required=False)
+    email_verified = serializers.BooleanField(required=False)
+    name = serializers.CharField(required=False)
+    locale = serializers.DictField(child=serializers.CharField(required=False))
+    given_name = serializers.CharField(required=False)
+    family_name = serializers.CharField(required=False)
+    email = serializers.CharField(required=False)
+    picture = serializers.CharField(required=False)

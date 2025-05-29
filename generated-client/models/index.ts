@@ -6,6 +6,7 @@ export * from './Development';
 export * from './DevelopmentCodeResponse';
 export * from './DevelopmentResponse';
 export * from './GetComponentCode';
+export * from './GetLinkedinData';
 export * from './GetSelectedComponents';
 export * from './GithubRequest';
 export * from './GithubResponse';

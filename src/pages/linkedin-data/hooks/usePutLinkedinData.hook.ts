@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { linkedinApi } from "../../../schema";
+import { GetLinkedinData } from "../../../../generated-client";
 
 export const usePutLinkedinData = ({
   onSuccess,
@@ -8,14 +9,13 @@ export const usePutLinkedinData = ({
 }) => {
   return useMutation({
     onSuccess: onSuccess,
-    mutationFn: async ({}: any) =>
+    mutationFn: async (selectedData: GetLinkedinData) =>
       await linkedinApi.linkedinDataUpdateDetailsUpdate({
         putLinkedinData: {
-          email: "filip.grabovac@netgen.io",
-          firstName: "Filip",
-          lastName: "Grabovac",
-          phoneNumber: "0912345678",
-          imageUrl: "https://via.placeholder.com/150",
+          email: selectedData.email,
+          firstName: selectedData.givenName,
+          lastName: selectedData.familyName,
+          imageUrl: selectedData.picture,
         },
       }),
   });

@@ -15,6 +15,7 @@ models/Development.ts
 models/DevelopmentCodeResponse.ts
 models/DevelopmentResponse.ts
 models/GetComponentCode.ts
+models/GetLinkedinData.ts
 models/GetSelectedComponents.ts
 models/GithubRequest.ts
 models/GithubResponse.ts

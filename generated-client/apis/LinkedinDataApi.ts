@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  GetLinkedinData,
   PutLinkedinData,
 } from '../models/index';
 import {
+    GetLinkedinDataFromJSON,
+    GetLinkedinDataToJSON,
     PutLinkedinDataFromJSON,
     PutLinkedinDataToJSON,
 } from '../models/index';
@@ -33,7 +36,7 @@ export class LinkedinDataApi extends runtime.BaseAPI {
 
     /**
      */
-    async linkedinDataDetailsUpdateRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async linkedinDataDetailsRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetLinkedinData>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -43,18 +46,19 @@ export class LinkedinDataApi extends runtime.BaseAPI {
         }
         const response = await this.request({
             path: `/api/linkedin-data/details/`,
-            method: 'PUT',
+            method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => GetLinkedinDataFromJSON(jsonValue));
     }
 
     /**
      */
-    async linkedinDataDetailsUpdate(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.linkedinDataDetailsUpdateRaw(initOverrides);
+    async linkedinDataDetailsRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetLinkedinData> {
+        const response = await this.linkedinDataDetailsRetrieveRaw(initOverrides);
+        return await response.value();
     }
 
     /**

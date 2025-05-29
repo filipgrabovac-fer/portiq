@@ -1,6 +1,8 @@
 export const linkedinDataType = {
-  name: "Name",
+  emailVerified: "Email Verified",
+  locale: "Locale",
+  givenName: "Given Name",
+  familyName: "Family Name",
   email: "Email",
-  phone: "Phone",
-  address: "Address",
+  picture: "Picture",
 };

@@ -59,11 +59,8 @@ export const LinkedinDataComponent = ({
           }
         </p>
         <p className=" font-medium">
-          {
-            linkedinDataType[
-              Object.keys(item)[0] as keyof typeof linkedinDataType
-            ]
-          }
+          {item[Object.keys(item)[0] as keyof typeof linkedinDataType] ??
+            "No data"}
         </p>
       </div>
     </div>

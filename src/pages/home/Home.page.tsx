@@ -1,4 +1,5 @@
-import { GithubResponse } from "../../../generated-client";
+import { GithubResponse, UserDetails } from "../../../generated-client";
+import { GenerateSummary } from "./components/generate-summary/GenerateSummary.component";
 import { PersonalInfoForm } from "./components/personal-info-form/PersonalInfoForm.component";
 import { ProfileFormComponentType } from "./components/profile-form/components/profile-form-component/profile-form-component.types";
 import {
@@ -44,6 +45,8 @@ export const Home = () => {
             )}
           />
         )}
+
+        {userData && <GenerateSummary userData={userData as UserDetails} />}
 
         {userData &&
           Object.entries(userData).map((componentData) => {

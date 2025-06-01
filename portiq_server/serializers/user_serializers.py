@@ -25,6 +25,7 @@ class PutUserDataSerializer(serializers.Serializer):
     country = serializers.CharField(required=False)
     github_username = serializers.CharField(required=False)
     image_url = serializers.CharField(required=False)
+    summary = serializers.CharField(required=False)
 
 
 class UserDetailsSerializer(serializers.Serializer):
@@ -39,6 +40,7 @@ class UserDetailsSerializer(serializers.Serializer):
     work_experiences = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     references = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     github_data = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
+    summary = serializers.CharField(allow_null=True)
 
 
 class UserLoggedInSerializer(serializers.Serializer):

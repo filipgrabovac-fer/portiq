@@ -22,12 +22,10 @@ from portiq_server.models.github_data import GithubData
 from portiq_server.models.hobby import Hobby
 from portiq_server.models.other import Other
 from portiq_server.models.portfolio_template import PortfolioTemplate
-from portiq_server.models.professional_summary import ProfessionalSummary
 from portiq_server.models.project_link import ProjectLink
 from portiq_server.models.project import Project
 from portiq_server.models.reference import Reference
 from portiq_server.models.skill import Skill
-from portiq_server.models.social_media_link import SocialMediaLink
 from portiq_server.models.user import User
 from portiq_server.models.user_portfolio_template import UserPortfolioTemplate
 from portiq_server.models.language import Language
@@ -35,8 +33,6 @@ from portiq_server.models.work_experience import WorkExperience
 
 
 admin.site.register(User)
-admin.site.register(ProfessionalSummary)
-admin.site.register(SocialMediaLink)
 admin.site.register(Education)
 admin.site.register(Skill)
 admin.site.register(Hobby)

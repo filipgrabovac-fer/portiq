@@ -14,6 +14,7 @@ class User(models.Model):
     zip_code = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
     github_username = models.CharField(max_length=255, null=True, blank=True)
+    summary = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -59,6 +59,7 @@ export interface UserUpdateRequest {
     country?: string;
     githubUsername?: string;
     imageUrl?: string;
+    summary?: string;
 }
 
 /**
@@ -364,6 +365,10 @@ export class UserApi extends runtime.BaseAPI {
 
         if (requestParameters['imageUrl'] != null) {
             formParams.append('image_url', requestParameters['imageUrl'] as any);
+        }
+
+        if (requestParameters['summary'] != null) {
+            formParams.append('summary', requestParameters['summary'] as any);
         }
 
         const response = await this.request({

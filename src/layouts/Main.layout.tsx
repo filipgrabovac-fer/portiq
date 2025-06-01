@@ -120,6 +120,7 @@ export const MainLayout = () => {
             title=""
             placement="bottomRight"
             arrow={false}
+            trigger="click"
           >
             <div className="p-2 border border-gray-200 rounded-md mr-2 ml-auto">
               <ChevronDown className="w-6 h-6 cursor-pointer" />

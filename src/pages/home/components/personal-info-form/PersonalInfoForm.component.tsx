@@ -22,7 +22,7 @@ import { useDeleteGithubData } from "../../hooks/useDeleteGithubData.hook";
 import { usePutGithubData } from "../../hooks/usePutGithubData.hook";
 import { GithubData } from "./GithubData.component";
 import { LinkedinData } from "./LinkedinData.component";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikErrors } from "formik";
 import * as yup from "yup";
 
 export type PersonalInfoFormProps = {
@@ -45,6 +45,21 @@ export const PersonalInfoForm = ({
   const [country, setCountry] = useState(data?.country);
   const [readonly, setReadonly] = useState(true);
   const [githubUsername, setGithubUsername] = useState(data?.github_username);
+
+  const [validationErrors, setValidationErrors] = useState<
+    FormikErrors<{
+      name: string | undefined;
+      surname: string | undefined;
+      email: string | undefined;
+      phone: string | undefined;
+      address: string | undefined;
+      city: string | undefined;
+      state: string | undefined;
+      zip_code: string | undefined;
+      country: string | undefined;
+      github_username: string | undefined;
+    }>
+  >();
 
   const resetData = () => {
     setName(data?.first_name);
@@ -217,7 +232,7 @@ export const PersonalInfoForm = ({
       }}
       validationSchema={ValidationSchema}
     >
-      {({ setFieldValue, errors, submitForm, validateForm }) => (
+      {({ setFieldValue, submitForm, validateForm }) => (
         <Form className="w-full">
           <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col gap-6 border border-gray-200 p-8">
             <div className="flex justify-between items-center">
@@ -237,6 +252,8 @@ export const PersonalInfoForm = ({
                       const errors = await validateForm();
                       if (Object.keys(errors).length == 0) {
                         submitForm();
+                      } else {
+                        setValidationErrors(errors);
                       }
                     }}
                     className="cursor-pointer hover:text-button_blue duration-300"
@@ -259,7 +276,7 @@ export const PersonalInfoForm = ({
               formInputs={formInputs}
               readonly={readonly}
               setFieldValue={setFieldValue}
-              errors={errors}
+              errors={validationErrors}
             />
 
             {githubData && githubData.avatarUrl && (

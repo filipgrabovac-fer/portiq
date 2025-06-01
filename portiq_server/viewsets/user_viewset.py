@@ -9,13 +9,14 @@ from portiq_server.models.other import Other
 from portiq_server.models.reference import Reference
 from portiq_server.models.user import User
 from portiq_server.models.work_experience import WorkExperience
-from portiq_server.serializers import PutUserDataSerializer, UserLoggedInSerializer, UserSerializer, UserDetailsSerializer
 from portiq_server.models.certificate import Certificate
 from portiq_server.models.education import Education
 from portiq_server.models.skill import Skill
 from portiq_server.models.project import Project
 from django.core.cache import cache
 from drf_spectacular.utils import extend_schema
+
+from portiq_server.serializers.user_serializers import PutUserDataSerializer, UserDetailsSerializer, UserLoggedInSerializer, UserSerializer
 
 class UserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()

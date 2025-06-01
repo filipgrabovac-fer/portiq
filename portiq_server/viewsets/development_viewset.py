@@ -23,7 +23,8 @@ from portiq_server.models.development.user_info_development import UserInfoDevel
 from portiq_server.models.development.work_experience_development import WorkExperienceDevelopment
 from portiq_server.models.portfolio_template import PortfolioTemplate
 from portiq_server.models.user import User
-from portiq_server.serializers import DevelopmentCodeResponseSerializer, GetSelectedComponentsSerializer, PutSelectedComponentsSerializer
+from portiq_server.serializers.development_serializers import DevelopmentCodeResponseSerializer
+from portiq_server.serializers.profile_component_serializers import GetSelectedComponentsSerializer, PutSelectedComponentsSerializer
 
 class CodeType(TypedDict):
     type: str

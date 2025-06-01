@@ -7,6 +7,7 @@ from portiq_server.models.development.certificate_development import Certificate
 from portiq_server.models.development.code_development import CodeDevelopment
 from portiq_server.models.development.css_development import CssDevelopment
 from portiq_server.models.development.education_development import EducationDevelopment
+from portiq_server.models.development.github_data_development import GithubDataDevelopment
 from portiq_server.models.development.hobby_development import HobbyDevelopment
 from portiq_server.models.development.html_development import HtmlDevelopment
 from portiq_server.models.development.javascript_development import JavascriptDevelopment
@@ -62,3 +63,4 @@ admin.site.register(ReferenceDevelopment)
 admin.site.register(WorkExperience)
 admin.site.register(WorkExperienceDevelopment)
 admin.site.register(GithubData)
+admin.site.register(GithubDataDevelopment)

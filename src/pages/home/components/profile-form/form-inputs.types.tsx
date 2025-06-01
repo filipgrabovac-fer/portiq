@@ -45,14 +45,14 @@ export type FormInputErrorType = {
 };
 
 export const PersonalInfoFormProps = {
-  name: yup.string().nullable(),
-  surname: yup.string().nullable(),
-  email: yup.string().nullable(),
-  phone: yup.string().nullable(),
-  address: yup.string().nullable(),
-  city: yup.string().nullable(),
-  state: yup.string().nullable(),
-  zip_code: yup.string().nullable(),
-  country: yup.string().nullable(),
+  name: yup.string().required("This field is required"),
+  surname: yup.string().required("This field is required"),
+  email: yup.string().email().required("This field is required"),
+  phone: yup.string().required("This field is required"),
+  address: yup.string().required("This field is required"),
+  city: yup.string().required("This field is required"),
+  state: yup.string().required("This field is required"),
+  zip_code: yup.string().required("This field is required"),
+  country: yup.string().required("This field is required"),
   github_username: yup.string().nullable(),
 };

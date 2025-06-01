@@ -8,7 +8,7 @@ export const useGetLinkedinData = () => {
     queryFn: async () => {
       const response: GetLinkedinData =
         (await linkedinApi.linkedinDataDetailsRetrieve()) ?? [];
-
+      console.log(response);
       return response;
     },
   });

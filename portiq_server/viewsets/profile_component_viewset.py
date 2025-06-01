@@ -30,28 +30,18 @@ from portiq_server.models.skill import Skill
 
 from portiq_server.models.user import User
 from portiq_server.models.work_experience import WorkExperience
-from portiq_server.serializers import (
-    CertificateSerializer,
-    EducationSerializer,
-    GetComponentCodeSerializer,
-    PostCertificateSerializer,
-    PostHobbySerializer,
-    PostWorkExperienceSerializer,
-    ProfileComponentDestroySerializer,
-    PostProjectSerializer,
-    PostSkillSerializer,
-    PostLanguageSerializer,
-    PostOtherSerializer,
-    PostEducationSerializer,
-    SkillSerializer,
-    LanguageSerializer,
-    OtherSerializer,
-    HobbySerializer,
-    ProjectSerializer,
-    WorkExperienceSerializer,
-    ReferenceSerializer,
-    PostReferenceSerializer
-)
+from portiq_server.serializers.certificate_serializers import CertificateSerializer, PostCertificateSerializer
+from portiq_server.serializers.development_serializers import GetComponentCodeSerializer
+from portiq_server.serializers.education_serializers import EducationSerializer, PostEducationSerializer
+from portiq_server.serializers.hobby_serializers import HobbySerializer, PostHobbySerializer
+from portiq_server.serializers.language_serializers import LanguageSerializer, PostLanguageSerializer
+from portiq_server.serializers.other_serializers import OtherSerializer, PostOtherSerializer
+from portiq_server.serializers.profile_component_serializers import ProfileComponentDestroySerializer
+from portiq_server.serializers.project_serializers import PostProjectSerializer, ProjectSerializer
+from portiq_server.serializers.reference_serializers import PostReferenceSerializer, ReferenceSerializer
+from portiq_server.serializers.skill_serializers import PostSkillSerializer, SkillSerializer
+from portiq_server.serializers.work_experience_serializers import PostWorkExperienceSerializer, WorkExperienceSerializer
+
 
 MODEL_MAPPING = {
     'certificates': Certificate,

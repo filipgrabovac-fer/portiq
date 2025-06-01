@@ -5,8 +5,11 @@ from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema
 from portiq_server.models.github_data import GithubData
 from portiq_server.models.user import User
-from portiq_server.serializers import GithubRequestSerializer, GithubResponseSerializer
 from django.core.cache import cache
+
+from portiq_server.serializers.github_serializers import GithubRequestSerializer, GithubResponseSerializer
+
+
 class GithubViewSet(viewsets.ViewSet):
     @extend_schema(
         request=GithubRequestSerializer,

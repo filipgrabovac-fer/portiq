@@ -17,9 +17,11 @@ export const Input = ({
     <div
       className={cn("relative", inputWrapperClass, readonly && "opacity-50")}
     >
-      <label htmlFor={name} className="absolute top-[-1.5rem] left-2">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={name} className="absolute top-[-1.5rem] left-2">
+          {label}
+        </label>
+      )}
       {type === "textarea" ? (
         <textarea
           rows={rows}

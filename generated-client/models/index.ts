@@ -13,6 +13,7 @@ export * from './GithubResponse';
 export * from './ImageUploadResponse';
 export * from './PostVertexAiGenerateText';
 export * from './PutLinkedinData';
+export * from './PutSummary';
 export * from './ResponseVertexAiGenerateText';
 export * from './SocialLogin';
 export * from './User';

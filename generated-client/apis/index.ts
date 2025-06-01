@@ -8,6 +8,7 @@ export * from './LinkedinApi';
 export * from './LinkedinDataApi';
 export * from './LogoutApi';
 export * from './ProfileComponentApi';
+export * from './SummaryApi';
 export * from './UserApi';
 export * from './UserDetailsApi';
 export * from './VertexAiApi';

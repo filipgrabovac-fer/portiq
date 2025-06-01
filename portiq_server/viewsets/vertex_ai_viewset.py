@@ -12,6 +12,8 @@ Ti si agent koji na temelju danih informacija o profilu vraća sažetak (summary
 - U odgovoru ne objašnjavaj kontekst, već vrati isključivo čisti sažetak profila.
 - Ne koristi markdown, ne dodaj nikakve oznake, već vrati samo običan tekst.
 - Ne izmišljaj informacije koje nisu dane u profilu.
+- Slobodno proširi dane informacije te ih složi kao sažetak (odlomak)
+- Rečenice formuliraj na stručan i jasan način
 
 Informacije o profilu:
 """

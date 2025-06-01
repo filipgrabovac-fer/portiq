@@ -8,6 +8,7 @@ import {
   LinkedinDataApi,
   ImageUploadApi,
   VertexAiApi,
+  SummaryApi,
 } from "../generated-client";
 
 export const userApi: UserApi = new UserApi();
@@ -20,3 +21,4 @@ export const githubApi: GithubApi = new GithubApi();
 export const linkedinApi: LinkedinDataApi = new LinkedinDataApi();
 export const imageUploadApi: ImageUploadApi = new ImageUploadApi();
 export const vertexAiApi: VertexAiApi = new VertexAiApi();
+export const summaryApi: SummaryApi = new SummaryApi();

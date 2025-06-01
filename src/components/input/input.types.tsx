@@ -3,7 +3,7 @@ export type InputProps = {
   rows?: number;
   readonly?: boolean;
   name: string;
-  label: string;
+  label?: string;
   type: string;
   placeholder: string;
   value: string;

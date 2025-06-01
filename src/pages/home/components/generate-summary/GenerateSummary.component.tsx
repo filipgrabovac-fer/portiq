@@ -5,18 +5,23 @@ import { cn } from "../../../../utils/cn.util";
 import { formatUserInfoToPropmt } from "../../utils/formatUserInfoToPropmt.util";
 import { usePostGenerateSummary } from "../profile-form/hooks/usePostGenerateSummary.hook";
 import { Loader2, Sparkle, SparkleIcon, Sparkles } from "lucide-react";
+import { usePutSummary } from "../../hooks/usePutSummary.hook";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type GenerateSummaryProps = {
   userData: UserDetails;
 };
 export const GenerateSummary = ({ userData }: GenerateSummaryProps) => {
+  const queryClient = useQueryClient();
   //@ts-ignore
   const [summary, setSummary] = useState(userData?.info?.[0]?.summary ?? "");
   const { mutate: generateSummary, isLoading } = usePostGenerateSummary({
     setSummary,
   });
-
-  console.log(userData);
+  const { mutate: putSummary, isLoading: isPutSummaryLoading } = usePutSummary({
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
+  });
 
   const prompt = formatUserInfoToPropmt({ userData: userData });
 
@@ -24,14 +29,13 @@ export const GenerateSummary = ({ userData }: GenerateSummaryProps) => {
     <div className="bg-white w-3/5 max-lg:w-full m-auto rounded-md flex flex-col  border border-gray-200 p-8 gap-4">
       <h2
         className={cn(
-          "text-2xl font-semibold pb-2 border-b-[1px] border-gray-200 mb-6"
+          "text-2xl font-semibold pb-2 border-b-[1px] border-gray-200 "
         )}
       >
         Summary
       </h2>
 
       <Input
-        label="Summary"
         name="summary"
         type="textarea"
         placeholder="Summary"
@@ -52,14 +56,26 @@ export const GenerateSummary = ({ userData }: GenerateSummaryProps) => {
             <Loader2 className="animate-spin opacity-50 cursor-not-allowed pointer-events-none" />
           ) : (
             <>
-              <div></div>
               <Sparkles className="w-4 h-4" />
               <p>Generate summary</p>
             </>
           )}
         </button>
-        <button className="bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer flex gap-2 justify-between items-center">
-          Save
+        <button
+          onClick={() => putSummary({ summary })}
+          className={cn(
+            "bg-button_blue text-white px-4 py-2 rounded-md cursor-pointer flex gap-2 justify-between items-center transition-all duration-300",
+            //@ts-ignore
+            userData?.info?.[0]?.summary === summary &&
+              "bg-button_blue/20 cursor-not-allowed pointer-events-none",
+            isPutSummaryLoading && "bg-button_blue/10"
+          )}
+        >
+          {isPutSummaryLoading ? (
+            <Loader2 className="animate-spin opacity-50 cursor-not-allowed pointer-events-none" />
+          ) : (
+            "Save"
+          )}
         </button>
       </div>
     </div>

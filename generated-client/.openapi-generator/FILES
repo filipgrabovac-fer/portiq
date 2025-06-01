@@ -6,6 +6,7 @@ apis/LinkedinApi.ts
 apis/LinkedinDataApi.ts
 apis/LogoutApi.ts
 apis/ProfileComponentApi.ts
+apis/SummaryApi.ts
 apis/UserApi.ts
 apis/UserDetailsApi.ts
 apis/VertexAiApi.ts
@@ -24,6 +25,7 @@ models/GithubResponse.ts
 models/ImageUploadResponse.ts
 models/PostVertexAiGenerateText.ts
 models/PutLinkedinData.ts
+models/PutSummary.ts
 models/ResponseVertexAiGenerateText.ts
 models/SocialLogin.ts
 models/User.ts

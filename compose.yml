@@ -2,6 +2,18 @@ services:
   frontend:
     build:
       context: .
+      target: frontend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
+      - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
+      - LINKEDIN_REDIRECT_URI=${LINKEDIN_REDIRECT_URI}
+  frontend-dev:
+    build:
+      context: .
       target: frontend-dev
     ports:
       - "3000:3000"

@@ -2,9 +2,9 @@ export const LinkedinData = () => {
   return (
     <a
       href={`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${
-        import.meta.env.LINKEDIN_CLIENT_ID
+        import.meta.env.VITE_LINKEDIN_CLIENT_ID
       }&redirect_uri=${
-        import.meta.env.LINKEDIN_REDIRECT_URI
+        import.meta.env.VITE_LINKEDIN_REDIRECT_URI
       }&scope=profile%20openid%20email&state=nekiRandomString`}
       className="flex items-center gap-2 bg-[#0077B5] hover:bg-[#005983] text-white font-semibold px-6 py-3 rounded-md shadow-md transition-all duration-300  h-16 w-full"
       style={{ textDecoration: "none" }}

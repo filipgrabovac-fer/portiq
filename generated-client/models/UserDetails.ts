@@ -85,12 +85,6 @@ export interface UserDetails {
      * @memberof UserDetails
      */
     githubData: Array<Array<string | null>>;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserDetails
-     */
-    imageUrl?: string;
 }
 
 /**
@@ -132,7 +126,6 @@ export function UserDetailsFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'workExperiences': json['work_experiences'],
         'references': json['references'],
         'githubData': json['github_data'],
-        'imageUrl': json['image_url'] == null ? undefined : json['image_url'],
     };
 }
 
@@ -158,7 +151,6 @@ export function UserDetailsToJSONTyped(value?: UserDetails | null, ignoreDiscrim
         'work_experiences': value['workExperiences'],
         'references': value['references'],
         'github_data': value['githubData'],
-        'image_url': value['imageUrl'],
     };
 }
 

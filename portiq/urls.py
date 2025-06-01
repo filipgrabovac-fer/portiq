@@ -4,7 +4,7 @@ from django.conf import settings
 from rest_framework import routers
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from .views import GoogleLogin
-from portiq_server.viewsets import development_viewset, github_viewset, linkedin_viewset, profile_component_viewset, user_viewset
+from portiq_server.viewsets import development_viewset, github_viewset, image_upload_viewset, linkedin_viewset, profile_component_viewset, user_viewset
 from react_server.views import serve_react
 from .auth import login_with_google, logout_user
 
@@ -15,6 +15,7 @@ router.register(r'development', development_viewset.DevelopmentViewSet, basename
 router.register(r'profile-component', profile_component_viewset.ProfileComponentViewSet, basename='profile-component')
 router.register(r'github', github_viewset.GithubViewSet, basename='github')
 router.register(r'linkedin-data', linkedin_viewset.LinkeinViewSetDetails, basename='linkedin-data')
+router.register(r'image-upload', image_upload_viewset.ImageUploadViewSet, basename='image-upload')
 
 urlpatterns = [
     path('dj-rest-auth/google/', GoogleLogin.as_view(), name='google_login'),

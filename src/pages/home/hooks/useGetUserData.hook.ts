@@ -13,6 +13,7 @@ export type UserDetailsInfoType = {
   phone_number: string;
   state: string;
   zip_code: string;
+  image?: string;
 };
 export const useGetUserData = () => {
   return useQuery({

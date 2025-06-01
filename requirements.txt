@@ -3,9 +3,10 @@ attrs==25.1.0
 certifi==2025.1.31
 cffi==1.17.1
 charset-normalizer==3.4.1
+cloudinary==1.44.0
 cryptography==44.0.2
 dj-rest-auth==7.0.1
-Django==5.1.7
+Django==5.2
 django-allauth==65.4.1
 django-cors-headers==4.7.0
 django-environ==0.12.0
@@ -30,6 +31,7 @@ referencing==0.36.2
 requests==2.32.3
 rpds-py==0.23.1
 segno==1.6.6
+six==1.17.0
 sqlparse==0.5.3
 typing_extensions==4.12.2
 uritemplate==4.1.1

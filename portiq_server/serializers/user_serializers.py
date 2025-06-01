@@ -8,10 +8,23 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [ "id_user", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country", "created_at", "github_username"]
 
 
-class PutUserDataSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = [ "first_name", "last_name", "email", "phone_number", "address", "city", "state", "zip_code", "country", "github_username"]
+# class PutUserDataSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = [ "first_name", "last_name", "email", "phone_number", "address", "city", "state", "zip_code", "country", "github_username"]
+
+class PutUserDataSerializer(serializers.Serializer):
+    first_name = serializers.CharField(required=False)
+    last_name = serializers.CharField(required=False)
+    email = serializers.EmailField(required=False)
+    phone_number = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    city = serializers.CharField(required=False)
+    state = serializers.CharField(required=False)
+    zip_code = serializers.CharField(required=False)
+    country = serializers.CharField(required=False)
+    github_username = serializers.CharField(required=False)
+    image_url = serializers.CharField(required=False)
 
 
 class UserDetailsSerializer(serializers.Serializer):
@@ -26,7 +39,7 @@ class UserDetailsSerializer(serializers.Serializer):
     work_experiences = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     references = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
     github_data = serializers.ListField(child=serializers.ListField(child=serializers.CharField(allow_null=True)))
-    image_url = serializers.CharField(required=False)
+
 
 class UserLoggedInSerializer(serializers.Serializer):
     id_user = serializers.IntegerField(required=True)

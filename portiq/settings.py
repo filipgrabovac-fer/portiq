@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 import environ
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -26,6 +25,8 @@ env = environ.Env(
     LINKEDIN_CLIENT_ID=(str, ''),
     LINKEDIN_CLIENT_SECRET=(str, ''),
     LINKEDIN_REDIRECT_URI=(str, ''),
+    CLOUDINARY_CLIENT_ID=(str, ''),
+    CLOUDINARY_CLIENT_SECRET=(str, ''),
 )
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -214,6 +215,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 APPEND_SLASH = False
 
-# Add to INSTALLED_APPS if not already there
+CLOUDINARY_URL=f'cloudinary://{env("CLOUDINARY_CLIENT_ID")}:{env("CLOUDINARY_CLIENT_SECRET")}@env("CLOUDINARY_CLOUD_NAME")'
+
+
 if 'django.contrib.staticfiles' not in INSTALLED_APPS:
     INSTALLED_APPS.append('django.contrib.staticfiles')

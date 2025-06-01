@@ -15,12 +15,14 @@ from portiq_server.models.skill import Skill
 from portiq_server.models.project import Project
 from django.core.cache import cache
 from drf_spectacular.utils import extend_schema
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from portiq_server.serializers.user_serializers import PutUserDataSerializer, UserDetailsSerializer, UserLoggedInSerializer, UserSerializer
 
 class UserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    parser_classes = (MultiPartParser, FormParser)
 
     def list(self, request):
         users = list(self.queryset.values_list("id_user", "first_name", "last_name", "email", "phone_number", "image_url", "address", "city", "state", "zip_code", "country"))
@@ -45,9 +47,13 @@ class UserViewSet(viewsets.ViewSet):
         user = self.queryset.filter(id_user=id_user).first()
 
         userData = request.data
-        userData["id_user"] = id_user
+        new_user_data = {}
+        for key, value in userData.items():
+            if value:
+                new_user_data[key] = value
+        new_user_data["id_user"] = id_user
 
-        serializer = self.serializer_class(user, data=userData)
+        serializer = self.serializer_class(user, data=new_user_data)
 
         if serializer.is_valid():
             serializer.save()

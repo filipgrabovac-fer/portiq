@@ -1,6 +1,7 @@
 apis/DevelopmentApi.ts
 apis/DjRestAuthApi.ts
 apis/GithubApi.ts
+apis/ImageUploadApi.ts
 apis/LinkedinApi.ts
 apis/LinkedinDataApi.ts
 apis/LogoutApi.ts
@@ -19,8 +20,8 @@ models/GetLinkedinData.ts
 models/GetSelectedComponents.ts
 models/GithubRequest.ts
 models/GithubResponse.ts
+models/ImageUploadResponse.ts
 models/PutLinkedinData.ts
-models/PutUserData.ts
 models/SocialLogin.ts
 models/User.ts
 models/UserDetails.ts

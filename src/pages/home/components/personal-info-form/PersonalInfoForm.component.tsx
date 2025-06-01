@@ -24,6 +24,7 @@ import { GithubData } from "./GithubData.component";
 import { LinkedinData } from "./LinkedinData.component";
 import { Form, Formik, FormikErrors } from "formik";
 import * as yup from "yup";
+import { usePutImageUpload } from "../../hooks/usePutImageUpload.hook";
 
 export type PersonalInfoFormProps = {
   data?: UserDetailsInfoType;
@@ -45,6 +46,8 @@ export const PersonalInfoForm = ({
   const [country, setCountry] = useState(data?.country);
   const [readonly, setReadonly] = useState(true);
   const [githubUsername, setGithubUsername] = useState(data?.github_username);
+  const [imageUrl, setImageUrl] = useState(data?.image_url);
+  const [image, setImage] = useState<FormData | undefined>();
 
   const [validationErrors, setValidationErrors] = useState<
     FormikErrors<{
@@ -58,6 +61,7 @@ export const PersonalInfoForm = ({
       zip_code: string | undefined;
       country: string | undefined;
       github_username: string | undefined;
+      image: FormData | undefined;
     }>
   >();
 
@@ -161,6 +165,17 @@ export const PersonalInfoForm = ({
       value: country,
     },
     {
+      label: "Image",
+      name: "image",
+      placeholder: data?.image_url,
+      type: "file",
+      // @ts-ignore
+      onChange: setImage,
+      required: true,
+      // @ts-ignore
+      value: image,
+    },
+    {
       label: "Github Username",
       name: "github_username",
       type: "text",
@@ -182,6 +197,26 @@ export const PersonalInfoForm = ({
       onSuccess: () =>
         queryClient.invalidateQueries({ queryKey: ["getUserData"] }),
     });
+  const { mutate: uploadImage } = usePutImageUpload({
+    onSuccess: (data) => {
+      console.log("we here");
+      updateUserData({
+        info: {
+          first_name: name ?? "",
+          last_name: surname ?? "",
+          email: email ?? "",
+          phone_number: phone ?? "",
+          address: address ?? "",
+          city: city ?? "",
+          state: state ?? "",
+          zip_code: zipCode ?? "",
+          country: country ?? "",
+          github_username: githubUsername ?? "",
+          image_url: data.url,
+        },
+      });
+    },
+  });
 
   const requiredParameters: Record<string, yup.AnySchema> = {};
 
@@ -208,26 +243,32 @@ export const PersonalInfoForm = ({
     zip_code: data?.zip_code,
     country: data?.country,
     github_username: data?.github_username,
+    image: undefined,
   };
 
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={(values) => {
-        updateUserData({
-          info: {
-            first_name: values.name ?? "",
-            last_name: values.surname ?? "",
-            email: values.email ?? "",
-            phone_number: values.phone ?? "",
-            address: values.address ?? "",
-            city: values.city ?? "",
-            state: values.state ?? "",
-            zip_code: values.zip_code ?? "",
-            country: values.country ?? "",
-            github_username: values.github_username ?? "",
-          },
-        });
+        if (image) {
+          uploadImage(values.image as unknown as File);
+        } else {
+          updateUserData({
+            info: {
+              first_name: values.name ?? "",
+              last_name: values.surname ?? "",
+              email: values.email ?? "",
+              phone_number: values.phone ?? "",
+              address: values.address ?? "",
+              city: values.city ?? "",
+              state: values.state ?? "",
+              zip_code: values.zip_code ?? "",
+              country: values.country ?? "",
+              github_username: values.github_username ?? "",
+              image_url: imageUrl,
+            },
+          });
+        }
         setReadonly(true);
       }}
       validationSchema={ValidationSchema}

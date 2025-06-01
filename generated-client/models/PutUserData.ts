@@ -24,70 +24,73 @@ export interface PutUserData {
      * @type {string}
      * @memberof PutUserData
      */
-    firstName: string;
+    firstName?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    lastName: string;
+    lastName?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    email: string;
+    email?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    phoneNumber?: string | null;
+    phoneNumber?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    address?: string | null;
+    address?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    city?: string | null;
+    city?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    state?: string | null;
+    state?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    zipCode?: string | null;
+    zipCode?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    country?: string | null;
+    country?: string;
     /**
      * 
      * @type {string}
      * @memberof PutUserData
      */
-    githubUsername?: string | null;
+    githubUsername?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PutUserData
+     */
+    image?: string;
 }
 
 /**
  * Check if a given object implements the PutUserData interface.
  */
 export function instanceOfPutUserData(value: object): value is PutUserData {
-    if (!('firstName' in value) || value['firstName'] === undefined) return false;
-    if (!('lastName' in value) || value['lastName'] === undefined) return false;
-    if (!('email' in value) || value['email'] === undefined) return false;
     return true;
 }
 
@@ -101,9 +104,9 @@ export function PutUserDataFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
         
-        'firstName': json['first_name'],
-        'lastName': json['last_name'],
-        'email': json['email'],
+        'firstName': json['first_name'] == null ? undefined : json['first_name'],
+        'lastName': json['last_name'] == null ? undefined : json['last_name'],
+        'email': json['email'] == null ? undefined : json['email'],
         'phoneNumber': json['phone_number'] == null ? undefined : json['phone_number'],
         'address': json['address'] == null ? undefined : json['address'],
         'city': json['city'] == null ? undefined : json['city'],
@@ -111,6 +114,7 @@ export function PutUserDataFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'zipCode': json['zip_code'] == null ? undefined : json['zip_code'],
         'country': json['country'] == null ? undefined : json['country'],
         'githubUsername': json['github_username'] == null ? undefined : json['github_username'],
+        'image': json['image'] == null ? undefined : json['image'],
     };
 }
 
@@ -135,6 +139,7 @@ export function PutUserDataToJSONTyped(value?: PutUserData | null, ignoreDiscrim
         'zip_code': value['zipCode'],
         'country': value['country'],
         'github_username': value['githubUsername'],
+        'image': value['image'],
     };
 }
 

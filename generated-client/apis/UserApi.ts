@@ -15,18 +15,27 @@
 
 import * as runtime from '../runtime';
 import type {
-  PutUserData,
   User,
 } from '../models/index';
 import {
-    PutUserDataFromJSON,
-    PutUserDataToJSON,
     UserFromJSON,
     UserToJSON,
 } from '../models/index';
 
 export interface UserCreateRequest {
-    user: Omit<User, 'id_user'|'created_at'>;
+    idUser: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    createdAt: Date;
+    phoneNumber?: string | null;
+    imageUrl?: string | null;
+    address?: string | null;
+    city?: string | null;
+    state?: string | null;
+    zipCode?: string | null;
+    country?: string | null;
+    githubUsername?: string | null;
 }
 
 export interface UserDestroyRequest {
@@ -39,7 +48,17 @@ export interface UserRetrieveRequest {
 
 export interface UserUpdateRequest {
     idUser: number;
-    putUserData: PutUserData;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phoneNumber?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    zipCode?: string;
+    country?: string;
+    githubUsername?: string;
+    imageUrl?: string;
 }
 
 /**
@@ -50,10 +69,38 @@ export class UserApi extends runtime.BaseAPI {
     /**
      */
     async userCreateRaw(requestParameters: UserCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
-        if (requestParameters['user'] == null) {
+        if (requestParameters['idUser'] == null) {
             throw new runtime.RequiredError(
-                'user',
-                'Required parameter "user" was null or undefined when calling userCreate().'
+                'idUser',
+                'Required parameter "idUser" was null or undefined when calling userCreate().'
+            );
+        }
+
+        if (requestParameters['firstName'] == null) {
+            throw new runtime.RequiredError(
+                'firstName',
+                'Required parameter "firstName" was null or undefined when calling userCreate().'
+            );
+        }
+
+        if (requestParameters['lastName'] == null) {
+            throw new runtime.RequiredError(
+                'lastName',
+                'Required parameter "lastName" was null or undefined when calling userCreate().'
+            );
+        }
+
+        if (requestParameters['email'] == null) {
+            throw new runtime.RequiredError(
+                'email',
+                'Required parameter "email" was null or undefined when calling userCreate().'
+            );
+        }
+
+        if (requestParameters['createdAt'] == null) {
+            throw new runtime.RequiredError(
+                'createdAt',
+                'Required parameter "createdAt" was null or undefined when calling userCreate().'
             );
         }
 
@@ -61,17 +108,82 @@ export class UserApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
-
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['idUser'] != null) {
+            formParams.append('id_user', requestParameters['idUser'] as any);
+        }
+
+        if (requestParameters['firstName'] != null) {
+            formParams.append('first_name', requestParameters['firstName'] as any);
+        }
+
+        if (requestParameters['lastName'] != null) {
+            formParams.append('last_name', requestParameters['lastName'] as any);
+        }
+
+        if (requestParameters['email'] != null) {
+            formParams.append('email', requestParameters['email'] as any);
+        }
+
+        if (requestParameters['phoneNumber'] != null) {
+            formParams.append('phone_number', requestParameters['phoneNumber'] as any);
+        }
+
+        if (requestParameters['imageUrl'] != null) {
+            formParams.append('image_url', requestParameters['imageUrl'] as any);
+        }
+
+        if (requestParameters['address'] != null) {
+            formParams.append('address', requestParameters['address'] as any);
+        }
+
+        if (requestParameters['city'] != null) {
+            formParams.append('city', requestParameters['city'] as any);
+        }
+
+        if (requestParameters['state'] != null) {
+            formParams.append('state', requestParameters['state'] as any);
+        }
+
+        if (requestParameters['zipCode'] != null) {
+            formParams.append('zip_code', requestParameters['zipCode'] as any);
+        }
+
+        if (requestParameters['country'] != null) {
+            formParams.append('country', requestParameters['country'] as any);
+        }
+
+        if (requestParameters['createdAt'] != null) {
+            formParams.append('created_at', (requestParameters['createdAt'] as any).toISOString());
+        }
+
+        if (requestParameters['githubUsername'] != null) {
+            formParams.append('github_username', requestParameters['githubUsername'] as any);
+        }
+
         const response = await this.request({
             path: `/api/user/`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: UserToJSON(requestParameters['user']),
+            body: formParams,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));
@@ -188,28 +300,78 @@ export class UserApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['putUserData'] == null) {
-            throw new runtime.RequiredError(
-                'putUserData',
-                'Required parameter "putUserData" was null or undefined when calling userUpdate().'
-            );
-        }
-
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
-
         if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
+        const consumes: runtime.Consume[] = [
+            { contentType: 'multipart/form-data' },
+            { contentType: 'application/x-www-form-urlencoded' },
+        ];
+        // @ts-ignore: canConsumeForm may be unused
+        const canConsumeForm = runtime.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any };
+        let useForm = false;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new URLSearchParams();
+        }
+
+        if (requestParameters['firstName'] != null) {
+            formParams.append('first_name', requestParameters['firstName'] as any);
+        }
+
+        if (requestParameters['lastName'] != null) {
+            formParams.append('last_name', requestParameters['lastName'] as any);
+        }
+
+        if (requestParameters['email'] != null) {
+            formParams.append('email', requestParameters['email'] as any);
+        }
+
+        if (requestParameters['phoneNumber'] != null) {
+            formParams.append('phone_number', requestParameters['phoneNumber'] as any);
+        }
+
+        if (requestParameters['address'] != null) {
+            formParams.append('address', requestParameters['address'] as any);
+        }
+
+        if (requestParameters['city'] != null) {
+            formParams.append('city', requestParameters['city'] as any);
+        }
+
+        if (requestParameters['state'] != null) {
+            formParams.append('state', requestParameters['state'] as any);
+        }
+
+        if (requestParameters['zipCode'] != null) {
+            formParams.append('zip_code', requestParameters['zipCode'] as any);
+        }
+
+        if (requestParameters['country'] != null) {
+            formParams.append('country', requestParameters['country'] as any);
+        }
+
+        if (requestParameters['githubUsername'] != null) {
+            formParams.append('github_username', requestParameters['githubUsername'] as any);
+        }
+
+        if (requestParameters['imageUrl'] != null) {
+            formParams.append('image_url', requestParameters['imageUrl'] as any);
+        }
+
         const response = await this.request({
             path: `/api/user/{id_user}/`.replace(`{${"id_user"}}`, encodeURIComponent(String(requestParameters['idUser']))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: PutUserDataToJSON(requestParameters['putUserData']),
+            body: formParams,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));

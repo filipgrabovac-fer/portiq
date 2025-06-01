@@ -42,6 +42,7 @@ export type FormInputErrorType = {
   zip_code?: string;
   country?: string;
   github_username?: string;
+  image?: string;
 };
 
 export const PersonalInfoFormProps = {
@@ -55,4 +56,5 @@ export const PersonalInfoFormProps = {
   zip_code: yup.string().required("This field is required"),
   country: yup.string().required("This field is required"),
   github_username: yup.string().nullable(),
+  image: yup.mixed(),
 };

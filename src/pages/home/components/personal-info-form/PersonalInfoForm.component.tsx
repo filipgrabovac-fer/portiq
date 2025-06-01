@@ -171,7 +171,6 @@ export const PersonalInfoForm = ({
       type: "file",
       // @ts-ignore
       onChange: setImage,
-      required: true,
       // @ts-ignore
       value: image,
     },
@@ -199,7 +198,6 @@ export const PersonalInfoForm = ({
     });
   const { mutate: uploadImage } = usePutImageUpload({
     onSuccess: (data) => {
-      console.log("we here");
       updateUserData({
         info: {
           first_name: name ?? "",

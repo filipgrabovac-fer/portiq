@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     
     "drf_spectacular",
     "django.contrib.sites",
-
     
     'allauth',
     'allauth.account',
@@ -180,6 +179,10 @@ SPECTACULAR_SETTINGS = {
     {
         'name': 'linkedin-data',
         'description': 'Linkedin endpoints'
+    },
+    {
+        'name': 'vertex-ai',
+        'description': 'Vertex AI endpoints'
     },
     ],
     'SCHEMA_PATH_PREFIX': '/api/',

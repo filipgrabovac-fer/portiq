@@ -26,6 +26,7 @@ services:
       - LINKEDIN_CLIENT_ID=${LINKEDIN_CLIENT_ID}
       - LINKEDIN_CLIENT_SECRET=${LINKEDIN_CLIENT_SECRET}
       - LINKEDIN_REDIRECT_URI=${LINKEDIN_REDIRECT_URI}
+      - VERTEX_AI_API_KEY=${VERTEX_AI_API_KEY}
     volumes:
       - ./src:/app/src
       - ./public:/app/public

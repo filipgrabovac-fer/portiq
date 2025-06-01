@@ -8,6 +8,7 @@ apis/LogoutApi.ts
 apis/ProfileComponentApi.ts
 apis/UserApi.ts
 apis/UserDetailsApi.ts
+apis/VertexAiApi.ts
 apis/index.ts
 index.ts
 models/Code.ts
@@ -21,7 +22,9 @@ models/GetSelectedComponents.ts
 models/GithubRequest.ts
 models/GithubResponse.ts
 models/ImageUploadResponse.ts
+models/PostVertexAiGenerateText.ts
 models/PutLinkedinData.ts
+models/ResponseVertexAiGenerateText.ts
 models/SocialLogin.ts
 models/User.ts
 models/UserDetails.ts

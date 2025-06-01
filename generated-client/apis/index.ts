@@ -10,3 +10,4 @@ export * from './LogoutApi';
 export * from './ProfileComponentApi';
 export * from './UserApi';
 export * from './UserDetailsApi';
+export * from './VertexAiApi';

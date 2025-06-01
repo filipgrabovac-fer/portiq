@@ -43,6 +43,7 @@ export const FormInputs = ({
                     "cursor-not-allowed pointer-events-none opacity-50"
                 )}
               >
+                {/* @ts-ignore */}
                 {formInput?.value?.name ?? "Upload"}
               </label>
 
@@ -51,7 +52,9 @@ export const FormInputs = ({
                 name={formInput.name}
                 type="file"
                 onChange={(event) => {
+                  // @ts-ignore
                   formInput.onChange(event?.target.files?.[0]);
+                  // @ts-ignore
                   setFieldValue(formInput.name, event.target.files?.[0]);
                 }}
                 readOnly={readonly}

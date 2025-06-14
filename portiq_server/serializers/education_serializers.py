@@ -18,3 +18,6 @@ class PostEducationSerializer(serializers.Serializer):
     type = serializers.CharField(required=False, allow_blank=True)
     start_date = serializers.DateTimeField(required=False)
     end_date = serializers.DateTimeField(required=False)
+
+
+    

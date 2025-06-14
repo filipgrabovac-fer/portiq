@@ -204,7 +204,7 @@ export const AddNewDataModal = ({
                   }
                 }}
               >
-                Create {dataType}
+                Create {ProfileFormComponentTitle[dataType]}
               </div>
             </Form>
           </div>

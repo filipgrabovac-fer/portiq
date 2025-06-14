@@ -7,16 +7,18 @@ from drf_spectacular.utils import extend_schema
 from portiq_server.serializers.vertex_ai_serializers import PostVertexAiGenerateTextSerializer, ResponseVertexAiGenerateTextSerializer
 
 prompt_context = """
-Ti si agent koji na temelju danih informacija o profilu vraća sažetak (summary) web portfolija.
+### You are an agent who, based on the given profile information, returns a summary of the web portfolio.
 
-- U odgovoru ne objašnjavaj kontekst, već vrati isključivo čisti sažetak profila.
-- Ne koristi markdown, ne dodaj nikakve oznake, već vrati samo običan tekst.
-- Ne izmišljaj informacije koje nisu dane u profilu.
-- Slobodno proširi dane informacije te ih složi kao sažetak (odlomak)
-- Rečenice formuliraj na stručan i jasan način
+- In your response, do not explain the context, just return the pure profile summary.
+- Do not use markdown, do not add any tags, just return plain text.
+- Do not make up information that is not provided in the profile.
+- Feel free to expand on the given information and compose it as a summary (paragraph) without line breaks.
+- Formulate sentences in a professional and clear manner, enriching them with natural language
+- Generate the summary in the language of the data you are provided with
 
-Informacije o profilu:
+###Profile information:
 """
+
 class VertexAiViewSet(viewsets.ViewSet):
     @extend_schema(
         request=PostVertexAiGenerateTextSerializer,

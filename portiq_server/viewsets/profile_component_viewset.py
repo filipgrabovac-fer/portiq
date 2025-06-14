@@ -88,7 +88,7 @@ COMPONENT_MODEL_MAPPING = {
     "other": OtherDevelopment,
     "hobbies": HobbyDevelopment,
     "info": UserInfoDevelopment,
-    "work_experiences": WorkExperienceDevelopment,
+    "workExperiences": WorkExperienceDevelopment,
     "references": ReferenceDevelopment,
     "github_data": GithubDataDevelopment
 }
@@ -102,7 +102,7 @@ COMPONENT_TYPE_BY_ID = {
     "id_other_development": "other",
     "id_hobby_development": "hobbies",
     "id_user_info_development": "info",
-    "id_work_experience_development": "work_experiences",
+    "id_work_experience_development": "workExperiences",
     "id_reference_development": "references",
     "id_github_data_development": "github_data"
 }

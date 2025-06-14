@@ -10,7 +10,7 @@ export const Landing = () => {
           Welcome to PortIQ - create your professional CV today!
         </h1>
         <h2 className="text-white opacity-80 italic hover:scale-105 transition-all duration-200 cursor-default md:text-base text-xs">
-          lorem ipsum text summa summaroum
+          You are one step away from creating your professional CV.
         </h2>
 
         <button

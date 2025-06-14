@@ -17,7 +17,7 @@ export const FormInputs = ({
       {formInputs.map((formInput) => (
         <div className={formInput.className}>
           {formInput.type === "select" && (
-            <>
+            <div className="flex flex-col gap-2">
               <label>{formInput.label ?? ""}</label>
               <Select
                 placeholder={formInput.placeholder}
@@ -28,7 +28,7 @@ export const FormInputs = ({
                 }}
                 options={formInput.options}
               />
-            </>
+            </div>
           )}
           {formInput.type === "file" && (
             <>

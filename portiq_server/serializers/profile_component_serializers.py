@@ -5,7 +5,7 @@ from portiq_server.models.portfolio_template import PortfolioTemplate
 class ProfileComponentDestroySerializer(serializers.Serializer):
     id = serializers.IntegerField(required=True)
     type = serializers.ChoiceField(
-        choices=['certificates', 'education', 'skills', 'projects', 'languages', 'other', 'hobbies'],
+        choices=['certificates', 'education', 'skills', 'projects', 'languages', 'other', 'hobbies', 'workExperiences', 'references'],
         required=True
     )
     

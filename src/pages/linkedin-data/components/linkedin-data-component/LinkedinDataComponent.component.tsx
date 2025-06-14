@@ -50,7 +50,14 @@ export const LinkedinDataComponent = ({
         }
         onChange={handleCheckboxChange}
       />
-      <div className="flex-1">
+      <div
+        className={cn(
+          "flex-1",
+          item[Object.keys(item)[0] as keyof typeof linkedinDataType].includes(
+            "http"
+          ) && "flex justify-between"
+        )}
+      >
         <p className="font-medium">
           {
             linkedinDataType[
@@ -58,9 +65,19 @@ export const LinkedinDataComponent = ({
             ]
           }
         </p>
-        <p className=" font-medium">
-          {item[Object.keys(item)[0] as keyof typeof linkedinDataType] ??
-            "No data"}
+        <p className="font-medium">
+          {item[Object.keys(item)[0] as keyof typeof linkedinDataType].includes(
+            "http"
+          ) ? (
+            <img
+              src={item[Object.keys(item)[0] as keyof typeof linkedinDataType]}
+              alt="linkedin data"
+              className="w-10 h-10 rounded-full"
+            />
+          ) : (
+            item[Object.keys(item)[0] as keyof typeof linkedinDataType] ??
+            "No data"
+          )}
         </p>
       </div>
     </div>

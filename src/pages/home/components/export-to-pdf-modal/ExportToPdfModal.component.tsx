@@ -74,10 +74,12 @@ export const ExportToPdfModal = ({
           <div className="flex-1">
             <div className="flex gap-4 items-center justify-center">
               <h1 className="text-2xl font-bold">Export to PDF</h1>
-              <DownloadIcon
-                className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
-                onClick={handleDownloadPDF}
-              />
+              {isPreview && (
+                <DownloadIcon
+                  className="w-8 h-8 bg-button_blue rounded-md p-1 text-white cursor-pointer"
+                  onClick={handleDownloadPDF}
+                />
+              )}
             </div>
           </div>
           <div className="w-5 flex-1"></div>

@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { UserDetailsInfoType } from "../../../../hooks/useGetUserData.hook";
 
 export type ProfileFormComponentItemType = {
   id?: string;

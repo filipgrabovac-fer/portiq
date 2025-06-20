@@ -60,6 +60,18 @@ services:
     ports:
       - "6379:6379"
 
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: portiq_db
+      POSTGRES_USER: portiq_user
+      POSTGRES_PASSWORD: portiq_pass
+      POSTGRES_HOST: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
     build:
       context: .
@@ -98,3 +110,4 @@ volumes:
   frontend_dist:
   backend_pycache:
   backend_migrations:
+  postgres_data:

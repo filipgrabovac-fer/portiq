@@ -30,6 +30,15 @@ def login_with_google(request):
 
     if existing_user:
         user = existing_user
+
+        user_dict = {
+            "id_user": user["id_user"],
+            "email": user["email"],
+            "first_name": user["first_name"],
+            "last_name": user["last_name"],
+            "image_url": user["image_url"],
+            "created_at": user["created_at"],
+        }
     else:
         user:User = User.objects.create(
             email=user_details["email"],
@@ -38,7 +47,16 @@ def login_with_google(request):
             image_url = user_details["picture"],
         )
 
-    cache.set("user", user, timeout=24*60*60)
+        user_dict = {
+            "id_user": user.id_user,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "image_url": user.image_url,
+            "created_at": user.created_at,
+        }
+
+    cache.set("user", user_dict, timeout=24*60*60)
     return redirect("/home")
 
 @extend_schema(tags=['logout'])

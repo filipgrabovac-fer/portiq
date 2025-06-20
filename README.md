@@ -1,54 +1,40 @@
-# React + TypeScript + Vite
+# Upute za pokretanje projekta
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. **Instaliraj Docker:**  
+   https://docs.docker.com/get-docker/
+   https://www.docker.com/products/docker-desktop/
 
-Currently, two official plugins are available:
+Alternativa Dockeru:
+https://orbstack.dev/dashboard
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Pokreni projekt:**
 
-## Expanding the ESLint configuration
+Nakon što ste postavili Docker i raspakirali preuzetu zip datoteku pozicionirajte se u glavni direktorij (root) i izvršite naredbu:
+  
+  docker compose up --build
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Svako sljedeće pokretanje može se postići izvršavanjem naredbe:
+  
+  docker compose up
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+3. **Inicijaliziranje baze podataka**  
+Za inicijaliziranje baze podataka je potrebno izvršiti naredbu
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   docker compose exec portiq-backend-1 python manage.py migrate
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+U slučaju da vam se ispiše greška kako portiq-backend-1 kontenjer ne postoji, u terminalu upišite naredbu
+  
+  docker ps
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+što će ispisati sve pokrenute kontenjere. Kopirajte CONTAINER ID poslužiteljskog kontenjera i ponovo pokrenite naredbu za migraciju, ali sa promijenjenim ID parametrom
+
+  docker compose exec <container_id> python manage.py migrate 
+
+
+Ukoliko imate problema s dopuštenjima pri rukovanju bazom podataka izvršite sljedeću naredbu:
+
+   docker compose exec portiq-backend-1 python manage.py createsuperuser
+
+4. **Aplikacija je dostupna na:**  
+  http://localhost:8000
+

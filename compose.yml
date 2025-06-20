@@ -63,10 +63,9 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_DB: portiq_db
-      POSTGRES_USER: portiq_user
-      POSTGRES_PASSWORD: portiq_pass
-      POSTGRES_HOST: db
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -97,8 +96,6 @@ services:
       - LINKEDIN_REDIRECT_URI=${LINKEDIN_REDIRECT_URI}
     ports:
       - "8000:8000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - ./portiq:/app/portiq
       - ./portiq_server:/app/portiq_server
@@ -111,3 +108,4 @@ volumes:
   backend_pycache:
   backend_migrations:
   postgres_data:
+    name: portiq_postgres_data

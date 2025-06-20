@@ -35,6 +35,11 @@ Ukoliko imate problema s dopuštenjima pri rukovanju bazom podataka izvršite sl
 
    docker compose exec portiq-backend-1 python manage.py createsuperuser
 
+
+Dodavanje podataka u bazu podataka:
+
+  docker exec -i portiq-db-1 psql -U portiq_user -d portiq_db < backup.sql
+
 4. **Aplikacija je dostupna na:**  
   http://localhost:8000
 

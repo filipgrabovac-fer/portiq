@@ -28,12 +28,12 @@ U slučaju da vam se ispiše greška kako portiq-backend-1 kontenjer ne postoji,
 
 što će ispisati sve pokrenute kontenjere. Kopirajte CONTAINER ID poslužiteljskog kontenjera i ponovo pokrenite naredbu za migraciju, ali sa promijenjenim ID parametrom
 
-  docker compose exec <container_id> python manage.py migrate 
+  docker exec -i <container_id> python manage.py migrate 
 
 
 Ukoliko imate problema s dopuštenjima pri rukovanju bazom podataka izvršite sljedeću naredbu:
 
-   docker compose exec portiq-backend-1 python manage.py createsuperuser
+   docker exec -i portiq-backend-1 python manage.py createsuperuser
 
 
 Dodavanje podataka u bazu podataka:

@@ -18,8 +18,20 @@ Svako sljedeće pokretanje može se postići izvršavanjem naredbe:
   docker compose up
 
 3. **Inicijaliziranje baze podataka**  
-Za inicijaliziranje baze podataka je potrebno izvršiti naredbu
+Za inicijaliziranje baze podataka je potrebno izvršiti naredbe
 
+   docker exec -i portiq-db-1 psql -U portiq_user -d postgres
+
+Nakon toga u psql shellu:
+
+    CREATE DATABASE portiq_db;
+
+Ako želite napuniti bazu podataka inicijalnim podacima, izvršite sljedeću naredbu:
+
+   docker exec -i portiq-db-1 psql -U portiq_user -d portiq_db < backup.sql
+
+
+a ako želite praznu bazu podataka, izvršite sljedeću naredbu:
    docker exec -it portiq-backend-1 python manage.py migrate
 
 U slučaju da vam se ispiše greška kako portiq-backend-1 kontenjer ne postoji, u terminalu upišite naredbu
@@ -34,11 +46,6 @@ U slučaju da vam se ispiše greška kako portiq-backend-1 kontenjer ne postoji,
 Ukoliko imate problema s dopuštenjima pri rukovanju bazom podataka izvršite sljedeću naredbu:
 
    docker exec -i portiq-backend-1 python manage.py createsuperuser
-
-
-Dodavanje podataka u bazu podataka:
-
-  docker exec -i portiq-db-1 psql -U portiq_user -d portiq_db < backup.sql
 
 4. **Aplikacija je dostupna na:**  
   http://localhost:8000

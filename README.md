@@ -20,7 +20,7 @@ Svako sljedeće pokretanje može se postići izvršavanjem naredbe:
 3. **Inicijaliziranje baze podataka**  
 Za inicijaliziranje baze podataka je potrebno izvršiti naredbu
 
-   docker compose exec portiq-backend-1 python manage.py migrate
+   docker exec -it portiq-backend-1 python manage.py migrate
 
 U slučaju da vam se ispiše greška kako portiq-backend-1 kontenjer ne postoji, u terminalu upišite naredbu
   

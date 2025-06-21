@@ -22,12 +22,11 @@ import { developmentRoute } from "../routes/development.routes";
 import { homeRoute } from "../routes/home.routes";
 import { loginRoute } from "../routes/login.routes";
 import { webPortfolioRoute } from "../routes/web-portfolio.routes";
-import { logoutApi, userApi, userDetailsApi } from "../schema";
+import { logoutApi } from "../schema";
 import {
   NavigationIcon,
   NavigationIconProps,
 } from "./components/NavigationIcon.component";
-import { useGetUserJsonData } from "./hooks/useGetUserJsonData.hook";
 
 export const MainLayout = () => {
   const { data: userId } = useGetUserId();

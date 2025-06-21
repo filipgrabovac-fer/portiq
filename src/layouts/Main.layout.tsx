@@ -79,9 +79,14 @@ export const MainLayout = () => {
         Create template
       </button>
 
-      <a href="/api/user-details/export-user-data/">
-        <button className="w-full text-button_blue hover:bg-button_blue/20 p-2 rounded-md transition-all duration-300 cursor-pointer text-center">
+      <a href="/api/user-details/export-user-data/json/">
+        <button className="w-full text-button_blue hover:bg-button_blue/20 p-2 rounded-md transition-all duration-300 cursor-pointer">
           Export to JSON
+        </button>
+      </a>
+      <a href="/api/user-details/export-user-data/xml/">
+        <button className="w-full text-button_blue hover:bg-button_blue/20 p-2 rounded-md transition-all duration-300 cursor-pointer">
+          Export to XML
         </button>
       </a>
       <button

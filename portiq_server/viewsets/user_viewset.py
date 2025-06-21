@@ -1,4 +1,5 @@
 import datetime
+from dicttoxml import dicttoxml
 import tempfile
 import json
 from django.http import FileResponse
@@ -255,19 +256,30 @@ class UserDetailsViewSet(viewsets.ViewSet):
         
 
 
-    @action(detail=False, methods=['get'], url_path="export-user-data")
-    def exportUserData(self, request):
+    @action(detail=False, methods=['get'], url_path="export-user-data/(?P<data_type>json|xml)")
+    def exportUserData(self, request, data_type):
+        data_type = data_type.lower()
         cached_user = cache.get("user")
         user_details = self.getUserDetails(request, cached_user["id_user"]).data
-        
-        with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as f:
-            json.dump(user_details, f, indent=2, cls=DateTimeEncoder)
+
+    
+        with tempfile.NamedTemporaryFile(mode='w+', suffix='.' + data_type, delete=False) as f:
+            if data_type == "xml":
+                xml_data = dicttoxml(
+                    user_details,
+                    custom_root='user_data',
+                    attr_type=False
+                )
+                f.write(xml_data.decode('utf-8'))
+            else:
+                json.dump(user_details, f, indent=2, cls=DateTimeEncoder)
+                
             f.seek(0)
             
             response = FileResponse(
                 open(f.name, 'rb'),
                 as_attachment=True,
-                filename='user_data.json'
+                filename=f'user_data.{data_type}'
             )
         
         return response

@@ -25,6 +25,10 @@ import {
     UserLoggedInToJSON,
 } from '../models/index';
 
+export interface UserDetailsExportUserDataRetrieveRequest {
+    dataType: string;
+}
+
 export interface UserDetailsUserDetailsRetrieveRequest {
     userId: string;
 }
@@ -36,7 +40,14 @@ export class UserDetailsApi extends runtime.BaseAPI {
 
     /**
      */
-    async userDetailsExportUserDataRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetails>> {
+    async userDetailsExportUserDataRetrieveRaw(requestParameters: UserDetailsExportUserDataRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetails>> {
+        if (requestParameters['dataType'] == null) {
+            throw new runtime.RequiredError(
+                'dataType',
+                'Required parameter "dataType" was null or undefined when calling userDetailsExportUserDataRetrieve().'
+            );
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -45,7 +56,7 @@ export class UserDetailsApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
         const response = await this.request({
-            path: `/api/user-details/export-user-data/`,
+            path: `/api/user-details/export-user-data/{data_type}/`.replace(`{${"data_type"}}`, encodeURIComponent(String(requestParameters['dataType']))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -56,8 +67,8 @@ export class UserDetailsApi extends runtime.BaseAPI {
 
     /**
      */
-    async userDetailsExportUserDataRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetails> {
-        const response = await this.userDetailsExportUserDataRetrieveRaw(initOverrides);
+    async userDetailsExportUserDataRetrieve(requestParameters: UserDetailsExportUserDataRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetails> {
+        const response = await this.userDetailsExportUserDataRetrieveRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

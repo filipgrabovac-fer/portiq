@@ -36,6 +36,33 @@ export class UserDetailsApi extends runtime.BaseAPI {
 
     /**
      */
+    async userDetailsExportUserDataRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetails>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && (this.configuration.username !== undefined || this.configuration.password !== undefined)) {
+            headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
+        }
+        const response = await this.request({
+            path: `/api/user-details/export-user-data/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserDetailsFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async userDetailsExportUserDataRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserDetails> {
+        const response = await this.userDetailsExportUserDataRetrieveRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     */
     async userDetailsUserDetailsRetrieveRaw(requestParameters: UserDetailsUserDetailsRetrieveRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<UserDetails>> {
         if (requestParameters['userId'] == null) {
             throw new runtime.RequiredError(

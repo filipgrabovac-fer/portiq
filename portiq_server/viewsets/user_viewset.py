@@ -1,3 +1,7 @@
+import datetime
+import tempfile
+import json
+from django.http import FileResponse
 from django.http import JsonResponse
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -19,6 +23,12 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from portiq_server.serializers.user_serializers import PutUserDataSerializer, UserDetailsSerializer, UserLoggedInSerializer, UserSerializer
 
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (datetime.date, datetime.datetime)):
+            return obj.isoformat()
+        return super().default(obj)
+    
 class UserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -242,3 +252,22 @@ class UserDetailsViewSet(viewsets.ViewSet):
             return Response({"id_user": cached_user["id_user"]}, status=status.HTTP_200_OK)
         else:
             return Response({"id_user": None}, status=status.HTTP_200_OK)
+        
+
+
+    @action(detail=False, methods=['get'], url_path="export-user-data")
+    def exportUserData(self, request):
+        cached_user = cache.get("user")
+        user_details = self.getUserDetails(request, cached_user["id_user"]).data
+        
+        with tempfile.NamedTemporaryFile(mode='w+', suffix='.json', delete=False) as f:
+            json.dump(user_details, f, indent=2, cls=DateTimeEncoder)
+            f.seek(0)
+            
+            response = FileResponse(
+                open(f.name, 'rb'),
+                as_attachment=True,
+                filename='user_data.json'
+            )
+        
+        return response

@@ -70,7 +70,6 @@ export const MainLayout = () => {
   ];
 
   const webPortfolioUrl = `http://localhost:3000/user/${userId}/web-portfolio`;
-  const { mutate: getUserJsonData } = useGetUserJsonData();
 
   const content = (
     <>
@@ -80,11 +79,11 @@ export const MainLayout = () => {
       >
         Create template
       </button>
-      <a
-        className="w-full text-button_blue hover:bg-button_blue/20 p-2 transition-all duration-300 cursor-pointer text-center"
-        href="/api/user-details/export-user-data/"
-      >
-        Export to JSON
+
+      <a href="/api/user-details/export-user-data/">
+        <button className="w-full text-button_blue hover:bg-button_blue/20 p-2 rounded-md transition-all duration-300 cursor-pointer text-center">
+          Export to JSON
+        </button>
       </a>
       <button
         className="w-full text-red-500 hover:bg-red-500/20 p-2 rounded-md transition-all duration-300 cursor-pointer"
